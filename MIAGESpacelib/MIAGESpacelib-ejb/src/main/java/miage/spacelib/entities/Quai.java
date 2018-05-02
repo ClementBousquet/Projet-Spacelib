@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import miage.spacelib.miagespacelibshared.StatutQuai;
 
 /**
  *
@@ -20,10 +21,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Quai implements Serializable {
 
-    private enum Statut {
-        Dispo, NonDispo
-    }
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,21 +32,28 @@ public class Quai implements Serializable {
     @OneToOne
     private Long idNavette;
     
-    private Statut statut;
+    private StatutQuai statut;
     
     protected Quai() {       
     };
     
     public Quai(Long station) {
         this.idStation = station;
-        this.statut = Statut.Dispo;
+        this.statut = StatutQuai.Dispo;
+    }
+    
+    public Quai(Long station, Long navette) {
+        this.idStation = station;
+        this.idNavette = navette;
+        this.statut = StatutQuai.NonDispo;
     }
 
-    public Statut getStatut() {
+
+    public StatutQuai getStatut() {
         return statut;
     }
 
-    public void setStatut(Statut statut) {
+    public void setStatut(StatutQuai statut) {
         this.statut = statut;
     }
     

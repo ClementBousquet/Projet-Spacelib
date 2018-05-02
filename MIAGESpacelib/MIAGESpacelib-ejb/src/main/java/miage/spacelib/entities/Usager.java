@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import miage.spacelib.miagespacelibshared.StatutMeca;
+import miage.spacelib.miagespacelibshared.StatutUsager;
 
 /**
  *
@@ -20,10 +22,6 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Usager implements Serializable {
-
-    private enum Statut {
-        Mecanicien, Admin
-    }
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,7 +33,9 @@ public class Usager implements Serializable {
     
     private String mdp;
     
-    private Statut st;
+    private StatutUsager st;
+    
+    private StatutMeca statutMeca;
     
     @OneToMany
     private List<Voyage> resa;
@@ -50,12 +50,25 @@ public class Usager implements Serializable {
         this.resa = new ArrayList();
     }
     
-    public Usager(String nom, String prenom, String motpass, Statut st) {
+    public Usager(String nom, String prenom, String motpass, StatutUsager st) {
         this.nom = nom;
         this.prenom = prenom;
         this.mdp = motpass;
         this.st = st;
         this.resa = new ArrayList();
+        
+        if(st.equals(StatutUsager.Mecanicien)) {
+            this.statutMeca = StatutMeca.Libre;
+        }
+        
+    }
+
+    public StatutMeca getStatutMeca() {
+        return statutMeca;
+    }
+
+    public void setStatutMeca(StatutMeca statutMeca) {
+        this.statutMeca = statutMeca;
     }
 
     public String getMdp() {
@@ -66,11 +79,11 @@ public class Usager implements Serializable {
         this.mdp = mdp;
     }
 
-    public Statut getSt() {
+    public StatutUsager getSt() {
         return st;
     }
 
-    public void setSt(Statut st) {
+    public void setSt(StatutUsager st) {
         this.st = st;
     }
 

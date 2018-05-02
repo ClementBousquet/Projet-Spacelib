@@ -8,6 +8,7 @@ package miage.spacelib.business;
 import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Navette;
+import miage.spacelib.entities.Quai;
 
 /**
  *
@@ -16,8 +17,8 @@ import miage.spacelib.entities.Navette;
 @Local
 public interface GestionTechniqueLocal {
     
-    List<Navette> afficherRevision(String station);
-    void initierRevision(Long idUsager, Long idNavette);
-    void finaliserRevision(Long idUsager);
+    List<Navette> afficherRevision(String station, Long idUsager);
+    Quai initierRevision(Long idUsager, Long idNavette, String station);
+    void finaliserRevision(Long idUsager, Long idNavette, String station);
     
 }

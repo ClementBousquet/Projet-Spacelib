@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import miage.spacelib.miagespacelibshared.StatutNavette;
 
 /**
  *
@@ -21,10 +22,6 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Navette implements Serializable {
-
-    private enum Statut {
-    Disponible, Voyage, BesoinRevision, EnRevision
-    }
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,7 +31,7 @@ public class Navette implements Serializable {
     @OneToOne
     private Long quai;
     
-    private Statut statut;
+    private StatutNavette statut;
     
     private int nbPlaces;
     
@@ -46,19 +43,18 @@ public class Navette implements Serializable {
     protected Navette() {
     }
     
-    public Navette(Long quai, int nbPlaces) {
-        this.quai = quai;
+    public Navette(int nbPlaces) {
         this.nbPlaces = nbPlaces;
-        this.statut = Statut.Disponible;
+        this.statut = StatutNavette.Disponible;
         this.historique = new ArrayList();
         this.historiqueRev = new ArrayList();
     }
 
-    public Statut getStatut() {
+    public StatutNavette getStatut() {
         return statut;
     }
 
-    public void setStatut(Statut statut) {
+    public void setStatut(StatutNavette statut) {
         this.statut = statut;
     }
     

@@ -14,8 +14,8 @@ import javax.ejb.Local;
 @Local
 public interface GestionVoyageLocal {
     
-    void authentifier(String login, String pass);
-    void inscrire(String nom, String prenom);
+    boolean authentifier(String login, String pass);
+    void inscrire(String nom, String prenom, String pass);
     void initierVoyage(Long idUsager, int nbPass, String nameSt);
     void finaliserVoyage(Long idUsager);
     
