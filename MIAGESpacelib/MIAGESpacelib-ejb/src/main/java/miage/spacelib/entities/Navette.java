@@ -22,6 +22,10 @@ import javax.persistence.OneToOne;
 @Entity
 public class Navette implements Serializable {
 
+    private enum Statut {
+    Disponible, Voyage, BesoinRevision, EnRevision
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,10 +34,14 @@ public class Navette implements Serializable {
     @OneToOne
     private Long quai;
     
+    private Statut statut;
+    
     private int nbPlaces;
     
     @OneToMany
-    private List<Operation> historique;
+    private List<OperationNavette> historique;
+    @OneToMany
+    private List<OperationRevisionNavette> historiqueRev;
 
     protected Navette() {
     }
@@ -41,7 +49,17 @@ public class Navette implements Serializable {
     public Navette(Long quai, int nbPlaces) {
         this.quai = quai;
         this.nbPlaces = nbPlaces;
+        this.statut = Statut.Disponible;
         this.historique = new ArrayList();
+        this.historiqueRev = new ArrayList();
+    }
+
+    public Statut getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Statut statut) {
+        this.statut = statut;
     }
     
     public Long getQuai() {
@@ -56,11 +74,11 @@ public class Navette implements Serializable {
         return nbPlaces;
     }
 
-    public List<Operation> getHistorique() {
+    public List<OperationNavette> getHistorique() {
         return historique;
     }
 
-    public void setHistorique(List<Operation> historique) {
+    public void setHistorique(List<OperationNavette> historique) {
         this.historique = historique;
     }
     

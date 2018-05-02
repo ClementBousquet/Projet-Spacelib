@@ -12,13 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Quentin
  */
 @Entity
-public class Reservation implements Serializable {
+public class OperationNavette implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -26,73 +27,58 @@ public class Reservation implements Serializable {
     private Long id;
 
     @ManyToOne
+    private Long idNavette;
     private Long idUsager;
     
-    private String intitule;
-    
-    private Long idVoyage;
-    private int placeReserve;   
+    private Quai quaiDep;
+    private Quai quaiArr;
     private Date dateDep;
     private Date dateArr;
+    private int nbPassager;
+    private String intitule;
+    private Date dateOperation;
     
-    protected Reservation() {
+    protected OperationNavette() {
     }
     
-    public Reservation(Long idV, Long idU, String intit, int nbPlaces, Date dateDep, Date dateArr) {
-        this.idUsager = idU;
-        this.idVoyage = idV;
-        this.intitule = intit;
-        this.placeReserve = nbPlaces;
-        this.dateDep = dateDep;
-        this.dateArr = dateArr;
-    }
-
-    public Long getIdUsager() {
-        return idUsager;
-    }
-
-    public void setIdUsager(Long idUsager) {
+    public OperationNavette(Long idNavette, Long idUsager, Quai quaidep, Quai quaiarr,String intit, Date datedep, Date datearr, int nb, Date dateope) {
+        this.idNavette = idNavette;
         this.idUsager = idUsager;
+        this.quaiDep = quaidep;
+        this.quaiArr = quaiarr;
+        this.dateDep = datedep;
+        this.dateArr = datearr;
+        this.nbPassager = nb;
+        this.intitule = intit;
+        this.dateOperation = dateope;
     }
 
-    public String getIntitule() {
-        return intitule;
+    public Long getIdNavette() {
+        return idNavette;
     }
 
-    public void setIntitule(String intitule) {
-        this.intitule = intitule;
+    public Quai getQuaiDep() {
+        return quaiDep;
     }
 
-    public Long getIdVoyage() {
-        return idVoyage;
-    }
-
-    public void setIdVoyage(Long idVoyage) {
-        this.idVoyage = idVoyage;
-    }
-
-    public int getPlaceReserve() {
-        return placeReserve;
-    }
-
-    public void setPlaceReserve(int placeReserve) {
-        this.placeReserve = placeReserve;
+    public Quai getQuaiArr() {
+        return quaiArr;
     }
 
     public Date getDateDep() {
         return dateDep;
     }
 
-    public void setDateDep(Date dateDep) {
-        this.dateDep = dateDep;
-    }
-
     public Date getDateArr() {
         return dateArr;
     }
 
-    public void setDateArr(Date dateArr) {
-        this.dateArr = dateArr;
+    public int getNbPassager() {
+        return nbPassager;
+    }
+
+    public Date getDateOperation() {
+        return dateOperation;
     }
     
     
@@ -115,10 +101,10 @@ public class Reservation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Reservation)) {
+        if (!(object instanceof OperationNavette)) {
             return false;
         }
-        Reservation other = (Reservation) object;
+        OperationNavette other = (OperationNavette) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -127,7 +113,7 @@ public class Reservation implements Serializable {
 
     @Override
     public String toString() {
-        return "miage.spacelib.entities.Reservation[ id=" + id + " ]";
+        return "miage.spacelib.entities.HistoNavette[ id=" + id + " ]";
     }
     
 }

@@ -11,7 +11,7 @@ import miage.spacelib.entities.Voyage;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Local
 public interface VoyageFacadeLocal {

@@ -17,42 +17,33 @@ import javax.persistence.Id;
  * @author Quentin
  */
 @Entity
-public class Voyage implements Serializable {
+public class OperationRevisionNavette implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long idTrajet;
     private Long idNavette;
-    private Long idUsager;
-    private Date dateDepart;
-    private int nbPassager;
-    private Date dateCreation;
+    private Long idStation;
+    private Long idQuai;
+    private Long idMecanicien;
+    
     private String intitule;
-    
-    protected Voyage() {
+    private Date dateCreation;
+
+    protected OperationRevisionNavette() {
     }
     
-    public Voyage(Long idT, Long idN, Long idU, Date date, int nbPass, Date datecrea, String intit) {
-        this.idTrajet = idT;
+    public OperationRevisionNavette (Long idN, Long idS, Long idQ, Long idM, String intit, Date date) {
         this.idNavette = idN;
-        this.idUsager = idU;
-        this.dateDepart = date;
-        this.nbPassager = nbPass;
-        this.dateCreation = datecrea;
+        this.idStation = idS;
+        this.idQuai = idQ;
+        this.idMecanicien = idM;
         this.intitule = intit;
+        this.dateCreation = date;
     }
-
-    public Long getIdTrajet() {
-        return idTrajet;
-    }
-
-    public void setIdTrajet(Long idTrajet) {
-        this.idTrajet = idTrajet;
-    }
-
+    
     public Long getIdNavette() {
         return idNavette;
     }
@@ -61,36 +52,28 @@ public class Voyage implements Serializable {
         this.idNavette = idNavette;
     }
 
-    public Long getIdUsager() {
-        return idUsager;
+    public Long getIdStation() {
+        return idStation;
     }
 
-    public void setIdUsager(Long idUsager) {
-        this.idUsager = idUsager;
+    public void setIdStation(Long idStation) {
+        this.idStation = idStation;
     }
 
-    public Date getDateDepart() {
-        return dateDepart;
+    public Long getIdQuai() {
+        return idQuai;
     }
 
-    public void setDateDepart(Date dateDepart) {
-        this.dateDepart = dateDepart;
+    public void setIdQuai(Long idQuai) {
+        this.idQuai = idQuai;
     }
 
-    public int getNbPassager() {
-        return nbPassager;
+    public Long getIdMecanicien() {
+        return idMecanicien;
     }
 
-    public void setNbPassager(int nbPassager) {
-        this.nbPassager = nbPassager;
-    }
-
-    public Date getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
+    public void setIdMecanicien(Long idMecanicien) {
+        this.idMecanicien = idMecanicien;
     }
 
     public String getIntitule() {
@@ -99,6 +82,14 @@ public class Voyage implements Serializable {
 
     public void setIntitule(String intitule) {
         this.intitule = intitule;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
     }
     
     public Long getId() {
@@ -119,10 +110,10 @@ public class Voyage implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Voyage)) {
+        if (!(object instanceof OperationRevisionNavette)) {
             return false;
         }
-        Voyage other = (Voyage) object;
+        OperationRevisionNavette other = (OperationRevisionNavette) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -131,7 +122,7 @@ public class Voyage implements Serializable {
 
     @Override
     public String toString() {
-        return "miage.spacelib.entities.Voyage[ id=" + id + " ]";
+        return "miage.spacelib.entities.OperationRevisionNavette[ id=" + id + " ]";
     }
     
 }

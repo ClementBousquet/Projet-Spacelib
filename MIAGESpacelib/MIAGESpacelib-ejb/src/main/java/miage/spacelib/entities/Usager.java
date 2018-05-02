@@ -21,6 +21,10 @@ import javax.persistence.OneToMany;
 @Entity
 public class Usager implements Serializable {
 
+    private enum Statut {
+        Mecanicien, Admin
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,16 +33,45 @@ public class Usager implements Serializable {
     private String nom;
     private String prenom;
     
+    private String mdp;
+    
+    private Statut st;
+    
     @OneToMany
-    private List<Reservation> resa;
+    private List<Voyage> resa;
     
     protected Usager() {       
     }
     
-    public Usager(String nom, String prenom) {
+    public Usager(String nom, String prenom, String motpass) {
         this.nom = nom;
         this.prenom = prenom;
+        this.mdp = motpass;
         this.resa = new ArrayList();
+    }
+    
+    public Usager(String nom, String prenom, String motpass, Statut st) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mdp = motpass;
+        this.st = st;
+        this.resa = new ArrayList();
+    }
+
+    public String getMdp() {
+        return mdp;
+    }
+
+    public void setMdp(String mdp) {
+        this.mdp = mdp;
+    }
+
+    public Statut getSt() {
+        return st;
+    }
+
+    public void setSt(Statut st) {
+        this.st = st;
     }
 
     public String getNom() {
@@ -57,11 +90,11 @@ public class Usager implements Serializable {
         this.prenom = prenom;
     }
 
-    public List<Reservation> getResa() {
+    public List<Voyage> getResa() {
         return resa;
     }
 
-    public void setResa(List<Reservation> resa) {
+    public void setResa(List<Voyage> resa) {
         this.resa = resa;
     }
     

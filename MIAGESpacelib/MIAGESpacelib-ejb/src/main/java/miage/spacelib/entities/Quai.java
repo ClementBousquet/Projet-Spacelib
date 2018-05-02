@@ -20,6 +20,10 @@ import javax.persistence.OneToOne;
 @Entity
 public class Quai implements Serializable {
 
+    private enum Statut {
+        Dispo, NonDispo
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,11 +35,22 @@ public class Quai implements Serializable {
     @OneToOne
     private Long idNavette;
     
+    private Statut statut;
+    
     protected Quai() {       
     };
     
     public Quai(Long station) {
         this.idStation = station;
+        this.statut = Statut.Dispo;
+    }
+
+    public Statut getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Statut statut) {
+        this.statut = statut;
     }
     
     public Long getId() {

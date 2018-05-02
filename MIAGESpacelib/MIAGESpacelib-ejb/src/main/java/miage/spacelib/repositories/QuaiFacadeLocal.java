@@ -11,7 +11,7 @@ import miage.spacelib.entities.Quai;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Local
 public interface QuaiFacadeLocal {
@@ -24,6 +24,8 @@ public interface QuaiFacadeLocal {
 
     Quai find(Object id);
 
+    Quai findDispoByStation(Long idStation);
+    
     List<Quai> findAll();
 
     List<Quai> findRange(int[] range);

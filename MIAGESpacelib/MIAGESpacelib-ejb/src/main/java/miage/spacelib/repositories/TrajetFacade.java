@@ -12,7 +12,7 @@ import miage.spacelib.entities.Trajet;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Stateless
 public class TrajetFacade extends AbstractFacade<Trajet> implements TrajetFacadeLocal {

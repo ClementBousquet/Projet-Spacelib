@@ -8,11 +8,16 @@ package miage.spacelib.repositories;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Station;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Stateless
 public class QuaiFacade extends AbstractFacade<Quai> implements QuaiFacadeLocal {
@@ -28,5 +33,13 @@ public class QuaiFacade extends AbstractFacade<Quai> implements QuaiFacadeLocal 
     public QuaiFacade() {
         super(Quai.class);
     }
+
+    @Override
+    public Quai findDispoByStation(Long idStation) {
+       Query qu = em.createQuery("SELECT TOP q FROM QUAI WHERE idStation =:idS AND statut = 'Dispo'");
+       qu.setParameter("idS", idStation);
+       Quai q = (Quai) qu.getSingleResult();
+       return q;
+       }
     
 }

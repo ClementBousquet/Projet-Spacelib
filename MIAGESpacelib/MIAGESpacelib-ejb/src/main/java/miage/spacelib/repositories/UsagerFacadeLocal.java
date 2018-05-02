@@ -11,7 +11,7 @@ import miage.spacelib.entities.Usager;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Local
 public interface UsagerFacadeLocal {
@@ -24,6 +24,8 @@ public interface UsagerFacadeLocal {
 
     Usager find(Object id);
 
+    Usager findByNameAndFirstname(String name, String firstName);
+    
     List<Usager> findAll();
 
     List<Usager> findRange(int[] range);

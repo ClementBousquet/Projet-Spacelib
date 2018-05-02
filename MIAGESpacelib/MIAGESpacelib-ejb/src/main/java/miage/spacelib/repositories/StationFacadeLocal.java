@@ -7,11 +7,12 @@ package miage.spacelib.repositories;
 
 import java.util.List;
 import javax.ejb.Local;
+import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Station;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Local
 public interface StationFacadeLocal {
@@ -23,7 +24,11 @@ public interface StationFacadeLocal {
     void remove(Station station);
 
     Station find(Object id);
-
+    
+    Station findByName(String nom);
+    
+    List<Navette> findNavetteRevision(Object id);
+    
     List<Station> findAll();
 
     List<Station> findRange(int[] range);

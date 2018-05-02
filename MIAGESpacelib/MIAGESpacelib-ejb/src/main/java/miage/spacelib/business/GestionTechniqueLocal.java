@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miage.spacelib.repositories;
+package miage.spacelib.business;
 
 import java.util.List;
 import javax.ejb.Local;
@@ -14,20 +14,10 @@ import miage.spacelib.entities.Navette;
  * @author Quentin
  */
 @Local
-public interface NavetteFacadeLocal {
-
-    void create(Navette navette);
-
-    void edit(Navette navette);
-
-    void remove(Navette navette);
-
-    Navette find(Object id);
+public interface GestionTechniqueLocal {
     
-    List<Navette> findAll();
-
-    List<Navette> findRange(int[] range);
-
-    int count();
+    List<Navette> afficherRevision(String station);
+    void initierRevision(Long idUsager, Long idNavette);
+    void finaliserRevision(Long idUsager);
     
 }

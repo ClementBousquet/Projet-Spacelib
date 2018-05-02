@@ -11,7 +11,7 @@ import miage.spacelib.entities.Trajet;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Local
 public interface TrajetFacadeLocal {

@@ -8,14 +8,14 @@ package miage.spacelib.repositories;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import miage.spacelib.entities.Navette;
+import miage.spacelib.entities.OperationRevisionNavette;
 
 /**
  *
  * @author Quentin
  */
 @Stateless
-public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFacadeLocal {
+public class OperationRevisionNavetteFacade extends AbstractFacade<OperationRevisionNavette> implements OperationRevisionNavetteFacadeLocal {
 
     @PersistenceContext(unitName = "miage.spacelib_MIAGESpacelib-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
         return em;
     }
 
-    public NavetteFacade() {
-        super(Navette.class);
+    public OperationRevisionNavetteFacade() {
+        super(OperationRevisionNavette.class);
     }
     
 }

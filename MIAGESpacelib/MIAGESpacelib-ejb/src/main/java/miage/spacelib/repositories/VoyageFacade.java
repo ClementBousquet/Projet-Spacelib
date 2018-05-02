@@ -12,7 +12,7 @@ import miage.spacelib.entities.Voyage;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Stateless
 public class VoyageFacade extends AbstractFacade<Voyage> implements VoyageFacadeLocal {

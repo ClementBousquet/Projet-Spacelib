@@ -8,11 +8,14 @@ package miage.spacelib.repositories;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import miage.spacelib.entities.Usager;
 
 /**
  *
- * @author Clem
+ * @author Quentin
  */
 @Stateless
 public class UsagerFacade extends AbstractFacade<Usager> implements UsagerFacadeLocal {
@@ -27,6 +30,20 @@ public class UsagerFacade extends AbstractFacade<Usager> implements UsagerFacade
 
     public UsagerFacade() {
         super(Usager.class);
+    }
+
+    @Override
+    public Usager findByNameAndFirstname(String name, String firstName) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Usager> cq = cb.createQuery(Usager.class);
+        Root<Usager> root = cq.from(Usager.class);
+        cq.where(
+                cb.and(
+                        cb.equal(cb.upper(root.get("prenom").as(String.class)), firstName.toUpperCase()),
+                        cb.equal(cb.upper(root.get("nom").as(String.class)), name.toUpperCase())
+                )
+        );
+        return getEntityManager().createQuery(cq).getSingleResult();
     }
     
 }
