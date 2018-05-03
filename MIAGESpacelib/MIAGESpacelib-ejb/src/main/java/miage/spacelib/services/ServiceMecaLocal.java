@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miage.spacelib.business;
+package miage.spacelib.services;
 
 import java.util.List;
 import javax.ejb.Local;
@@ -15,11 +15,11 @@ import miage.spacelib.entities.Quai;
  * @author Quentin
  */
 @Local
-public interface GestionTechniqueLocal {
+public interface ServiceMecaLocal {
     
-    List<Navette> afficherRevision(String station, Long idUsager);
+    void authentifier(String login, String pass);
     Quai initierRevision(Long idUsager, Long idNavette, String station);
     void finaliserRevision(Long idUsager, Long idNavette, String station);
-    Long authentifier(String login, String pass);
+    List<Navette> afficherRevision(String station, Long idUsager);
     
 }

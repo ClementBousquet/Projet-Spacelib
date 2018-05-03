@@ -47,8 +47,8 @@ public class GestionSpacelib implements GestionSpacelibLocal {
         for(int i = 0; i < nbPassagers.size(); i++) {
             nav = new Navette(nbPassagers.get(i));
             navetteFacade.create(nav);
-            quaiFacade.create(new Quai(st.getId(), nav.getId()));
-            quaiFacade.create(new Quai(st.getId()));
+            quaiFacade.create(new Quai(st, nav));
+            quaiFacade.create(new Quai(st));
         }
             
     }

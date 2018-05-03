@@ -16,6 +16,7 @@ import miage.spacelib.entities.Quai;
 import miage.spacelib.entities.Usager;
 import miage.spacelib.miagespacelibshared.StatutMeca;
 import miage.spacelib.miagespacelibshared.StatutNavette;
+import miage.spacelib.miagespacelibshared.StatutUsager;
 import miage.spacelib.repositories.NavetteFacade;
 import miage.spacelib.repositories.OperationRevisionNavetteFacade;
 import miage.spacelib.repositories.QuaiFacade;
@@ -70,10 +71,11 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Quai initierRevision(Long idUsager, Long idNavette, String station) {
-        this.ornFacade.create(new OperationRevisionNavette(idNavette,
-                stationFacade.findByName(station).getId(),
+        this.ornFacade.create(new OperationRevisionNavette(
+                navetteFacade.find(idNavette),
+                stationFacade.findByName(station),
                 navetteFacade.find(idNavette).getQuai(),
-                idUsager,
+                usagerFacade.find(idUsager),
                 "Debut de revision",
                 new Date()));
 
@@ -90,10 +92,11 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public void finaliserRevision(Long idUsager, Long idNavette, String station) {
-        this.ornFacade.create(new OperationRevisionNavette(idNavette,
-                stationFacade.findByName(station).getId(),
+        this.ornFacade.create(new OperationRevisionNavette(
+                navetteFacade.find(idNavette),
+                stationFacade.findByName(station),
                 navetteFacade.find(idNavette).getQuai(),
-                idUsager,
+                usagerFacade.find(idUsager),
                 "Fin de revision",
                 new Date()));
 
@@ -109,4 +112,15 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public Long authentifier(String login, String pass) {
+        String[] tab = login.split(".");
+        Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
+        if(us.getMdp().equals(pass) && us.getSt().equals(StatutUsager.Mecanicien)) {
+            return us.getId();
+        } else {
+            return null;
+        }
+    }
 }

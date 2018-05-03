@@ -24,10 +24,10 @@ public class OperationRevisionNavette implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long idNavette;
-    private Long idStation;
-    private Long idQuai;
-    private Long idMecanicien;
+    private Navette idNavette;
+    private Station idStation;
+    private Quai idQuai;
+    private Usager idMecanicien;
     
     private String intitule;
     private Date dateCreation;
@@ -35,7 +35,7 @@ public class OperationRevisionNavette implements Serializable {
     protected OperationRevisionNavette() {
     }
     
-    public OperationRevisionNavette (Long idN, Long idS, Long idQ, Long idM, String intit, Date date) {
+    public OperationRevisionNavette (Navette idN, Station idS, Quai idQ, Usager idM, String intit, Date date) {
         this.idNavette = idN;
         this.idStation = idS;
         this.idQuai = idQ;
@@ -43,36 +43,44 @@ public class OperationRevisionNavette implements Serializable {
         this.intitule = intit;
         this.dateCreation = date;
     }
-    
-    public Long getIdNavette() {
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Navette getIdNavette() {
         return idNavette;
     }
 
-    public void setIdNavette(Long idNavette) {
+    public void setIdNavette(Navette idNavette) {
         this.idNavette = idNavette;
     }
 
-    public Long getIdStation() {
+    public Station getIdStation() {
         return idStation;
     }
 
-    public void setIdStation(Long idStation) {
+    public void setIdStation(Station idStation) {
         this.idStation = idStation;
     }
 
-    public Long getIdQuai() {
+    public Quai getIdQuai() {
         return idQuai;
     }
 
-    public void setIdQuai(Long idQuai) {
+    public void setIdQuai(Quai idQuai) {
         this.idQuai = idQuai;
     }
 
-    public Long getIdMecanicien() {
+    public Usager getIdMecanicien() {
         return idMecanicien;
     }
 
-    public void setIdMecanicien(Long idMecanicien) {
+    public void setIdMecanicien(Usager idMecanicien) {
         this.idMecanicien = idMecanicien;
     }
 
@@ -92,13 +100,7 @@ public class OperationRevisionNavette implements Serializable {
         this.dateCreation = dateCreation;
     }
     
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     @Override
     public int hashCode() {

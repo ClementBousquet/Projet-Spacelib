@@ -27,22 +27,22 @@ public class Quai implements Serializable {
     private Long id;
     
     @ManyToOne
-    private Long idStation;
+    private Station idStation;
 
     @OneToOne
-    private Long idNavette;
+    private Navette idNavette;
     
     private StatutQuai statut;
     
     protected Quai() {       
     };
     
-    public Quai(Long station) {
+    public Quai(Station station) {
         this.idStation = station;
         this.statut = StatutQuai.Dispo;
     }
     
-    public Quai(Long station, Long navette) {
+    public Quai(Station station, Navette navette) {
         this.idStation = station;
         this.idNavette = navette;
         this.statut = StatutQuai.NonDispo;
@@ -65,21 +65,23 @@ public class Quai implements Serializable {
         this.id = id;
     }
 
-    public Long getIdStation() {
+    public Station getIdStation() {
         return idStation;
     }
 
-    public void setIdStation(Long idStation) {
+    public void setIdStation(Station idStation) {
         this.idStation = idStation;
     }
 
-    public Long getIdNavette() {
+    public Navette getIdNavette() {
         return idNavette;
     }
 
-    public void setIdNavette(Long idNavette) {
+    public void setIdNavette(Navette idNavette) {
         this.idNavette = idNavette;
     }
+
+    
     
     @Override
     public int hashCode() {

@@ -31,7 +31,7 @@ public class Navette implements Serializable {
     private Long id;
 
     @OneToOne
-    private Long quai;
+    private Quai quai;
     
     private StatutNavette statut;
     
@@ -52,6 +52,38 @@ public class Navette implements Serializable {
         this.historiqueRev = new ArrayList();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Quai getQuai() {
+        return quai;
+    }
+
+    public void setQuai(Quai quai) {
+        this.quai = quai;
+    }
+
+    public StatutNavette getStatut() {
+        return statut;
+    }
+
+    public void setStatut(StatutNavette statut) {
+        this.statut = statut;
+    }
+
+    public int getNbPlaces() {
+        return nbPlaces;
+    }
+
+    public void setNbPlaces(int nbPlaces) {
+        this.nbPlaces = nbPlaces;
+    }
+
     public Map<Voyage, OperationNavette> getHistorique() {
         return historique;
     }
@@ -68,34 +100,8 @@ public class Navette implements Serializable {
         this.historiqueRev = historiqueRev;
     }
 
-    public StatutNavette getStatut() {
-        return statut;
-    }
-
-    public void setStatut(StatutNavette statut) {
-        this.statut = statut;
-    }
     
-    public Long getQuai() {
-        return quai;
-    }
-
-    public void setQuai(Long quai) {
-        this.quai = quai;
-    }
-
-    public int getNbPlaces() {
-        return nbPlaces;
-    }
     
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;

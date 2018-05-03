@@ -92,7 +92,13 @@ public class GestionVoyage implements GestionVoyageLocal {
                 q.setStatut(StatutQuai.NonDispo);
                 ln.get(0).setStatut(StatutNavette.Voyage);
                 
-                Voyage v = new Voyage(t.getId() ,ln.get(0).getId(), idUsager, new Date(), nbPass, new Date(), "Voyage Initie");
+                Voyage v = new Voyage(t,
+                        ln.get(0),
+                        usagerFacade.find(idUsager), 
+                        new Date(), 
+                        nbPass, 
+                        new Date(), 
+                        "Voyage Initie");
                 
                 c.setTime(v.getDateDepart());
                 c.add(Calendar.DATE, t.getDureeVoyage());
@@ -101,8 +107,8 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 voyageFacade.create(v);
                 
-                OperationNavette on = new OperationNavette(ln.get(0).getId(), 
-                        idUsager, 
+                OperationNavette on = new OperationNavette(ln.get(0), 
+                        usagerFacade.find(idUsager), 
                         quaiFacade.find(ln.get(0).getQuai()), 
                         q, 
                         "Voyage Initie", 
@@ -117,7 +123,7 @@ public class GestionVoyage implements GestionVoyageLocal {
                 q2.setStatut(StatutQuai.Dispo);
                 
                 Navette n = navetteFacade.find(ln.get(0));
-                n.setQuai(q.getId());
+                n.setQuai(q);
                 
                 Map<Voyage, OperationNavette> lon = n.getHistorique();
                 lon.put(v, on);
@@ -146,7 +152,9 @@ public class GestionVoyage implements GestionVoyageLocal {
     }
 
     @Override
-    public void finaliserVoyage(Long idUsager, Voyage v) {
+    public void finaliserVoyage(Long idUsager, Long idVoyage) {
+        
+        Voyage v = voyageFacade.find(idVoyage);
         
         Navette n = navetteFacade.find(v.getIdNavette());
         
@@ -177,7 +185,7 @@ public class GestionVoyage implements GestionVoyageLocal {
             OperationRevisionNavette orn = new OperationRevisionNavette(
             on.getIdNavette(),
             quaiFacade.find(on.getQuaiArr()).getIdStation(),
-            on.getQuaiArr().getId(),
+            on.getQuaiArr(),
             null,
             "Revision nécessaire",
             on.getDateArr());

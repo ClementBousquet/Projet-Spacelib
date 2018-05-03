@@ -24,9 +24,9 @@ public class Voyage implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long idTrajet;
-    private Long idNavette;
-    private Long idUsager;
+    private Trajet idTrajet;
+    private Navette idNavette;
+    private Usager idUsager;
     private Date dateDepart;
     private Date dateArrive;
     private int nbPassager;
@@ -36,7 +36,7 @@ public class Voyage implements Serializable {
     protected Voyage() {
     }
     
-    public Voyage(Long idT, Long idN, Long idU, Date date, int nbPass, Date datecrea, String intit) {
+    public Voyage(Trajet idT, Navette idN, Usager idU, Date date, int nbPass, Date datecrea, String intit) {
         this.idTrajet = idT;
         this.idNavette = idN;
         this.idUsager = idU;
@@ -53,30 +53,32 @@ public class Voyage implements Serializable {
     public void setDateArrive(Date dateArrive) {
         this.dateArrive = dateArrive;
     }
-    
-    public Long getIdTrajet() {
+
+    public Trajet getIdTrajet() {
         return idTrajet;
     }
 
-    public void setIdTrajet(Long idTrajet) {
+    public void setIdTrajet(Trajet idTrajet) {
         this.idTrajet = idTrajet;
     }
 
-    public Long getIdNavette() {
+    public Navette getIdNavette() {
         return idNavette;
     }
 
-    public void setIdNavette(Long idNavette) {
+    public void setIdNavette(Navette idNavette) {
         this.idNavette = idNavette;
     }
 
-    public Long getIdUsager() {
+    public Usager getIdUsager() {
         return idUsager;
     }
 
-    public void setIdUsager(Long idUsager) {
+    public void setIdUsager(Usager idUsager) {
         this.idUsager = idUsager;
     }
+    
+    
 
     public Date getDateDepart() {
         return dateDepart;

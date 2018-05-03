@@ -27,8 +27,9 @@ public class OperationNavette implements Serializable {
     private Long id;
 
     @ManyToOne
-    private Long idNavette;
-    private Long idUsager;
+    private Navette idNavette;
+    
+    private Usager idUsager;
     private Quai quaiDep;
     private Quai quaiArr;
     private Date dateDep;
@@ -40,7 +41,7 @@ public class OperationNavette implements Serializable {
     protected OperationNavette() {
     }
     
-    public OperationNavette(Long idNavette, Long idUsager, Quai quaidep, Quai quaiarr, String intit, Date datedep, Date datearr, int nb, Date dateope) {
+    public OperationNavette(Navette idNavette, Usager idUsager, Quai quaidep, Quai quaiarr, String intit, Date datedep, Date datearr, int nb, Date dateope) {
         this.idNavette = idNavette;
         this.idUsager = idUsager;
         this.quaiDep = quaidep;
@@ -52,36 +53,6 @@ public class OperationNavette implements Serializable {
         this.dateOperation = dateope;
     }
 
-    public Long getIdNavette() {
-        return idNavette;
-    }
-
-    public Quai getQuaiDep() {
-        return quaiDep;
-    }
-
-    public Quai getQuaiArr() {
-        return quaiArr;
-    }
-
-    public Date getDateDep() {
-        return dateDep;
-    }
-
-    public Date getDateArr() {
-        return dateArr;
-    }
-
-    public int getNbPassager() {
-        return nbPassager;
-    }
-
-    public Date getDateOperation() {
-        return dateOperation;
-    }
-    
-    
-    
     public Long getId() {
         return id;
     }
@@ -89,6 +60,80 @@ public class OperationNavette implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Navette getIdNavette() {
+        return idNavette;
+    }
+
+    public void setIdNavette(Navette idNavette) {
+        this.idNavette = idNavette;
+    }
+
+    public Usager getIdUsager() {
+        return idUsager;
+    }
+
+    public void setIdUsager(Usager idUsager) {
+        this.idUsager = idUsager;
+    }
+
+    public Quai getQuaiDep() {
+        return quaiDep;
+    }
+
+    public void setQuaiDep(Quai quaiDep) {
+        this.quaiDep = quaiDep;
+    }
+
+    public Quai getQuaiArr() {
+        return quaiArr;
+    }
+
+    public void setQuaiArr(Quai quaiArr) {
+        this.quaiArr = quaiArr;
+    }
+
+    public Date getDateDep() {
+        return dateDep;
+    }
+
+    public void setDateDep(Date dateDep) {
+        this.dateDep = dateDep;
+    }
+
+    public Date getDateArr() {
+        return dateArr;
+    }
+
+    public void setDateArr(Date dateArr) {
+        this.dateArr = dateArr;
+    }
+
+    public int getNbPassager() {
+        return nbPassager;
+    }
+
+    public void setNbPassager(int nbPassager) {
+        this.nbPassager = nbPassager;
+    }
+
+    public String getIntitule() {
+        return intitule;
+    }
+
+    public void setIntitule(String intitule) {
+        this.intitule = intitule;
+    }
+
+    public Date getDateOperation() {
+        return dateOperation;
+    }
+
+    public void setDateOperation(Date dateOperation) {
+        this.dateOperation = dateOperation;
+    }
+
+   
 
     @Override
     public int hashCode() {
