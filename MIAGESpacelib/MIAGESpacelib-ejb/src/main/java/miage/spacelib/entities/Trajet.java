@@ -6,10 +6,12 @@
 package miage.spacelib.entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 /**
  *
@@ -23,11 +25,14 @@ public class Trajet implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JoinColumn
     private Station stationDep;
     
+    @JoinColumn
     private Station stationArr;
     
     //En nombres de jours
+    @Column(nullable = false)
     private int dureeVoyage;
     
     protected Trajet() {

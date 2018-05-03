@@ -7,10 +7,13 @@ package miage.spacelib.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -24,12 +27,23 @@ public class OperationRevisionNavette implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn
     private Navette idNavette;
+    
+    @JoinColumn
     private Station idStation;
+    
+    @JoinColumn
     private Quai idQuai;
+    
+    @JoinColumn
     private Usager idMecanicien;
     
+    @Column(nullable = false)
     private String intitule;
+    
+    @Column(nullable = false)
     private Date dateCreation;
 
     protected OperationRevisionNavette() {

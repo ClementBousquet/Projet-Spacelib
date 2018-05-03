@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -27,11 +28,18 @@ public class OperationNavette implements Serializable {
     private Long id;
 
     @ManyToOne
+    @JoinColumn
     private Navette idNavette;
     
+    @JoinColumn
     private Usager idUsager;
+    
+    @JoinColumn
     private Quai quaiDep;
+    
+    @JoinColumn
     private Quai quaiArr;
+    
     private Date dateDep;
     private Date dateArr;
     private int nbPassager;

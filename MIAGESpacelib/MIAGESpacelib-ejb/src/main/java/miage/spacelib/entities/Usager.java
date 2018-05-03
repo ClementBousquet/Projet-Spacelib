@@ -8,10 +8,12 @@ package miage.spacelib.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import miage.spacelib.miagespacelibshared.StatutMeca;
 import miage.spacelib.miagespacelibshared.StatutUsager;
@@ -28,16 +30,20 @@ public class Usager implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String nom;
+    
+    @Column(nullable = false)
     private String prenom;
     
+    @Column(nullable = false)
     private String mdp;
     
     private StatutUsager st;
     
     private StatutMeca statutMeca;
     
-    @OneToMany
+    @JoinColumn
     private List<Voyage> resa;
     
     protected Usager() {       

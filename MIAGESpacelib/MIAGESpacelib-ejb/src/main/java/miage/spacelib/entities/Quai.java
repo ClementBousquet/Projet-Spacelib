@@ -6,10 +6,12 @@
 package miage.spacelib.entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import miage.spacelib.miagespacelibshared.StatutQuai;
@@ -27,11 +29,14 @@ public class Quai implements Serializable {
     private Long id;
     
     @ManyToOne
+    @JoinColumn
     private Station idStation;
 
     @OneToOne
+    @JoinColumn
     private Navette idNavette;
     
+    @Column(nullable = false)
     private StatutQuai statut;
     
     protected Quai() {       
