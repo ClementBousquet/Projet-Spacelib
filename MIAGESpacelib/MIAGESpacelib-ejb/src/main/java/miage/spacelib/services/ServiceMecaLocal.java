@@ -17,7 +17,7 @@ import miage.spacelib.entities.Quai;
 @Local
 public interface ServiceMecaLocal {
     
-    void authentifier(String login, String pass);
+    Long authentifier(String login, String pass);
     Quai initierRevision(Long idUsager, Long idNavette, String station);
     void finaliserRevision(Long idUsager, Long idNavette, String station);
     List<Navette> afficherRevision(String station, Long idUsager);

@@ -13,10 +13,10 @@ import miage.spacelib.entities.Quai;
 import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Usager;
 import miage.spacelib.miagespacelibshared.StatutUsager;
-import miage.spacelib.repositories.NavetteFacade;
-import miage.spacelib.repositories.QuaiFacade;
-import miage.spacelib.repositories.StationFacade;
-import miage.spacelib.repositories.UsagerFacade;
+import miage.spacelib.repositories.NavetteFacadeLocal;
+import miage.spacelib.repositories.QuaiFacadeLocal;
+import miage.spacelib.repositories.StationFacadeLocal;
+import miage.spacelib.repositories.UsagerFacadeLocal;
 
 /**
  *
@@ -25,17 +25,17 @@ import miage.spacelib.repositories.UsagerFacade;
 @Stateless
 public class GestionSpacelib implements GestionSpacelibLocal {
 
-     @EJB
-    private StationFacade stationFacade;
+    @EJB
+    private StationFacadeLocal stationFacade;
 
     @EJB
-    private NavetteFacade navetteFacade;
+    private NavetteFacadeLocal navetteFacade;
 
     @EJB
-    private QuaiFacade quaiFacade;
+    private QuaiFacadeLocal quaiFacade;
 
     @EJB
-    private UsagerFacade usagerFacade;
+    private UsagerFacadeLocal usagerFacade;
     
     @Override
     public void creerStation(String nom, float coordX, float coordY, List<Integer> nbPassagers) {

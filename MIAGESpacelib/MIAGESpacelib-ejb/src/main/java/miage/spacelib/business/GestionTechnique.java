@@ -17,11 +17,11 @@ import miage.spacelib.entities.Usager;
 import miage.spacelib.miagespacelibshared.StatutMeca;
 import miage.spacelib.miagespacelibshared.StatutNavette;
 import miage.spacelib.miagespacelibshared.StatutUsager;
-import miage.spacelib.repositories.NavetteFacade;
-import miage.spacelib.repositories.OperationRevisionNavetteFacade;
-import miage.spacelib.repositories.QuaiFacade;
-import miage.spacelib.repositories.StationFacade;
-import miage.spacelib.repositories.UsagerFacade;
+import miage.spacelib.repositories.NavetteFacadeLocal;
+import miage.spacelib.repositories.OperationRevisionNavetteFacadeLocal;
+import miage.spacelib.repositories.QuaiFacadeLocal;
+import miage.spacelib.repositories.StationFacadeLocal;
+import miage.spacelib.repositories.UsagerFacadeLocal;
 
 /**
  *
@@ -31,19 +31,19 @@ import miage.spacelib.repositories.UsagerFacade;
 public class GestionTechnique implements GestionTechniqueLocal {
 
     @EJB
-    private StationFacade stationFacade;
+    private StationFacadeLocal stationFacade;
 
     @EJB
-    private OperationRevisionNavetteFacade ornFacade;
+    private OperationRevisionNavetteFacadeLocal ornFacade;
 
     @EJB
-    private NavetteFacade navetteFacade;
+    private NavetteFacadeLocal navetteFacade;
 
     @EJB
-    private QuaiFacade quaiFacade;
+    private QuaiFacadeLocal quaiFacade;
 
     @EJB
-    private UsagerFacade usagerFacade;
+    private UsagerFacadeLocal usagerFacade;
 
     @Override
     public List<Navette> afficherRevision(String station, Long idUsager) {
@@ -116,11 +116,15 @@ public class GestionTechnique implements GestionTechniqueLocal {
     @Override
     public Long authentifier(String login, String pass) {
         String[] tab = login.split(".");
-        Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
-        if(us.getMdp().equals(pass) && us.getSt().equals(StatutUsager.Mecanicien)) {
-            return us.getId();
-        } else {
-            return null;
+        if(tab.length == 2) {
+             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
+            if(us.getMdp().equals(pass) && us.getSt().equals(StatutUsager.Mecanicien)) {
+                return us.getId();
+            } 
         }
+        
+        long l = 1;
+        
+        return l;
     }
 }

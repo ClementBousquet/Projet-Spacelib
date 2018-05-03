@@ -20,14 +20,14 @@ import miage.spacelib.entities.Usager;
 import miage.spacelib.entities.Voyage;
 import miage.spacelib.miagespacelibshared.StatutNavette;
 import miage.spacelib.miagespacelibshared.StatutQuai;
-import miage.spacelib.repositories.NavetteFacade;
-import miage.spacelib.repositories.OperationNavetteFacade;
-import miage.spacelib.repositories.OperationRevisionNavetteFacade;
-import miage.spacelib.repositories.QuaiFacade;
-import miage.spacelib.repositories.StationFacade;
-import miage.spacelib.repositories.TrajetFacade;
-import miage.spacelib.repositories.UsagerFacade;
-import miage.spacelib.repositories.VoyageFacade;
+import miage.spacelib.repositories.NavetteFacadeLocal;
+import miage.spacelib.repositories.OperationNavetteFacadeLocal;
+import miage.spacelib.repositories.OperationRevisionNavetteFacadeLocal;
+import miage.spacelib.repositories.QuaiFacadeLocal;
+import miage.spacelib.repositories.StationFacadeLocal;
+import miage.spacelib.repositories.TrajetFacadeLocal;
+import miage.spacelib.repositories.UsagerFacadeLocal;
+import miage.spacelib.repositories.VoyageFacadeLocal;
 
 /**
  *
@@ -37,28 +37,28 @@ import miage.spacelib.repositories.VoyageFacade;
 public class GestionVoyage implements GestionVoyageLocal {
 
     @EJB
-    UsagerFacade usagerFacade;
+    UsagerFacadeLocal usagerFacade;
     
     @EJB
-    QuaiFacade quaiFacade;
+    QuaiFacadeLocal quaiFacade;
     
     @EJB
-    StationFacade stationFacade;
+    StationFacadeLocal stationFacade;
     
     @EJB
-    NavetteFacade navetteFacade;
+    NavetteFacadeLocal navetteFacade;
     
     @EJB
-    VoyageFacade voyageFacade;
+    VoyageFacadeLocal voyageFacade;
     
     @EJB
-    TrajetFacade trajetFacade;
+    TrajetFacadeLocal trajetFacade;
     
     @EJB
-    OperationNavetteFacade operationNavetteFacade;
+    OperationNavetteFacadeLocal operationNavetteFacade;
     
     @EJB
-    OperationRevisionNavetteFacade operationRevNavetteFacade;
+    OperationRevisionNavetteFacadeLocal operationRevNavetteFacade;
     
     // LOGIN : NOM.PRENOM
     @Override

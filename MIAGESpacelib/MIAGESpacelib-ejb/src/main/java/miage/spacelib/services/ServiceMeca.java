@@ -23,8 +23,8 @@ public class ServiceMeca implements ServiceMecaLocal {
     private GestionTechniqueLocal gestionTech;
     
     @Override
-    public void authentifier(String login, String pass) {
-        gestionTech.authentifier(login, pass);
+    public Long authentifier(String login, String pass) {
+        return gestionTech.authentifier(login, pass);
     }
 
     @Override
