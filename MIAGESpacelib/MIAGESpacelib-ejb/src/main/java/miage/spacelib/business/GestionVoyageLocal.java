@@ -5,7 +5,10 @@
  */
 package miage.spacelib.business;
 
+import java.util.Date;
 import javax.ejb.Local;
+import miage.spacelib.entities.OperationNavette;
+import miage.spacelib.entities.Voyage;
 
 /**
  *
@@ -14,9 +17,9 @@ import javax.ejb.Local;
 @Local
 public interface GestionVoyageLocal {
     
-    boolean authentifier(String login, String pass);
+    Long authentifier(String login, String pass);
     void inscrire(String nom, String prenom, String pass);
-    void initierVoyage(Long idUsager, int nbPass, String nameSt);
-    void finaliserVoyage(Long idUsager);
-    
+    String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep);
+    void finaliserVoyage(Long idUsager, Voyage v);
+    Voyage afficherVoyage(Long idUsager);
 }

@@ -29,7 +29,6 @@ public class OperationNavette implements Serializable {
     @ManyToOne
     private Long idNavette;
     private Long idUsager;
-    
     private Quai quaiDep;
     private Quai quaiArr;
     private Date dateDep;
@@ -41,7 +40,7 @@ public class OperationNavette implements Serializable {
     protected OperationNavette() {
     }
     
-    public OperationNavette(Long idNavette, Long idUsager, Quai quaidep, Quai quaiarr,String intit, Date datedep, Date datearr, int nb, Date dateope) {
+    public OperationNavette(Long idNavette, Long idUsager, Quai quaidep, Quai quaiarr, String intit, Date datedep, Date datearr, int nb, Date dateope) {
         this.idNavette = idNavette;
         this.idUsager = idUsager;
         this.quaiDep = quaidep;

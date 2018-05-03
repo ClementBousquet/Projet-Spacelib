@@ -24,6 +24,8 @@ public interface NavetteFacadeLocal {
 
     Navette find(Object id);
     
+    List<Navette> findByStation(Long idStation, int nbPass);
+    
     List<Navette> findAll();
 
     List<Navette> findRange(int[] range);

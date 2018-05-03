@@ -5,9 +5,11 @@
  */
 package miage.spacelib.repositories;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import miage.spacelib.entities.Navette;
 
 /**
@@ -27,6 +29,13 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
 
     public NavetteFacade() {
         super(Navette.class);
+    }
+
+    @Override
+    public List<Navette> findByStation(Long idStation, int nbPass) {
+        Query qu = em.createQuery("SELECT n FROM QUAI, NAVETTE, STATION WHERE NAVETTE.id = QUAI.idNavette AND STATION.id = QUAI.idStation AND NAVETTE.Statut = 'Disponible' AND STATION.id =:idStation AND NAVETTE.nbPlaces >=:nbPass");
+       List<Navette> n = qu.getResultList();
+       return n;
     }
     
 }

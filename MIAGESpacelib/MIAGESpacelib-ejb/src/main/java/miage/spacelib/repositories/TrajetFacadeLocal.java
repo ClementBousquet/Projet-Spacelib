@@ -7,6 +7,7 @@ package miage.spacelib.repositories;
 
 import java.util.List;
 import javax.ejb.Local;
+import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 
 /**
@@ -24,6 +25,8 @@ public interface TrajetFacadeLocal {
 
     Trajet find(Object id);
 
+    Trajet findByStations(Station st1, Station st2);
+    
     List<Trajet> findAll();
 
     List<Trajet> findRange(int[] range);

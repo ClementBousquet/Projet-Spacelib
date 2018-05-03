@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationRevisionNavette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Usager;
 import miage.spacelib.miagespacelibshared.StatutMeca;
 import miage.spacelib.miagespacelibshared.StatutNavette;
 import miage.spacelib.repositories.NavetteFacade;
@@ -76,10 +77,14 @@ public class GestionTechnique implements GestionTechniqueLocal {
                 "Debut de revision",
                 new Date()));
 
-        this.usagerFacade.find(idUsager).setStatutMeca(StatutMeca.Occupe);
-
-        this.navetteFacade.find(idNavette).setStatut(StatutNavette.EnRevision);
-
+        Usager u = this.usagerFacade.find(idUsager);
+        u.setStatutMeca(StatutMeca.Occupe);
+        usagerFacade.edit(u);
+        
+        Navette n = this.navetteFacade.find(idNavette);
+        n.setStatut(StatutNavette.EnRevision);
+        navetteFacade.edit(n);
+        
         return quaiFacade.find(navetteFacade.find(idNavette).getQuai());
     }
 
@@ -92,9 +97,13 @@ public class GestionTechnique implements GestionTechniqueLocal {
                 "Fin de revision",
                 new Date()));
 
-        this.usagerFacade.find(idUsager).setStatutMeca(StatutMeca.Libre);
-
-        this.navetteFacade.find(idNavette).setStatut(StatutNavette.Disponible);
+        Usager u = this.usagerFacade.find(idUsager);
+        u.setStatutMeca(StatutMeca.Libre);
+        usagerFacade.edit(u);
+        
+        Navette n = this.navetteFacade.find(idNavette);
+        n.setStatut(StatutNavette.Disponible);
+        navetteFacade.edit(n);
         
     }
 

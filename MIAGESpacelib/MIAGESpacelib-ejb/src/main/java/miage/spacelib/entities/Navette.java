@@ -7,7 +7,9 @@ package miage.spacelib.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +38,7 @@ public class Navette implements Serializable {
     private int nbPlaces;
     
     @OneToMany
-    private List<OperationNavette> historique;
+    private Map<Voyage, OperationNavette> historique;
     @OneToMany
     private List<OperationRevisionNavette> historiqueRev;
 
@@ -46,8 +48,24 @@ public class Navette implements Serializable {
     public Navette(int nbPlaces) {
         this.nbPlaces = nbPlaces;
         this.statut = StatutNavette.Disponible;
-        this.historique = new ArrayList();
+        this.historique = new HashMap();
         this.historiqueRev = new ArrayList();
+    }
+
+    public Map<Voyage, OperationNavette> getHistorique() {
+        return historique;
+    }
+
+    public void setHistorique(Map<Voyage, OperationNavette> historique) {
+        this.historique = historique;
+    }
+
+    public List<OperationRevisionNavette> getHistoriqueRev() {
+        return historiqueRev;
+    }
+
+    public void setHistoriqueRev(List<OperationRevisionNavette> historiqueRev) {
+        this.historiqueRev = historiqueRev;
     }
 
     public StatutNavette getStatut() {
@@ -68,14 +86,6 @@ public class Navette implements Serializable {
 
     public int getNbPlaces() {
         return nbPlaces;
-    }
-
-    public List<OperationNavette> getHistorique() {
-        return historique;
-    }
-
-    public void setHistorique(List<OperationNavette> historique) {
-        this.historique = historique;
     }
     
     public Long getId() {

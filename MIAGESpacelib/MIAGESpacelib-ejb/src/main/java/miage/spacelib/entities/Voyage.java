@@ -28,6 +28,7 @@ public class Voyage implements Serializable {
     private Long idNavette;
     private Long idUsager;
     private Date dateDepart;
+    private Date dateArrive;
     private int nbPassager;
     private Date dateCreation;
     private String intitule;
@@ -45,6 +46,14 @@ public class Voyage implements Serializable {
         this.intitule = intit;
     }
 
+    public Date getDateArrive() {
+        return dateArrive;
+    }
+
+    public void setDateArrive(Date dateArrive) {
+        this.dateArrive = dateArrive;
+    }
+    
     public Long getIdTrajet() {
         return idTrajet;
     }

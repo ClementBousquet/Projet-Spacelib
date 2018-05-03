@@ -8,6 +8,8 @@ package miage.spacelib.repositories;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 
 /**
@@ -27,6 +29,15 @@ public class TrajetFacade extends AbstractFacade<Trajet> implements TrajetFacade
 
     public TrajetFacade() {
         super(Trajet.class);
+    }
+
+    @Override
+    public Trajet findByStations(Station st1, Station st2) {
+        Query qu = em.createQuery("SELECT t FROM TRAJET WHERE stationDep =:st1 AND stationArr =:st2");
+       qu.setParameter("st1", st1);
+       qu.setParameter("st2", st2);
+       Trajet t = (Trajet) qu.getSingleResult();
+       return t;
     }
     
 }
