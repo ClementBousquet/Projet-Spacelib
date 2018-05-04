@@ -5,6 +5,7 @@
  */
 package miage.spacelib.business;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationNavette;
 import miage.spacelib.entities.OperationRevisionNavette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 import miage.spacelib.entities.Usager;
 import miage.spacelib.entities.Voyage;
@@ -63,8 +65,15 @@ public class GestionVoyage implements GestionVoyageLocal {
     // LOGIN : NOM.PRENOM
     @Override
     public Long authentifier(String login, String pass) {
-        String[] tab = login.split(".");
+        String[] tab = login.split("\\.");
+        System.out.println("login : "+ login);
+        System.out.println("mdp : "+ pass);
+        System.out.println("size : "+ tab.length);
+        System.out.println("tab[] : "+ tab[0]);
         Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
+        System.out.println(us.getId());
+        System.out.println(us.getNom());
+        System.out.println(us.getPrenom());
         if(us.getMdp().equals(pass)) {
             return us.getId();
         } else {
@@ -222,7 +231,23 @@ public class GestionVoyage implements GestionVoyageLocal {
                     }
                 }
             }
+            if ("Voyage Initie".equals(v.getIntitule())) {
+                return v;
+            } else {
+                return null;
+            }
             
-            return v;
+    }
+
+    @Override
+    public List<String> recupStations() {
+        List<String> lst = new ArrayList();
+        List<Station> ls = stationFacade.findAll();
+        for (int i = 0; i < ls.size(); i++) {
+            lst.add(ls.get(i).getNom());
+        }
+        
+        return lst;
+        
     }
 }

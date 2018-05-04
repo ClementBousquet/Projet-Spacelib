@@ -25,8 +25,14 @@ public class ConsoleAdmin {
     
     public void run() {
         
-        this.genererJeuTest();
         int choix = -1;
+        
+        choix = (int) CLIUtils.saisirEntier(scanner, "Generer Jeu de Test ? (0 : Non/ 1 : Oui) : ", 0, 1);
+        
+        if (choix == 1) {
+            this.genererJeuTest();
+        }
+        
         do {
             do {
                 showMenu();
@@ -36,15 +42,15 @@ public class ConsoleAdmin {
                             break;
                         case 1:
                             AjouterStation();
-                            this.askNext();
+                            choix = this.askNext();
                             break;
                         case 2:
                             AjouterTrajet();
-                            this.askNext();
+                            choix = this.askNext();
                             break;
                         case 3:
                             AjouterMeca();
-                            this.askNext();
+                            choix = this.askNext();
                             break;
                         default:
                             System.out.println("Erreur de choix");
@@ -158,6 +164,7 @@ public class ConsoleAdmin {
         this.services.creerTrajet("Tadmor", "Brahe", 2);
         this.services.creerTrajet("Tadmor", "Amateru", 2);
         
+        System.out.println("Jeu de Test initialisé");
         
     }
     

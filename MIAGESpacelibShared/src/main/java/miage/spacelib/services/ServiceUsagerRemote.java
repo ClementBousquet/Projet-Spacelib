@@ -5,6 +5,7 @@
  */
 package miage.spacelib.services;
 
+import java.util.List;
 import javax.ejb.Remote;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 
@@ -20,5 +21,6 @@ public interface ServiceUsagerRemote {
     String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep);
     void finaliserVoyage(Long idUsager, VoyageVoyage v);
     VoyageVoyage afficherVoyage(Long idUsager);
+    List<String> recupStations();
     
 }

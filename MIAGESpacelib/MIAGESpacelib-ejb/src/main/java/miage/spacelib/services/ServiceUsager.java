@@ -5,6 +5,7 @@
  */
 package miage.spacelib.services;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.business.GestionVoyageLocal;
@@ -50,4 +51,9 @@ public class ServiceUsager implements ServiceUsagerRemote {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public List<String> recupStations() {
+        return gestionVoyage.recupStations();
+    }
 }

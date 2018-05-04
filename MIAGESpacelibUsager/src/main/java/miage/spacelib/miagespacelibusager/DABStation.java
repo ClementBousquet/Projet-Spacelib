@@ -1,5 +1,6 @@
 package miage.spacelib.miagespacelibusager;
 
+import java.util.List;
 import java.util.Scanner;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 import miage.spacelib.services.ServiceUsagerRemote;
@@ -12,38 +13,48 @@ public class DABStation {
     
     private final ServiceUsagerRemote services;
     private final Scanner scanner = new Scanner(System.in);
+    private String stationActuelle;
     
     private Long idUs = null;
     private Boolean isVoyage = false;
-    private VoyageVoyage v = null;
+    private VoyageVoyage v = new VoyageVoyage();
+    private VoyageVoyage vComp = v;
     
     public DABStation(ServiceUsagerRemote services) {
         this.services = services;
+        this.stationActuelle = "Terre";
     }
     
-    public void run() {
-        genererJeuTest(); 
+    public void run() { 
         int choix = -1;
+        
+        choix = (int) CLIUtils.saisirEntier(scanner, "Generer Jeu de Test ? (0 : Non/ 1 : Oui) : ", 0, 1);
+        
+        if (choix == 1) {
+            this.genererJeuTest();
+        }
+        
         do {
             do {
-                try {
-                    showMenu();
-                    choix = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, 3);
-                    switch (choix) {
-                        case 1:
-                            if(this.authentifier()) {
-                                launchServCli();
-                            };
-                            choix = this.askNext();
-                            break;
-                        case 0:
-                            break;
-                        default:
-                            System.out.println("Erreur de choix");
-                    }
-                } catch(Exception ex){
-                    System.out.println("Votre compte est inconnu.");
-                    choix = 0;
+                showMenu();
+                choix = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, 3);
+                switch (choix) {
+                    case 1:
+                        if (this.authentifier()) {
+                            launchServCli();
+                        } else {
+                            System.out.println("Erreur lors de l'authentification");
+                        }
+                        choix = this.askNext();
+                        break;
+                    case 2:
+                        inscrire();
+                        choix = this.askNext();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Erreur de choix");
                 }
             } while (choix != 0);
             this.quitter();
@@ -51,29 +62,59 @@ public class DABStation {
     }
     
      private void launchServCli() {
-        int choix = -1;
+        int choix2 = -1;
         do {
-            v = services.afficherVoyage(idUs);
-            
+            //v = services.afficherVoyage(idUs);
             this.showMenuAuthent();
-            choix = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
-            switch (choix) {
+            choix2 = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
+            switch (choix2) {
                 case 0 :
+                    deconnexion();
                     break;
                 case 1 :
-                    if(v.equals(null)) {
-                        //A COMPLETER
+                    if(v.equals(vComp)) {
+                        initierVoyage();
                     } else {
-                        //A COMPLETER
+                        finaliserVoyage();
                     }
+                    choix2 = this.askNext();
                     break;
                 default:
                     System.out.println("Erreur de choix");
             }
             
-        } while(choix != 0);
+        } while(choix2 != 0);
     }
     
+    private void deconnexion() {
+        idUs = 0L;
+    } 
+     
+    private void initierVoyage() {
+        int st;
+        long nbPass = CLIUtils.saisirEntier(scanner, "Combien de passagers ? : ");
+        List<String> stations = this.services.recupStations();
+        showMenuStation(stations);
+        st = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, 100);
+        String quai = this.services.initierVoyage(idUs, (int) nbPass, stations.get(st), this.stationActuelle);
+        System.out.println("Voyage Initiée, veuillez vous rendre au quai "+quai);
+    } 
+    
+    private void finaliserVoyage() {
+        this.services.finaliserVoyage(idUs, v);
+        v = vComp;
+        System.out.println("Voyage Achevée");
+    }
+    
+    private void inscrire() {
+        String nom = CLIUtils.saisirChaine(scanner, "Rentrer votre nom : ");
+        String prenom = CLIUtils.saisirChaine(scanner, "Rentrer votre prenom : ");
+        String mdp = CLIUtils.saisirChaine(scanner, "Rentrer un nouveau mot de passe : ");
+        
+        this.services.inscrire(nom, prenom, mdp);
+        
+    } 
+     
     private void showMenu() {
         CLIUtils.afficherTitreSection("Menu de sélection");
         System.out.println("\t0. Quitter");
@@ -82,7 +123,7 @@ public class DABStation {
     }
     
     private void showMenuAuthent () {
-        if (v.equals(null)) {
+        if (v.equals(vComp)) {
             CLIUtils.afficherTitreSection("Menu de sélection");
             System.out.println("\t0. Déconnexion");
             System.out.println("\t1. InitierVoyage");
@@ -94,11 +135,21 @@ public class DABStation {
            
     }
     
+    private void showMenuStation(List<String> stations) {
+        CLIUtils.afficherTitreSection("Menu de sélection");
+        for (int i = 0; i < stations.size(); i++) {
+            if(!stations.get(i).equals(stationActuelle))
+                System.out.println("\t"+i+". "+stations.get(i));
+        }
+    }
+    
     private void genererJeuTest() {
         
         this.services.inscrire("Ate", "Tom", "mdp");
         this.services.inscrire("Alain", "Terieur", "mdp");
         this.services.inscrire("Haile", "Leau", "mdp");
+        
+        System.out.println("Jeu de Test initialisé");
         
     }
     
@@ -116,7 +167,7 @@ public class DABStation {
         
         idUs = services.authentifier(login, passw);
         
-        if ( !idUs.equals(null) ){
+        if (!idUs.equals(0L)){
             return true;
         }       
         return false;

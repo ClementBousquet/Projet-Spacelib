@@ -6,6 +6,7 @@
 package miage.spacelib.business;
 
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.OperationNavette;
 import miage.spacelib.entities.Voyage;
@@ -22,4 +23,5 @@ public interface GestionVoyageLocal {
     String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep);
     void finaliserVoyage(Long idUsager, Long idVoyage);
     Voyage afficherVoyage(Long idUsager);
+    List<String> recupStations();
 }

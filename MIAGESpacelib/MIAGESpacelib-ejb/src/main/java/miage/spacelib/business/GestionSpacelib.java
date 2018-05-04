@@ -63,6 +63,8 @@ public class GestionSpacelib implements GestionSpacelibLocal {
             quaiFacade.create(q2);
             listq.add(q1);
             listq.add(q2);
+            nav.setQuai(q1);
+            navetteFacade.edit(nav);
         }
         
         st.setQuais(listq);
