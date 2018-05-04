@@ -7,7 +7,7 @@ package miage.spacelib.services;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import miage.spacelib.business.GestionVoyage;
+import miage.spacelib.business.GestionVoyageLocal;
 import miage.spacelib.entities.Voyage;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 
@@ -19,7 +19,7 @@ import miage.spacelib.miagespacelibshared.VoyageVoyage;
 public class ServiceUsager implements ServiceUsagerRemote {
 
     @EJB
-    GestionVoyage gestionVoyage;
+    GestionVoyageLocal gestionVoyage;
     
     @Override
     public Long authentifier(String login, String pass) {

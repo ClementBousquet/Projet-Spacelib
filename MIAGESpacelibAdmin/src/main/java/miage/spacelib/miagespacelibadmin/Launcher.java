@@ -16,7 +16,7 @@ import javax.naming.NamingException;
  */
 public class Launcher {
     
-    public static void main(String[] args) throws NotBoundException, RemoteException, MalformedURLException{
+    public static void main(String[] args) {
         try{
             RMIAdminServiceManager rmiMgr = new RMIAdminServiceManager();
             ConsoleAdmin cons = new ConsoleAdmin(rmiMgr.getAdminRemoteSvc());

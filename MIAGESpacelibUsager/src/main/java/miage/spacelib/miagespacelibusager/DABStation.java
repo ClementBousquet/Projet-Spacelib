@@ -22,6 +22,7 @@ public class DABStation {
     }
     
     public void run() {
+        genererJeuTest(); 
         int choix = -1;
         do {
             do {
@@ -49,21 +50,56 @@ public class DABStation {
         } while (true);
     }
     
-    private void showMenu() {
-        if (idUs.equals(null)) {
-            CLIUtils.afficherTitreSection("Menu de sélection");
-            System.out.println("\t1. Authentifier");
-            System.out.println("\t2. S'inscrire");
-        } else {
-            if (v.equals(null)) {
-                CLIUtils.afficherTitreSection("Menu de sélection");
-                System.out.println("\t1. InitierVoyage");
-            } else {
-                CLIUtils.afficherTitreSection("Menu de sélection");
-                System.out.println("\t1. FinaliserVoyage");
-            }
-        }
+     private void launchServCli() {
+        int choix = -1;
+        do {
+            v = services.afficherVoyage(idUs);
             
+            this.showMenuAuthent();
+            choix = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
+            switch (choix) {
+                case 0 :
+                    break;
+                case 1 :
+                    if(v.equals(null)) {
+                        //A COMPLETER
+                    } else {
+                        //A COMPLETER
+                    }
+                    break;
+                default:
+                    System.out.println("Erreur de choix");
+            }
+            
+        } while(choix != 0);
+    }
+    
+    private void showMenu() {
+        CLIUtils.afficherTitreSection("Menu de sélection");
+        System.out.println("\t0. Quitter");
+        System.out.println("\t1. Authentifier");
+        System.out.println("\t2. S'inscrire"); 
+    }
+    
+    private void showMenuAuthent () {
+        if (v.equals(null)) {
+            CLIUtils.afficherTitreSection("Menu de sélection");
+            System.out.println("\t0. Déconnexion");
+            System.out.println("\t1. InitierVoyage");
+        } else {
+            CLIUtils.afficherTitreSection("Menu de sélection");
+            System.out.println("\t0. Déconnexion");
+            System.out.println("\t1. FinaliserVoyage");
+        }
+           
+    }
+    
+    private void genererJeuTest() {
+        
+        this.services.inscrire("Ate", "Tom", "mdp");
+        this.services.inscrire("Alain", "Terieur", "mdp");
+        this.services.inscrire("Haile", "Leau", "mdp");
+        
     }
     
     private int askNext() {
@@ -84,30 +120,6 @@ public class DABStation {
             return true;
         }       
         return false;
-    }
- 
-    private void launchServCli() {
-        int choix = -1;
-        do {
-            v = services.afficherVoyage(idUs);
-            
-            this.showMenu();
-            choix = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
-            switch (choix) {
-                case 0 :
-                    break;
-                case 1 :
-                    if(v.equals(null)) {
-                        //A COMPLETER
-                    } else {
-                        //A COMPLETER
-                    }
-                    break;
-                default:
-                    System.out.println("Erreur de choix");
-            }
-            
-        } while(choix != 0);
     }
     
 }

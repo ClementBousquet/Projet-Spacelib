@@ -8,7 +8,7 @@ package miage.spacelib.services;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import miage.spacelib.business.GestionSpacelib;
+import miage.spacelib.business.GestionSpacelibLocal;
 
 /**
  *
@@ -18,7 +18,7 @@ import miage.spacelib.business.GestionSpacelib;
 public class ServiceAdmin implements ServiceAdminRemote {
 
     @EJB
-    GestionSpacelib gestionSpacelib;
+    GestionSpacelibLocal gestionSpacelib;
     
     @Override
     public void creerStation(String nom, float coordX, float coordY, List<Integer> nbPass) {

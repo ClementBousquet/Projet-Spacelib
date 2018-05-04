@@ -12,9 +12,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.2.1</version>
+            <groupId>org.glassfish.main.appclient</groupId>
+            <artifactId>gf-client</artifactId>
+            <version>4.1.1</version>
         </dependency>
     </dependencies>
     <properties>
