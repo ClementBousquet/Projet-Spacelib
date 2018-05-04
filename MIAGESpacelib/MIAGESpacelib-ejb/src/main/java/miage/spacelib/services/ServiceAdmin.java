@@ -32,4 +32,9 @@ public class ServiceAdmin implements ServiceAdminRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public void creerTrajet(String st1, String st2, int duree) {
+        gestionSpacelib.creerTrajet(st1, st2, duree);
+    }
 }

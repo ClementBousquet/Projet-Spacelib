@@ -18,5 +18,6 @@ public interface GestionSpacelibLocal {
     
     void creerStation(String nom, float coordX, float coordY, List<Integer> nbPassagers);
     void ajouterMeca(String nom, String prenom, String pass);
+    void creerTrajet(String nomSt1, String nomSt2, int duree);
     
 }
