@@ -36,29 +36,30 @@ public class Quai implements Serializable {
     @JoinColumn
     private Navette idNavette;
     
+    /* Dispo, NonDispo */
     @Column(nullable = false)
-    private StatutQuai statut;
+    private String statut;
     
     protected Quai() {       
     };
     
     public Quai(Station station) {
         this.idStation = station;
-        this.statut = StatutQuai.Dispo;
+        this.statut = "Dispo";
     }
     
     public Quai(Station station, Navette navette) {
         this.idStation = station;
         this.idNavette = navette;
-        this.statut = StatutQuai.NonDispo;
+        this.statut = "NonDispo";
     }
 
 
-    public StatutQuai getStatut() {
+    public String getStatut() {
         return statut;
     }
 
-    public void setStatut(StatutQuai statut) {
+    public void setStatut(String statut) {
         this.statut = statut;
     }
     

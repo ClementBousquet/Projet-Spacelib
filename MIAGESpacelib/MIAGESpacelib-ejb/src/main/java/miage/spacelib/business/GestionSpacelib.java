@@ -77,7 +77,7 @@ public class GestionSpacelib implements GestionSpacelibLocal {
 
     @Override
     public void ajouterMeca(String nom, String prenom, String pass) {
-        usagerFacade.create(new Usager(nom, prenom, pass, StatutUsager.Mecanicien));
+        usagerFacade.create(new Usager(nom, prenom, pass, "Mecanicien"));
     }
 
     @Override

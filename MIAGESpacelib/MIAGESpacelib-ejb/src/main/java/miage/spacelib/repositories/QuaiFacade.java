@@ -36,7 +36,7 @@ public class QuaiFacade extends AbstractFacade<Quai> implements QuaiFacadeLocal 
 
     @Override
     public Quai findDispoByStation(Long idStation) {
-       Query qu = em.createQuery("SELECT TOP q FROM QUAI WHERE idStation =:idS AND statut = 'Dispo'");
+       Query qu = em.createQuery("SELECT UPPER(q) FROM QUAI WHERE idStation =:idS AND statut = 'Dispo'");
        qu.setParameter("idS", idStation);
        Quai q = (Quai) qu.getSingleResult();
        return q;

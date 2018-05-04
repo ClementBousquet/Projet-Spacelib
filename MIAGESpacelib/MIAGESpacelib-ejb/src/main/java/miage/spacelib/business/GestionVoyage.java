@@ -89,20 +89,20 @@ public class GestionVoyage implements GestionVoyageLocal {
     @Override
     public String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep) {
         
-        List<Navette> ln = navetteFacade.findByStation(stationFacade.findByName(stationArr).getId(), nbPass);
+        Navette ln = navetteFacade.findByStation(stationFacade.findByName(stationArr).getId(), nbPass);
         Calendar c = Calendar.getInstance();
         Trajet t = trajetFacade.findByStations(stationFacade.findByName(stationDep), stationFacade.findByName(stationArr));
         
-        if(ln.size() > 0) {
+        if(ln != null) {
             
             Quai q = quaiFacade.findDispoByStation(stationFacade.findByName(stationArr).getId());
             if (!q.equals(null)) {
                 
-                q.setStatut(StatutQuai.NonDispo);
-                ln.get(0).setStatut(StatutNavette.Voyage);
+                q.setStatut("NonDispo");
+                ln.setStatut("Voyage");
                 
                 Voyage v = new Voyage(t,
-                        ln.get(0),
+                        ln,
                         usagerFacade.find(idUsager), 
                         new Date(), 
                         nbPass, 
@@ -116,9 +116,9 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 voyageFacade.create(v);
                 
-                OperationNavette on = new OperationNavette(ln.get(0), 
+                OperationNavette on = new OperationNavette(ln, 
                         usagerFacade.find(idUsager), 
-                        quaiFacade.find(ln.get(0).getQuai()), 
+                        quaiFacade.find(ln.getQuai()), 
                         q, 
                         "Voyage Initie", 
                         new Date(), 
@@ -128,10 +128,10 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 operationNavetteFacade.create(on);
                 
-                Quai q2 = quaiFacade.find(ln.get(0).getQuai());
-                q2.setStatut(StatutQuai.Dispo);
+                Quai q2 = quaiFacade.find(ln.getQuai());
+                q2.setStatut("Dispo");
                 
-                Navette n = navetteFacade.find(ln.get(0));
+                Navette n = navetteFacade.find(ln);
                 n.setQuai(q);
                 
                 Map<Voyage, OperationNavette> lon = n.getHistorique();
@@ -148,7 +148,7 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 usagerFacade.edit(u);
                 
-                return "Rendez vous au quai "+ln.get(0).getId()+", vous arriverez au quai "+q.getId();
+                return "Rendez vous au quai "+ln.getId()+", vous arriverez au quai "+q.getId();
                 
             } else {
                 return "Aucun Quais dans la station d'arrivee disponibles";
@@ -189,7 +189,7 @@ public class GestionVoyage implements GestionVoyageLocal {
         n.setHistorique(mapvo);
         
         if(mapvo.size()%6 == 0) {
-            n.setStatut(StatutNavette.BesoinRevision);
+            n.setStatut("BesoinRevision");
             
             OperationRevisionNavette orn = new OperationRevisionNavette(
             on.getIdNavette(),
@@ -206,7 +206,7 @@ public class GestionVoyage implements GestionVoyageLocal {
             n.setHistoriqueRev(lorn);
             
         } else {
-             n.setStatut(StatutNavette.Disponible);
+             n.setStatut("Disponible");
         }
         
         navetteFacade.edit(n);

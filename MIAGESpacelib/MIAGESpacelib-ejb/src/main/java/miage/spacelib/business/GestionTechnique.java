@@ -51,7 +51,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
         OperationRevisionNavette orn = null;
         List<Navette> ln = new ArrayList();
 
-        if (usagerFacade.find(idUsager).getStatutMeca().equals(StatutMeca.Libre)) {
+        if (usagerFacade.find(idUsager).getStatutMeca().equals("Libre")) {
             return this.stationFacade.findNavetteRevision(station);
         } else {
             List<OperationRevisionNavette> lrn = ornFacade.findAll();
@@ -80,11 +80,11 @@ public class GestionTechnique implements GestionTechniqueLocal {
                 new Date()));
 
         Usager u = this.usagerFacade.find(idUsager);
-        u.setStatutMeca(StatutMeca.Occupe);
+        u.setStatutMeca("Occupe");
         usagerFacade.edit(u);
         
         Navette n = this.navetteFacade.find(idNavette);
-        n.setStatut(StatutNavette.EnRevision);
+        n.setStatut("EnRevision");
         navetteFacade.edit(n);
         
         return quaiFacade.find(navetteFacade.find(idNavette).getQuai());
@@ -101,11 +101,11 @@ public class GestionTechnique implements GestionTechniqueLocal {
                 new Date()));
 
         Usager u = this.usagerFacade.find(idUsager);
-        u.setStatutMeca(StatutMeca.Libre);
+        u.setStatutMeca("Libre");
         usagerFacade.edit(u);
         
         Navette n = this.navetteFacade.find(idNavette);
-        n.setStatut(StatutNavette.Disponible);
+        n.setStatut("Disponible");
         navetteFacade.edit(n);
         
     }
@@ -118,7 +118,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
         String[] tab = login.split(".");
         if(tab.length == 2) {
              Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
-            if(us.getMdp().equals(pass) && us.getSt().equals(StatutUsager.Mecanicien)) {
+            if(us.getMdp().equals(pass) && us.getStatutUsager().equals("Mecanicien")) {
                 return us.getId();
             } 
         }

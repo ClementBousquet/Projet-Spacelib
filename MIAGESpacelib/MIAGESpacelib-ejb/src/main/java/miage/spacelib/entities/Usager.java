@@ -39,9 +39,11 @@ public class Usager implements Serializable {
     @Column(nullable = false)
     private String mdp;
     
-    private StatutUsager st;
+    /* Mecanicien, Admin, Usager */
+    private String statutUsager;
     
-    private StatutMeca statutMeca;
+    /* Libre, Occupe */
+    private String statutMeca;
     
     @JoinColumn
     private List<Voyage> resa;
@@ -54,26 +56,27 @@ public class Usager implements Serializable {
         this.prenom = prenom;
         this.mdp = motpass;
         this.resa = new ArrayList();
+        this.statutUsager = "Usager";
     }
     
-    public Usager(String nom, String prenom, String motpass, StatutUsager st) {
+    public Usager(String nom, String prenom, String motpass, String statutUsager) {
         this.nom = nom;
         this.prenom = prenom;
         this.mdp = motpass;
-        this.st = st;
+        this.statutUsager = statutUsager;
         this.resa = new ArrayList();
         
-        if(st.equals(StatutUsager.Mecanicien)) {
-            this.statutMeca = StatutMeca.Libre;
+        if("Mecanicien".equals(statutUsager)) {
+            this.statutMeca = "Libre";
         }
         
     }
 
-    public StatutMeca getStatutMeca() {
+    public String getStatutMeca() {
         return statutMeca;
     }
 
-    public void setStatutMeca(StatutMeca statutMeca) {
+    public void setStatutMeca(String statutMeca) {
         this.statutMeca = statutMeca;
     }
 
@@ -85,12 +88,12 @@ public class Usager implements Serializable {
         this.mdp = mdp;
     }
 
-    public StatutUsager getSt() {
-        return st;
+    public String getStatutUsager() {
+        return statutUsager;
     }
 
-    public void setSt(StatutUsager st) {
-        this.st = st;
+    public void setStatutUsager(String st) {
+        this.statutUsager = st;
     }
 
     public String getNom() {

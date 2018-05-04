@@ -38,8 +38,9 @@ public class Navette implements Serializable {
     @JoinColumn
     private Quai quai;
     
+    /* Disponible, Voyage, BesoinRevision, EnRevision */
     @Column(nullable = false)
-    private StatutNavette statut;
+    private String statut;
     
     @Column(nullable = false)
     private int nbPlaces;
@@ -55,7 +56,7 @@ public class Navette implements Serializable {
     
     public Navette(int nbPlaces) {
         this.nbPlaces = nbPlaces;
-        this.statut = StatutNavette.Disponible;
+        this.statut = "Disponible";
         this.historique = new HashMap();
         this.historiqueRev = new ArrayList();
     }
@@ -76,11 +77,11 @@ public class Navette implements Serializable {
         this.quai = quai;
     }
 
-    public StatutNavette getStatut() {
+    public String getStatut() {
         return statut;
     }
 
-    public void setStatut(StatutNavette statut) {
+    public void setStatut(String statut) {
         this.statut = statut;
     }
 

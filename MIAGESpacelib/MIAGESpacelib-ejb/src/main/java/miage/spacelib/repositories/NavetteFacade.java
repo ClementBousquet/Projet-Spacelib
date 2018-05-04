@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import miage.spacelib.entities.Navette;
+import miage.spacelib.entities.Quai;
 
 /**
  *
@@ -32,10 +33,33 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
     }
 
     @Override
-    public List<Navette> findByStation(Long idStation, int nbPass) {
-        Query qu = em.createQuery("SELECT n FROM QUAI, NAVETTE, STATION WHERE NAVETTE.id = QUAI.idNavette AND STATION.id = QUAI.idStation AND NAVETTE.Statut = 'Disponible' AND STATION.id =:idStation AND NAVETTE.nbPlaces >=:nbPass");
+    public Navette findByStation(Long idStation, int nbPass) {
+       Query qu = em.createQuery("SELECT n FROM NAVETTE WHERE nbPlaces >= "+nbPass);
        List<Navette> n = qu.getResultList();
-       return n;
+              
+       Query qu2 = em.createQuery("SELECT q FROM QUAI WHERE idStation =:idS");
+       qu2.setParameter("idS", idStation);
+       List<Quai> q = qu2.getResultList();
+       
+       Navette nav = null;
+       
+       boolean trouve = false;
+       for (int i = 0; i < q.size(); i++) {
+           
+           if(!trouve) {
+               
+               for (int j = 0; j < n.size(); j++) {
+                   
+                   if (q.get(i).getIdNavette().equals(n.get(j).getId()) && "Disponible".equals(n.get(j).getStatut())) {
+                       trouve = true;
+                       nav = n.get(j);
+                   }
+                   
+               }
+               
+           }    
+       }
+       return nav;
     }
     
 }
