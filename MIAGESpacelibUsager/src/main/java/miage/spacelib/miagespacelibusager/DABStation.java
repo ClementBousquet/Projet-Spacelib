@@ -76,7 +76,7 @@ public class DABStation {
                     deconnexion();
                     break;
                 case 1 :
-                    if(v.equals(vComp)) {
+                    if(v.getIdVoyage().equals(vComp.getIdVoyage())) {
                         initierVoyage();
                     } else {
                         finaliserVoyage();
@@ -140,9 +140,8 @@ public class DABStation {
     }
     
     private int showMenuStation(List<String> stations) {
-        CLIUtils.afficherTitreSection("Menu de sélection");
+        CLIUtils.afficherTitreSection("Station de départ");
         for (int i = 0; i < stations.size(); i++) {
-            if(!stations.get(i).equals(stationActuelle))
                 System.out.println("\t"+i+". "+stations.get(i));
         }
         return stations.size();

@@ -10,6 +10,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.entities.Navette;
@@ -190,7 +193,7 @@ public class GestionVoyage implements GestionVoyageLocal {
                 new Date());
         
         v.setIntitule("Voyage Acheve");
-        v.setDateCreation(v.getDateArrive());
+        v.setDateCreation(new Date());
         voyageFacade.edit(v);
         
         operationNavetteFacade.create(on);
@@ -239,6 +242,7 @@ public class GestionVoyage implements GestionVoyageLocal {
         System.out.println("Recup' liste voyage "+lv.size());
         
             for (int i = 0; i < lv.size(); i++) {
+                
                 if (v == null) {
                     v = lv.get(i);
                 } else {
