@@ -9,6 +9,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 
@@ -33,11 +36,17 @@ public class TrajetFacade extends AbstractFacade<Trajet> implements TrajetFacade
 
     @Override
     public Trajet findByStations(Station st1, Station st2) {
-        Query qu = em.createQuery("SELECT t FROM TRAJET WHERE stationDep =:st1 AND stationArr =:st2");
-       qu.setParameter("st1", st1);
-       qu.setParameter("st2", st2);
-       Trajet t = (Trajet) qu.getSingleResult();
-       return t;
+        
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Trajet> cq = cb.createQuery(Trajet.class);
+        Root<Trajet> root = cq.from(Trajet.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("stationDep").as(Station.class), st1),
+                        cb.equal(root.get("stationArr").as(Station.class), st2)
+                )
+        );
+        return getEntityManager().createQuery(cq).getSingleResult();
     }
     
 }

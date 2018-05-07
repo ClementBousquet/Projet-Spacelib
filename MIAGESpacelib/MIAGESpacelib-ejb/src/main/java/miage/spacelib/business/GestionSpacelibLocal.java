@@ -7,7 +7,6 @@ package miage.spacelib.business;
 
 import java.util.List;
 import javax.ejb.Local;
-import miage.spacelib.miagespacelibshared.StatutUsager;
 
 /**
  *

@@ -10,8 +10,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Station;
 
 /**
  *
@@ -22,7 +26,7 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
 
     @PersistenceContext(unitName = "miage.spacelib_MIAGESpacelib-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -33,33 +37,16 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
     }
 
     @Override
-    public Navette findByStation(Long idStation, int nbPass) {
-       Query qu = em.createQuery("SELECT n FROM NAVETTE WHERE nbPlaces >= "+nbPass);
-       List<Navette> n = qu.getResultList();
-              
-       Query qu2 = em.createQuery("SELECT q FROM QUAI WHERE idStation =:idS");
-       qu2.setParameter("idS", idStation);
-       List<Quai> q = qu2.getResultList();
-       
-       Navette nav = null;
-       
-       boolean trouve = false;
-       for (int i = 0; i < q.size(); i++) {
-           
-           if(!trouve) {
-               
-               for (int j = 0; j < n.size(); j++) {
-                   
-                   if (q.get(i).getIdNavette().equals(n.get(j).getId()) && "Disponible".equals(n.get(j).getStatut())) {
-                       trouve = true;
-                       nav = n.get(j);
-                   }
-                   
-               }
-               
-           }    
-       }
-       return nav;
+    public Navette findByQuai(Quai q) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Navette> cq = cb.createQuery(Navette.class);
+        Root<Navette> root = cq.from(Navette.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("quai").as(Quai.class), q)
+                )
+        );
+        return getEntityManager().createQuery(cq).getSingleResult();
     }
     
 }

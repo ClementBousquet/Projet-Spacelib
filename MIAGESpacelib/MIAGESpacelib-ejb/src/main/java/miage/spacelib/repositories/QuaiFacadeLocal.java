@@ -8,6 +8,7 @@ package miage.spacelib.repositories;
 import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Station;
 
 /**
  *
@@ -23,8 +24,10 @@ public interface QuaiFacadeLocal {
     void remove(Quai quai);
 
     Quai find(Object id);
+    
+    List<Quai> findByStation(Station st);
 
-    Quai findDispoByStation(Long idStation);
+    Quai findDispoByStation(Station st);
     
     List<Quai> findAll();
 

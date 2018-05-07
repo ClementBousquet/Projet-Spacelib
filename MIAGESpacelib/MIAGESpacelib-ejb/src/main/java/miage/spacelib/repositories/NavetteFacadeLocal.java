@@ -8,6 +8,7 @@ package miage.spacelib.repositories;
 import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Navette;
+import miage.spacelib.entities.Quai;
 
 /**
  *
@@ -24,7 +25,7 @@ public interface NavetteFacadeLocal {
 
     Navette find(Object id);
     
-    Navette findByStation(Long idStation, int nbPass);
+    Navette findByQuai(Quai q);
     
     List<Navette> findAll();
 

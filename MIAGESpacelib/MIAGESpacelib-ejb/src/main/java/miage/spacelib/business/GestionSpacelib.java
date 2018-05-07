@@ -14,7 +14,6 @@ import miage.spacelib.entities.Quai;
 import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 import miage.spacelib.entities.Usager;
-import miage.spacelib.miagespacelibshared.StatutUsager;
 import miage.spacelib.repositories.NavetteFacadeLocal;
 import miage.spacelib.repositories.QuaiFacadeLocal;
 import miage.spacelib.repositories.StationFacadeLocal;

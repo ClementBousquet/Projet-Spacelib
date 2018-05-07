@@ -5,9 +5,14 @@
  */
 package miage.spacelib.repositories;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import miage.spacelib.entities.Usager;
 import miage.spacelib.entities.Voyage;
 
 /**
@@ -27,6 +32,21 @@ public class VoyageFacade extends AbstractFacade<Voyage> implements VoyageFacade
 
     public VoyageFacade() {
         super(Voyage.class);
+    }
+
+    @Override
+    public List<Voyage> findByUsager(Usager us) {
+        
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Voyage> cq = cb.createQuery(Voyage.class);
+        Root<Voyage> root = cq.from(Voyage.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("idUsager").as(Usager.class), us)
+                )
+        );
+        
+        return getEntityManager().createQuery(cq).getResultList();
     }
     
 }

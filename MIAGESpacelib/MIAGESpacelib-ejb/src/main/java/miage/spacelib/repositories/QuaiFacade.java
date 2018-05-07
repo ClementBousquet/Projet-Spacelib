@@ -5,10 +5,10 @@
  */
 package miage.spacelib.repositories;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -35,11 +35,32 @@ public class QuaiFacade extends AbstractFacade<Quai> implements QuaiFacadeLocal 
     }
 
     @Override
-    public Quai findDispoByStation(Long idStation) {
-       Query qu = em.createQuery("SELECT UPPER(q) FROM QUAI WHERE idStation =:idS AND statut = 'Dispo'");
-       qu.setParameter("idS", idStation);
-       Quai q = (Quai) qu.getSingleResult();
-       return q;
-       }
+    public Quai findDispoByStation(Station st) {
+       
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Quai> cq = cb.createQuery(Quai.class);
+        Root<Quai> root = cq.from(Quai.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("idStation").as(Station.class), st),
+                        cb.equal(root.get("statut").as(String.class), "Dispo")
+                )
+        );
+        return getEntityManager().createQuery(cq).getResultList().get(0);
+        
+    }
+
+    @Override
+    public List<Quai> findByStation(Station st) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Quai> cq = cb.createQuery(Quai.class);
+        Root<Quai> root = cq.from(Quai.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("idStation").as(Station.class), st)
+                )
+        );
+        return getEntityManager().createQuery(cq).getResultList();
+    }
     
 }

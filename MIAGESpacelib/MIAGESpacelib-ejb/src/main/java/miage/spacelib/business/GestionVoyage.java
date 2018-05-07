@@ -20,8 +20,6 @@ import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 import miage.spacelib.entities.Usager;
 import miage.spacelib.entities.Voyage;
-import miage.spacelib.miagespacelibshared.StatutNavette;
-import miage.spacelib.miagespacelibshared.StatutQuai;
 import miage.spacelib.repositories.NavetteFacadeLocal;
 import miage.spacelib.repositories.OperationNavetteFacadeLocal;
 import miage.spacelib.repositories.OperationRevisionNavetteFacadeLocal;
@@ -66,18 +64,16 @@ public class GestionVoyage implements GestionVoyageLocal {
     @Override
     public Long authentifier(String login, String pass) {
         String[] tab = login.split("\\.");
-        System.out.println("login : "+ login);
-        System.out.println("mdp : "+ pass);
-        System.out.println("size : "+ tab.length);
-        System.out.println("tab[] : "+ tab[0]);
-        Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
-        System.out.println(us.getId());
-        System.out.println(us.getNom());
-        System.out.println(us.getPrenom());
-        if(us.getMdp().equals(pass)) {
-            return us.getId();
-        } else {
-            return null;
+        try {
+            Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
+            if(us != null && us.getMdp().equals(pass)) {
+                return us.getId();
+            } else {
+                return 0L;
+        }
+        } catch (javax.persistence.NoResultException e) {
+            e.printStackTrace();
+            return 0L;
         }
     }
 
@@ -88,19 +84,34 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep) {
+        System.out.println("initierVoyage....");
+        Station st = stationFacade.findByName(stationDep);
+        System.out.println("recupération de la station de départ ...");
+        List<Quai> quais = quaiFacade.findByStation(st);
+        System.out.println("recuperation des quais ..."+quais.size());
+        List<Navette> navettes = new ArrayList();
         
-        Navette ln = navetteFacade.findByStation(stationFacade.findByName(stationArr).getId(), nbPass);
+        for (int i = 0; i < quais.size(); i++) {
+            if (quais.get(i).getIdNavette() != null) {
+                navettes.add(navetteFacade.findByQuai(quais.get(i)));
+            }
+        }
+        System.out.println("Récupération des navettes...."+navettes.size());
+
         Calendar c = Calendar.getInstance();
-        Trajet t = trajetFacade.findByStations(stationFacade.findByName(stationDep), stationFacade.findByName(stationArr));
         
-        if(ln != null) {
+        Trajet t = trajetFacade.findByStations(stationFacade.findByName(stationDep), stationFacade.findByName(stationArr));
+        System.out.println("Récupération du trajet...."+t.getDureeVoyage()+" "+t.getStationDep()+" "+t.getStationArr());
+        if(navettes.size() > 0) {
             
-            Quai q = quaiFacade.findDispoByStation(stationFacade.findByName(stationArr).getId());
-            if (!q.equals(null)) {
+            Navette ln = navettes.get(0);
+            
+            Quai q = quaiFacade.findDispoByStation(stationFacade.findByName(stationArr));
+            if (q != null) {
                 
                 q.setStatut("NonDispo");
                 ln.setStatut("Voyage");
-                
+                System.out.println("Creation du voyage...");
                 Voyage v = new Voyage(t,
                         ln,
                         usagerFacade.find(idUsager), 
@@ -108,17 +119,17 @@ public class GestionVoyage implements GestionVoyageLocal {
                         nbPass, 
                         new Date(), 
                         "Voyage Initie");
-                
+                System.out.println("Voyage crée...");
                 c.setTime(v.getDateDepart());
                 c.add(Calendar.DATE, t.getDureeVoyage());
                 
                 v.setDateArrive(c.getTime());
                 
                 voyageFacade.create(v);
-                
+                System.out.println("OperationNavette ...");
                 OperationNavette on = new OperationNavette(ln, 
                         usagerFacade.find(idUsager), 
-                        quaiFacade.find(ln.getQuai()), 
+                        quaiFacade.find(ln.getQuai().getId()), 
                         q, 
                         "Voyage Initie", 
                         new Date(), 
@@ -128,10 +139,10 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 operationNavetteFacade.create(on);
                 
-                Quai q2 = quaiFacade.find(ln.getQuai());
+                Quai q2 = quaiFacade.find(ln.getQuai().getId());
                 q2.setStatut("Dispo");
                 
-                Navette n = navetteFacade.find(ln);
+                Navette n = navetteFacade.find(ln.getId());
                 n.setQuai(q);
                 
                 Map<Voyage, OperationNavette> lon = n.getHistorique();
@@ -165,24 +176,24 @@ public class GestionVoyage implements GestionVoyageLocal {
         
         Voyage v = voyageFacade.find(idVoyage);
         
-        Navette n = navetteFacade.find(v.getIdNavette());
+        Navette n = navetteFacade.find(v.getIdNavette().getId());
         
         OperationNavette on = new OperationNavette(
                 v.getIdNavette(),
                 v.getIdUsager(),
                 n.getHistorique().get(v).getQuaiDep(),
                 n.getHistorique().get(v).getQuaiArr(),
-                "Voyage Achevé",
+                "Voyage Acheve",
                 v.getDateDepart(),
                 v.getDateArrive(),
                 v.getNbPassager(),
-                v.getDateCreation());
+                new Date());
         
-        operationNavetteFacade.create(on);
-        
-        v.setIntitule("Voyage Achevé");
+        v.setIntitule("Voyage Acheve");
         v.setDateCreation(v.getDateArrive());
         voyageFacade.edit(v);
+        
+        operationNavetteFacade.create(on);
         
         Map<Voyage, OperationNavette> mapvo = n.getHistorique();
         mapvo.put(v, on);
@@ -221,7 +232,12 @@ public class GestionVoyage implements GestionVoyageLocal {
         
         Voyage v = null;
 
-        List<Voyage> lv = voyageFacade.findAll();
+        System.out.println("Creation voyage null");
+        
+        List<Voyage> lv = voyageFacade.findByUsager(usagerFacade.find(idUsager));
+        
+        System.out.println("Recup' liste voyage "+lv.size());
+        
             for (int i = 0; i < lv.size(); i++) {
                 if (v == null) {
                     v = lv.get(i);
@@ -231,7 +247,12 @@ public class GestionVoyage implements GestionVoyageLocal {
                     }
                 }
             }
+            
+            System.out.println(v.getId());
+            System.out.println(v.getIntitule());
+            
             if ("Voyage Initie".equals(v.getIntitule())) {
+                System.out.println("On a un voyage");
                 return v;
             } else {
                 return null;

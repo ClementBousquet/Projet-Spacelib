@@ -8,6 +8,7 @@ package miage.spacelib.repositories;
 import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Voyage;
+import miage.spacelib.entities.Usager;
 
 /**
  *
@@ -24,6 +25,8 @@ public interface VoyageFacadeLocal {
 
     Voyage find(Object id);
 
+    List<Voyage> findByUsager(Usager us);
+    
     List<Voyage> findAll();
 
     List<Voyage> findRange(int[] range);

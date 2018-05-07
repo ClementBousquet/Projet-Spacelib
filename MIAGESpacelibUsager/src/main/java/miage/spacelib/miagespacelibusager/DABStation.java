@@ -17,8 +17,8 @@ public class DABStation {
     
     private Long idUs = null;
     private Boolean isVoyage = false;
-    private VoyageVoyage v = new VoyageVoyage();
-    private VoyageVoyage vComp = v;
+    private VoyageVoyage v = new VoyageVoyage(0L, null, null, 0);
+    private VoyageVoyage vComp = new VoyageVoyage(0L, null, null, 0);
     
     public DABStation(ServiceUsagerRemote services) {
         this.services = services;
@@ -44,6 +44,8 @@ public class DABStation {
                             launchServCli();
                         } else {
                             System.out.println("Erreur lors de l'authentification");
+                            System.out.println("Rappel identifiant : NOM.PRENOM");
+
                         }
                         choix = this.askNext();
                         break;
@@ -64,7 +66,8 @@ public class DABStation {
      private void launchServCli() {
         int choix2 = -1;
         do {
-            //v = services.afficherVoyage(idUs);
+            v = services.afficherVoyage(idUs);
+            System.out.println("Voyage : "+v.getIdVoyage());
             this.showMenuAuthent();
             choix2 = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
             switch (choix2) {
@@ -94,8 +97,8 @@ public class DABStation {
         int st;
         long nbPass = CLIUtils.saisirEntier(scanner, "Combien de passagers ? : ");
         List<String> stations = this.services.recupStations();
-        showMenuStation(stations);
-        st = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, 100);
+        int i  = showMenuStation(stations);
+        st = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, i-1);
         String quai = this.services.initierVoyage(idUs, (int) nbPass, stations.get(st), this.stationActuelle);
         System.out.println("Voyage Initiée, veuillez vous rendre au quai "+quai);
     } 
@@ -123,7 +126,7 @@ public class DABStation {
     }
     
     private void showMenuAuthent () {
-        if (v.equals(vComp)) {
+        if (v.getIdVoyage().equals(vComp.getIdVoyage())) {
             CLIUtils.afficherTitreSection("Menu de sélection");
             System.out.println("\t0. Déconnexion");
             System.out.println("\t1. InitierVoyage");
@@ -135,12 +138,13 @@ public class DABStation {
            
     }
     
-    private void showMenuStation(List<String> stations) {
+    private int showMenuStation(List<String> stations) {
         CLIUtils.afficherTitreSection("Menu de sélection");
         for (int i = 0; i < stations.size(); i++) {
             if(!stations.get(i).equals(stationActuelle))
                 System.out.println("\t"+i+". "+stations.get(i));
         }
+        return stations.size();
     }
     
     private void genererJeuTest() {
@@ -165,8 +169,11 @@ public class DABStation {
         String login = CLIUtils.saisirChaine(scanner, "Rentrer votre login : ");
         String passw = CLIUtils.saisirChaine(scanner, "Rentrer votre mot de passe : ");
         
-        idUs = services.authentifier(login, passw);
-        
+        if (login.contains("\\."))
+            idUs = services.authentifier(login, passw);
+        else
+            return false;
+            
         if (!idUs.equals(0L)){
             return true;
         }       

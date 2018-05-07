@@ -5,20 +5,21 @@
  */
 package miage.spacelib.miagespacelibshared;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Quentin
  */
-public class VoyageVoyage {
+public class VoyageVoyage implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     private Long idVoyage;
     private Date dateDepart;
     private Date dateArrive;
     private int nbPassager;
-
-    public VoyageVoyage(){};
     
     public VoyageVoyage(Long idVoyage, Date dateDepart, Date dateArrive, int nbPassager) {
         this.idVoyage = idVoyage;

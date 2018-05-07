@@ -45,7 +45,13 @@ public class ServiceUsager implements ServiceUsagerRemote {
     @Override
     public VoyageVoyage afficherVoyage(Long idUsager) {
         Voyage v = gestionVoyage.afficherVoyage(idUsager);
-        return new VoyageVoyage(v.getId(), v.getDateDepart(), v.getDateArrive(), v.getNbPassager());
+        System.out.println("On arrive ici");
+        if (v != null) {
+            System.out.println("On renvoie le voyage");
+            return new VoyageVoyage(v.getId(), v.getDateDepart(), v.getDateArrive(), v.getNbPassager());
+        } else {
+            return new VoyageVoyage(0L, null, null, 0);
+        }
     }
 
     
