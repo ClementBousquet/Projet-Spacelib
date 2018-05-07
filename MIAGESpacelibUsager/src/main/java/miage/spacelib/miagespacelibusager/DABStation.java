@@ -32,6 +32,7 @@ public class DABStation {
         
         if (choix == 1) {
             this.genererJeuTest();
+            this.setStationActuelle();
         }
         
         do {
@@ -67,7 +68,6 @@ public class DABStation {
         int choix2 = -1;
         do {
             v = services.afficherVoyage(idUs);
-            System.out.println("Voyage : "+v.getIdVoyage());
             this.showMenuAuthent();
             choix2 = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
             switch (choix2) {
@@ -178,6 +178,13 @@ public class DABStation {
             return true;
         }       
         return false;
+    }
+
+    private void setStationActuelle() {
+        List<String> stations = this.services.recupStations();
+        int nbStations  = showMenuStation(stations);
+        int station = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, nbStations-1);
+        this.stationActuelle = stations.get(station);
     }
     
 }
