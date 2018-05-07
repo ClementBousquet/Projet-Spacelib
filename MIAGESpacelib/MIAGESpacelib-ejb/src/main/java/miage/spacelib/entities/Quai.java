@@ -32,7 +32,6 @@ public class Quai implements Serializable {
     private Station idStation;
 
     @OneToOne
-    @JoinColumn
     private Navette idNavette;
     
     /* Dispo, NonDispo */

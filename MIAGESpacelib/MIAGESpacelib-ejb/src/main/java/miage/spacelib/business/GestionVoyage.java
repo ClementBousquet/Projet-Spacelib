@@ -115,7 +115,8 @@ public class GestionVoyage implements GestionVoyageLocal {
                 q.setStatut("NonDispo");
                 ln.setStatut("Voyage");
                 System.out.println("Creation du voyage...");
-                Voyage v = new Voyage(t,
+                Voyage v = new Voyage(
+                        t,
                         ln,
                         usagerFacade.find(idUsager), 
                         new Date(), 
@@ -146,8 +147,11 @@ public class GestionVoyage implements GestionVoyageLocal {
                 q2.setStatut("Dispo");
                 q2.setIdNavette(null);
                 
+                
+                
                 Navette n = navetteFacade.find(ln.getId());
                 n.setQuai(q);
+                q.setIdNavette(n);
                 
                 Map<Voyage, OperationNavette> lon = n.getHistorique();
                 lon.put(v, on);
