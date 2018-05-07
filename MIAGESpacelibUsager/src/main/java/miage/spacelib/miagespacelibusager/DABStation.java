@@ -30,9 +30,10 @@ public class DABStation {
         
         choix = (int) CLIUtils.saisirEntier(scanner, "Generer Jeu de Test ? (0 : Non/ 1 : Oui) : ", 0, 1);
         
+        this.setStationActuelle();
+        
         if (choix == 1) {
             this.genererJeuTest();
-            this.setStationActuelle();
         }
         
         do {
@@ -169,7 +170,7 @@ public class DABStation {
         String login = CLIUtils.saisirChaine(scanner, "Rentrer votre login : ");
         String passw = CLIUtils.saisirChaine(scanner, "Rentrer votre mot de passe : ");
         
-        if (login.contains("\\."))
+        if (login.contains("."))
             idUs = services.authentifier(login, passw);
         else
             return false;
