@@ -167,7 +167,7 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 usagerFacade.edit(u);
                 
-                return "Rendez vous au quai "+ln.getId()+", vous arriverez au quai "+q.getId();
+                return "Rendez vous au quai "+q2.getId()+", vous arriverez au quai "+q.getId();
                 
             } else {
                 return "Aucun Quais dans la station d'arrivee disponibles";
