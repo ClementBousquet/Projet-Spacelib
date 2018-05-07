@@ -131,7 +131,8 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 voyageFacade.create(v);
                 System.out.println("OperationNavette ...");
-                OperationNavette on = new OperationNavette(ln, 
+                OperationNavette on = new OperationNavette(
+                        v.getIdNavette(), 
                         usagerFacade.find(idUsager), 
                         quaiFacade.find(ln.getQuai().getId()), 
                         q, 
