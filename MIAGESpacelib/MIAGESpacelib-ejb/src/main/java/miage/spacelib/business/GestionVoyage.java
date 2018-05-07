@@ -144,6 +144,7 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 Quai q2 = quaiFacade.find(ln.getQuai().getId());
                 q2.setStatut("Dispo");
+                q2.setIdNavette(null);
                 
                 Navette n = navetteFacade.find(ln.getId());
                 n.setQuai(q);
@@ -236,11 +237,10 @@ public class GestionVoyage implements GestionVoyageLocal {
         Voyage v = null;
 
         System.out.println("Creation voyage null");
-        
-        List<Voyage> lv = voyageFacade.findByUsager(usagerFacade.find(idUsager));
-        
-        System.out.println("Recup' liste voyage "+lv.size());
-        
+        try {
+            
+            List<Voyage> lv = voyageFacade.findByUsager(usagerFacade.find(idUsager));
+            
             for (int i = 0; i < lv.size(); i++) {
                 
                 if (v == null) {
@@ -252,15 +252,17 @@ public class GestionVoyage implements GestionVoyageLocal {
                 }
             }
             
-            System.out.println(v.getId());
-            System.out.println(v.getIntitule());
-            
-            if ("Voyage Initie".equals(v.getIntitule())) {
+            if (v != null && "Voyage Initie".equals(v.getIntitule())) {
                 System.out.println("On a un voyage");
                 return v;
             } else {
                 return null;
             }
+            
+        } catch(javax.persistence.NoResultException e) {
+            e.printStackTrace();
+            return null;
+        }
             
     }
 
