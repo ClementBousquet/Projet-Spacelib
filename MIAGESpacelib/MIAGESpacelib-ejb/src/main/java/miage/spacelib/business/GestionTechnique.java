@@ -1,4 +1,4 @@
-/*
+        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -61,7 +61,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
                     }
                 }
             }
-            ln.add(navetteFacade.find(orn.getIdNavette()));
+            ln.add(navetteFacade.find(orn.getIdNavette().getId()));
             return ln;
         }
     }
@@ -84,7 +84,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
         n.setStatut("EnRevision");
         navetteFacade.edit(n);
         
-        return quaiFacade.find(navetteFacade.find(idNavette).getQuai());
+        return quaiFacade.find(navetteFacade.find(idNavette).getId());
     }
 
     @Override
@@ -112,16 +112,17 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Long authentifier(String login, String pass) {
-        String[] tab = login.split(".");
-        if(tab.length == 2) {
-             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
-            if(us.getMdp().equals(pass) && us.getStatutUsager().equals("Mecanicien")) {
+        String[] tab = login.split("\\.");
+        try {
+            Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
+            if(us != null && us.getMdp().equals(pass) && us.getStatutUsager().equals("Mecanicien")) {
                 return us.getId();
-            } 
+            } else {
+                return 0L;
         }
-        
-        long l = 1;
-        
-        return l;
+        } catch (javax.persistence.NoResultException e) {
+            e.printStackTrace();
+            return 0L;
+        }
     }
 }

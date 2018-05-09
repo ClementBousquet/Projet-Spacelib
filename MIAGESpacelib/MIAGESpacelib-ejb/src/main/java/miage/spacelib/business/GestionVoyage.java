@@ -100,7 +100,7 @@ public class GestionVoyage implements GestionVoyageLocal {
             }
         }
         System.out.println("Récupération des navettes...."+navettes.size());
-
+        
         Calendar c = Calendar.getInstance();
         
         Trajet t = trajetFacade.findByStations(stationFacade.findByName(stationDep), stationFacade.findByName(stationArr));
@@ -208,12 +208,12 @@ public class GestionVoyage implements GestionVoyageLocal {
         mapvo.put(v, on);
         n.setHistorique(mapvo);
         
-        if(mapvo.size()%6 == 0) {
+        if(mapvo.size()%3 == 0) {
             n.setStatut("BesoinRevision");
             
             OperationRevisionNavette orn = new OperationRevisionNavette(
             on.getIdNavette(),
-            quaiFacade.find(on.getQuaiArr()).getIdStation(),
+            quaiFacade.find(on.getQuaiArr().getId()).getIdStation(),
             on.getQuaiArr(),
             null,
             "Revision nécessaire",
