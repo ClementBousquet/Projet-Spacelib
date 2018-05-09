@@ -19,6 +19,7 @@ import miage.spacelib.repositories.StationFacadeLocal;
 import miage.spacelib.repositories.TrajetFacadeLocal;
 import miage.spacelib.repositories.UsagerFacadeLocal;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 /**
  *
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 @Stateless
 public class GestionSpacelib implements GestionSpacelibLocal {
 
-    final static Logger logger = Logger.getLogger(GestionSpacelib.class);
+    final static Logger log4j = Logger.getLogger(GestionSpacelib.class);
     
     @EJB
     private StationFacadeLocal stationFacade;
@@ -46,7 +47,7 @@ public class GestionSpacelib implements GestionSpacelibLocal {
     
     @Override
     public void creerStation(String nom, float coordX, float coordY, List<Integer> nbPassagers) {
-        
+        log4j.info("Créer Station");
         Navette nav;
         Quai q1, q2;
         
@@ -70,7 +71,7 @@ public class GestionSpacelib implements GestionSpacelibLocal {
         
         st.setQuais(listq);
         stationFacade.edit(st);
-        
+        log4j.info("Station crée" + st);
     }
 
     // Add business logic below. (Right-click in editor and choose
@@ -78,11 +79,13 @@ public class GestionSpacelib implements GestionSpacelibLocal {
 
     @Override
     public void ajouterMeca(String nom, String prenom, String pass) {
+        log4j.info("Creer Mécanicien");
         usagerFacade.create(new Usager(nom, prenom, pass, "Mecanicien"));
     }
 
     @Override
     public void creerTrajet(String nomSt1, String nomSt2, int duree) {
+        log4j.info("Créer Trajet");
         trajetFacade.create(new Trajet(stationFacade.findByName(nomSt1),stationFacade.findByName(nomSt2), duree));
     }
 

@@ -29,6 +29,7 @@ import miage.spacelib.repositories.StationFacadeLocal;
 import miage.spacelib.repositories.TrajetFacadeLocal;
 import miage.spacelib.repositories.UsagerFacadeLocal;
 import miage.spacelib.repositories.VoyageFacadeLocal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -37,6 +38,8 @@ import miage.spacelib.repositories.VoyageFacadeLocal;
 @Stateless
 public class GestionVoyage implements GestionVoyageLocal {
 
+    final static Logger log4j = Logger.getLogger(GestionVoyage.class);
+    
     @EJB
     UsagerFacadeLocal usagerFacade;
     
@@ -64,6 +67,7 @@ public class GestionVoyage implements GestionVoyageLocal {
     // LOGIN : NOM.PRENOM
     @Override
     public Long authentifier(String login, String pass) {
+        log4j.debug("authentification de l'usager" + login + " " + pass);
         String[] tab = login.split("\\.");
         try {
             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
@@ -73,23 +77,24 @@ public class GestionVoyage implements GestionVoyageLocal {
                 return 0L;
         }
         } catch (javax.persistence.NoResultException e) {
-            e.printStackTrace();
+            log4j.error("Pas d'usager pour ces identifiants " + e.getMessage());
             return 0L;
         }
     }
 
     @Override
     public void inscrire(String nom, String prenom, String pass) {
+        log4j.debug("Inscription");
         usagerFacade.create(new Usager(nom, prenom, pass));
     }
 
     @Override
     public String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep) {
-        System.out.println("initierVoyage....");
+        log4j.debug("Initialisation du voyage");
+        
         Station st = stationFacade.findByName(stationDep);
-        System.out.println("recupération de la station de départ ...");
         List<Quai> quais = quaiFacade.findByStation(st);
-        System.out.println("recuperation des quais ..."+quais.size());
+        
         List<Navette> navettes = new ArrayList();
         
         for (int i = 0; i < quais.size(); i++) {
@@ -99,16 +104,14 @@ public class GestionVoyage implements GestionVoyageLocal {
                     if (n.getNbPlaces() >= nbPass)
                         navettes.add(navetteFacade.findByQuai(quais.get(i)));
                 } catch (NoResultException e) {
-                    //e.printStackTrace();
+                    log4j.error(" Navette " + navetteFacade.findByQuai(quais.get(i)).getId() +" Non disponible " + e.getMessage());
                 }
             }
         }
-        System.out.println("Récupération des navettes...."+navettes.size());
         
         Calendar c = Calendar.getInstance();
         
         Trajet t = trajetFacade.findByStations(stationFacade.findByName(stationDep), stationFacade.findByName(stationArr));
-        System.out.println("Récupération du trajet...."+t.getDureeVoyage()+" "+t.getStationDep()+" "+t.getStationArr());
         if(navettes.size() > 0) {
             
             Navette ln = navettes.get(0);
@@ -118,7 +121,6 @@ public class GestionVoyage implements GestionVoyageLocal {
                 
                 q.setStatut("NonDispo");
                 ln.setStatut("Voyage");
-                System.out.println("Creation du voyage...");
                 Voyage v = new Voyage(
                         t,
                         ln,
@@ -127,14 +129,12 @@ public class GestionVoyage implements GestionVoyageLocal {
                         nbPass, 
                         new Date(), 
                         "Voyage Initie");
-                System.out.println("Voyage crée...");
                 c.setTime(v.getDateDepart());
                 c.add(Calendar.DATE, t.getDureeVoyage());
                 
                 v.setDateArrive(c.getTime());
                 
                 voyageFacade.create(v);
-                System.out.println("OperationNavette ...");
                 OperationNavette on = new OperationNavette(
                         v.getIdNavette(), 
                         usagerFacade.find(idUsager), 
@@ -186,6 +186,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public void finaliserVoyage(Long idUsager, Long idVoyage) {
+        log4j.debug("Finaliser Voyage");
         
         Voyage v = voyageFacade.find(idVoyage);
         
@@ -242,10 +243,10 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public Voyage afficherVoyage(Long idUsager) {
+        log4j.debug("afficher Voyage");
         
         Voyage v = null;
-
-        System.out.println("Creation voyage null");
+        
         try {
             
             List<Voyage> lv = voyageFacade.findByUsager(usagerFacade.find(idUsager));
@@ -262,14 +263,13 @@ public class GestionVoyage implements GestionVoyageLocal {
             }
             
             if (v != null && "Voyage Initie".equals(v.getIntitule())) {
-                System.out.println("On a un voyage");
                 return v;
             } else {
                 return null;
             }
             
         } catch(javax.persistence.NoResultException e) {
-            e.printStackTrace();
+            log4j.error("Pas de voyage pour l'usager " + idUsager + " " + e.getMessage());
             return null;
         }
             
@@ -277,6 +277,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public List<String> recupStations() {
+        log4j.debug("recuperation des stations");
         List<String> lst = new ArrayList();
         List<Station> ls = stationFacade.findAll();
         for (int i = 0; i < ls.size(); i++) {
