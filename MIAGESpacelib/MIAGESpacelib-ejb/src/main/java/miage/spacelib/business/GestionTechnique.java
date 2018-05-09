@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationRevisionNavette;
 import miage.spacelib.entities.Quai;
@@ -21,6 +20,7 @@ import miage.spacelib.repositories.OperationRevisionNavetteFacadeLocal;
 import miage.spacelib.repositories.QuaiFacadeLocal;
 import miage.spacelib.repositories.StationFacadeLocal;
 import miage.spacelib.repositories.UsagerFacadeLocal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -29,6 +29,8 @@ import miage.spacelib.repositories.UsagerFacadeLocal;
 @Stateless
 public class GestionTechnique implements GestionTechniqueLocal {
 
+    final static Logger log4j = Logger.getLogger(GestionSpacelib.class);
+    
     @EJB
     private StationFacadeLocal stationFacade;
 
@@ -46,7 +48,8 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public List<Navette> afficherRevision(String station, Long idUsager) {
-
+        log4j.info("afficher Revision");
+        
         OperationRevisionNavette orn = null;
         List<Navette> ln = new ArrayList();
 
@@ -55,13 +58,16 @@ public class GestionTechnique implements GestionTechniqueLocal {
             Station st = stationFacade.findByName(station);
             List<Quai> quais = quaiFacade.findByStation(st);
             List<Navette> navettes = new ArrayList();
-            
+            System.out.println("On cherche les navettes en révisions");
+            System.out.println(quais.size());
             for (int i = 0; i < quais.size(); i++) {
                try {
+                    System.out.println("la navette " + navetteFacade.findByQuai(quais.get(i)) + " n'as pas besoin de révision");
                     Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "BesoinRevision");
-                    navettes.add(navetteFacade.findByQuai(quais.get(i)));
-                } catch (NoResultException e) {
-                    //e.printStackTrace();
+                    navettes.add(n);
+                } catch (javax.persistence.NoResultException e) {
+                    log4j.error("La navette "+ navetteFacade.findByQuai(quais.get(i)) +" n'as pas besoin de révision");
+                    log4j.error(e.getMessage());
                 }
             }
             
@@ -85,6 +91,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Quai initierRevision(Long idUsager, Long idNavette, String station) {
+        log4j.info("Initier Revision");
         this.ornFacade.create(new OperationRevisionNavette(
                 navetteFacade.find(idNavette),
                 stationFacade.findByName(station),
@@ -106,6 +113,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public void finaliserRevision(Long idUsager, Long idNavette, String station) {
+        log4j.info("finaliser Révision");
         this.ornFacade.create(new OperationRevisionNavette(
                 navetteFacade.find(idNavette),
                 stationFacade.findByName(station),
@@ -129,6 +137,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Long authentifier(String login, String pass) {
+        log4j.info("Authentifier Mécanicien");
         String[] tab = login.split("\\.");
         try {
             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
@@ -138,7 +147,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
                 return 0L;
         }
         } catch (javax.persistence.NoResultException e) {
-            e.printStackTrace();
+            log4j.error("Pas de mécanicien a ces identifiants " + e.getMessage());
             return 0L;
         }
     }

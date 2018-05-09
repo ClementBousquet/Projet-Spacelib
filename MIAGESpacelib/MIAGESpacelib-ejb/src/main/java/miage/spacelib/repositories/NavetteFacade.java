@@ -47,7 +47,11 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
                         cb.equal(root.get("quai").as(Quai.class), q)
                 )
         );
-        return getEntityManager().createQuery(cq).getSingleResult();
+        try {
+            return getEntityManager().createQuery(cq).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
     @Override
@@ -61,7 +65,11 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
                         cb.equal(cb.upper(root.get("statut").as(String.class)), statut.toUpperCase())
                 )
         );
-        return getEntityManager().createQuery(cq).getSingleResult();
+        try {
+            return getEntityManager().createQuery(cq).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

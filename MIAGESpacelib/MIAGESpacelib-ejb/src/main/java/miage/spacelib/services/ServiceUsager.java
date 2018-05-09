@@ -8,7 +8,9 @@ package miage.spacelib.services;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import miage.spacelib.business.GestionTechniqueLocal;
 import miage.spacelib.business.GestionVoyageLocal;
+import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Voyage;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 
@@ -18,7 +20,7 @@ import miage.spacelib.miagespacelibshared.VoyageVoyage;
  */
 @Stateless
 public class ServiceUsager implements ServiceUsagerRemote {
-
+    
     @EJB
     GestionVoyageLocal gestionVoyage;
     
@@ -45,9 +47,7 @@ public class ServiceUsager implements ServiceUsagerRemote {
     @Override
     public VoyageVoyage afficherVoyage(Long idUsager) {
         Voyage v = gestionVoyage.afficherVoyage(idUsager);
-        System.out.println("On arrive ici");
         if (v != null) {
-            System.out.println("On renvoie le voyage");
             return new VoyageVoyage(v.getId(), v.getDateDepart(), v.getDateArrive(), v.getNbPassager());
         } else {
             return new VoyageVoyage(0L, null, null, 0);
