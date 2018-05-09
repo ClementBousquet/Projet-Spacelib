@@ -5,6 +5,7 @@
  */
 package miage.spacelib.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -18,4 +19,5 @@ public interface ServiceAdminRemote {
     void creerStation(String nom, float coordX, float coordY, List<Integer> nbPass);
     void ajouterMeca(String nom, String prenom, String pass);
     void creerTrajet(String st1, String st2, int duree);
+    List<String> getStations();
 }
