@@ -18,8 +18,8 @@ import miage.spacelib.entities.Quai;
 public interface ServiceMecaLocal {
     
     Long authentifier(String login, String pass);
-    Quai initierRevision(Long idUsager, Long idNavette, String station);
+    String initierRevision(Long idUsager, Long idNavette, String station);
     void finaliserRevision(Long idUsager, Long idNavette, String station);
-    List<Navette> afficherRevision(String station, Long idUsager);
+    List<String> afficherRevision(String station, Long idUsager);
     
 }

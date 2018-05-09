@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 @Stateless
 public class GestionTechnique implements GestionTechniqueLocal {
 
-    final static Logger log4j = Logger.getLogger(GestionSpacelib.class);
+    final static Logger log4j = Logger.getLogger(GestionTechnique.class);
     
     @EJB
     private StationFacadeLocal stationFacade;
@@ -48,7 +48,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public List<Navette> afficherRevision(String station, Long idUsager) {
-        log4j.info("afficher Revision");
+        log4j.debug("afficher Revision");
         
         OperationRevisionNavette orn = null;
         List<Navette> ln = new ArrayList();
@@ -64,7 +64,9 @@ public class GestionTechnique implements GestionTechniqueLocal {
                try {
                     System.out.println("la navette " + navetteFacade.findByQuai(quais.get(i)) + " n'as pas besoin de révision");
                     Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "BesoinRevision");
-                    navettes.add(n);
+                    if (n != null) {
+                        navettes.add(n);
+                    }
                 } catch (javax.persistence.NoResultException e) {
                     log4j.error("La navette "+ navetteFacade.findByQuai(quais.get(i)) +" n'as pas besoin de révision");
                     log4j.error(e.getMessage());
@@ -91,7 +93,12 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Quai initierRevision(Long idUsager, Long idNavette, String station) {
-        log4j.info("Initier Revision");
+        log4j.debug("Initier Revision");
+        
+        if(usagerFacade.find(idUsager).getStatutMeca().equals("Occupe")) {
+            return null;
+        }
+        
         this.ornFacade.create(new OperationRevisionNavette(
                 navetteFacade.find(idNavette),
                 stationFacade.findByName(station),
@@ -108,12 +115,12 @@ public class GestionTechnique implements GestionTechniqueLocal {
         n.setStatut("EnRevision");
         navetteFacade.edit(n);
         
-        return quaiFacade.find(navetteFacade.find(idNavette).getId());
+        return quaiFacade.find(navetteFacade.find(idNavette).getQuai().getId());
     }
 
     @Override
     public void finaliserRevision(Long idUsager, Long idNavette, String station) {
-        log4j.info("finaliser Révision");
+        log4j.debug("finaliser Révision");
         this.ornFacade.create(new OperationRevisionNavette(
                 navetteFacade.find(idNavette),
                 stationFacade.findByName(station),
@@ -137,7 +144,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Long authentifier(String login, String pass) {
-        log4j.info("Authentifier Mécanicien");
+        log4j.debug("Authentifier Mécanicien");
         String[] tab = login.split("\\.");
         try {
             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);

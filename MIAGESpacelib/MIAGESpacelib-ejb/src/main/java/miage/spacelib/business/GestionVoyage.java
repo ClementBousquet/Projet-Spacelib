@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
 @Stateless
 public class GestionVoyage implements GestionVoyageLocal {
 
-    final static Logger log4j = Logger.getLogger(GestionSpacelib.class);
+    final static Logger log4j = Logger.getLogger(GestionVoyage.class);
     
     @EJB
     UsagerFacadeLocal usagerFacade;
@@ -67,7 +67,7 @@ public class GestionVoyage implements GestionVoyageLocal {
     // LOGIN : NOM.PRENOM
     @Override
     public Long authentifier(String login, String pass) {
-        log4j.info("authentification de l'usager" + login + " " + pass);
+        log4j.debug("authentification de l'usager" + login + " " + pass);
         String[] tab = login.split("\\.");
         try {
             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
@@ -84,13 +84,13 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public void inscrire(String nom, String prenom, String pass) {
-        log4j.info("Inscription");
+        log4j.debug("Inscription");
         usagerFacade.create(new Usager(nom, prenom, pass));
     }
 
     @Override
     public String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep) {
-        log4j.info("Initialisation du voyage");
+        log4j.debug("Initialisation du voyage");
         
         Station st = stationFacade.findByName(stationDep);
         List<Quai> quais = quaiFacade.findByStation(st);
@@ -186,7 +186,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public void finaliserVoyage(Long idUsager, Long idVoyage) {
-        log4j.info("Finaliser Voyage");
+        log4j.debug("Finaliser Voyage");
         
         Voyage v = voyageFacade.find(idVoyage);
         
@@ -243,7 +243,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public Voyage afficherVoyage(Long idUsager) {
-        log4j.info("afficher Voyage");
+        log4j.debug("afficher Voyage");
         
         Voyage v = null;
         
@@ -277,7 +277,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public List<String> recupStations() {
-        log4j.info("recuperation des stations");
+        log4j.debug("recuperation des stations");
         List<String> lst = new ArrayList();
         List<Station> ls = stationFacade.findAll();
         for (int i = 0; i < ls.size(); i++) {

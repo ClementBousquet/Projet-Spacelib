@@ -98,6 +98,7 @@ public class DABStation {
         int st;
         long nbPass = CLIUtils.saisirEntier(scanner, "Combien de passagers ? : ");
         List<String> stations = this.services.recupStations();
+        stations.remove(this.stationActuelle);
         int i  = showMenuStation(stations);
         st = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, i-1);
         String msgQuai = this.services.initierVoyage(idUs, (int) nbPass, stations.get(st), this.stationActuelle);
@@ -140,7 +141,7 @@ public class DABStation {
     }
     
     private int showMenuStation(List<String> stations) {
-        CLIUtils.afficherTitreSection("Station de départ");
+        CLIUtils.afficherTitreSection("Menu de sélection");
         for (int i = 0; i < stations.size(); i++) {
                 System.out.println("\t"+i+". "+stations.get(i));
         }
