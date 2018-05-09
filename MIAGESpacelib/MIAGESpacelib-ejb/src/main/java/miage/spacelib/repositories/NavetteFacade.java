@@ -8,6 +8,7 @@ package miage.spacelib.repositories;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -44,6 +45,20 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
         cq.where(
                 cb.and(
                         cb.equal(root.get("quai").as(Quai.class), q)
+                )
+        );
+        return getEntityManager().createQuery(cq).getSingleResult();
+    }
+    
+    @Override
+    public Navette findByQuaiAndStatut(Quai q, String statut) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Navette> cq = cb.createQuery(Navette.class);
+        Root<Navette> root = cq.from(Navette.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("quai").as(Quai.class), q),
+                        cb.equal(cb.upper(root.get("statut").as(String.class)), statut.toUpperCase())
                 )
         );
         return getEntityManager().createQuery(cq).getSingleResult();

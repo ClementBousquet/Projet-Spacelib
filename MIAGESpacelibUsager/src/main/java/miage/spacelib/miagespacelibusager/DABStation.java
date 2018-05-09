@@ -100,8 +100,8 @@ public class DABStation {
         List<String> stations = this.services.recupStations();
         int i  = showMenuStation(stations);
         st = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, i-1);
-        String quai = this.services.initierVoyage(idUs, (int) nbPass, stations.get(st), this.stationActuelle);
-        System.out.println("Voyage Initiée, veuillez vous rendre au quai "+quai);
+        String msgQuai = this.services.initierVoyage(idUs, (int) nbPass, stations.get(st), this.stationActuelle);
+        System.out.println(msgQuai);
     } 
     
     private void finaliserVoyage() {

@@ -27,6 +27,8 @@ public interface NavetteFacadeLocal {
     
     Navette findByQuai(Quai q);
     
+    Navette findByQuaiAndStatut(Quai q, String statut);
+    
     List<Navette> findAll();
 
     List<Navette> findRange(int[] range);

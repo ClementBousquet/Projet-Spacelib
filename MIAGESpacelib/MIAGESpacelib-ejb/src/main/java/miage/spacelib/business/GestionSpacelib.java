@@ -5,7 +5,6 @@
  */
 package miage.spacelib.business;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

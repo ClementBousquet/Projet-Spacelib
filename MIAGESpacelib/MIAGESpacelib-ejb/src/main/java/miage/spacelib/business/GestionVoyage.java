@@ -10,11 +10,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationNavette;
 import miage.spacelib.entities.OperationRevisionNavette;
@@ -96,7 +94,13 @@ public class GestionVoyage implements GestionVoyageLocal {
         
         for (int i = 0; i < quais.size(); i++) {
             if (quais.get(i).getIdNavette() != null) {
-                navettes.add(navetteFacade.findByQuai(quais.get(i)));
+                try {
+                    Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "Disponible");
+                    if (n.getNbPlaces() >= nbPass)
+                        navettes.add(navetteFacade.findByQuai(quais.get(i)));
+                } catch (NoResultException e) {
+                    //e.printStackTrace();
+                }
             }
         }
         System.out.println("Récupération des navettes...."+navettes.size());

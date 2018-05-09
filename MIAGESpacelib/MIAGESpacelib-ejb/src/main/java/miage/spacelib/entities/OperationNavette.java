@@ -27,8 +27,6 @@ public class OperationNavette implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn
     private Navette idNavette;
     
     @JoinColumn

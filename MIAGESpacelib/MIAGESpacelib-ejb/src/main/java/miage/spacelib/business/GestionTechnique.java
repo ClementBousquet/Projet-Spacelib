@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationRevisionNavette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Usager;
 import miage.spacelib.repositories.NavetteFacadeLocal;
 import miage.spacelib.repositories.OperationRevisionNavetteFacadeLocal;
@@ -49,7 +50,20 @@ public class GestionTechnique implements GestionTechniqueLocal {
         List<Navette> ln = new ArrayList();
 
         if (usagerFacade.find(idUsager).getStatutMeca().equals("Libre")) {
-            return this.stationFacade.findNavetteRevision(station);
+            
+            Station st = stationFacade.findByName(station);
+            List<Quai> quais = quaiFacade.findByStation(st);
+            List<Navette> navettes = new ArrayList();
+            
+            for (int i = 0; i < quais.size(); i++) {
+                if (quais.get(i).getIdNavette() != null) {
+                    if (navetteFacade.findByQuaiAndStatut(quais.get(i), "BesoinRevision") != null)
+                        navettes.add(navetteFacade.findByQuai(quais.get(i)));
+                }
+            }
+            
+            return navettes;
+            
         } else {
             List<OperationRevisionNavette> lrn = ornFacade.findAll();
             for (int i = 0; i < lrn.size(); i++) {
