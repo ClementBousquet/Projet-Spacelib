@@ -85,4 +85,9 @@ public class GestionSpacelib implements GestionSpacelibLocal {
     public void creerTrajet(String nomSt1, String nomSt2, int duree) {
         trajetFacade.create(new Trajet(stationFacade.findByName(nomSt1),stationFacade.findByName(nomSt2), duree));
     }
+
+    @Override
+    public List<Station> getStations() {
+        return stationFacade.findAll();
+    }
 }

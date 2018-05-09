@@ -5,10 +5,12 @@
  */
 package miage.spacelib.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.business.GestionSpacelibLocal;
+import miage.spacelib.entities.Station;
 
 /**
  *
@@ -35,7 +37,18 @@ public class ServiceAdmin implements ServiceAdminRemote {
         gestionSpacelib.creerTrajet(st1, st2, duree);
     }
     
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public List<String> getStations() {
+        List<Station> ls = gestionSpacelib.getStations();
+        List<String> stations = new ArrayList<>();
+        for (Station st : ls ) {
+            stations.add(st.getNom());
+        }
+        return stations;
+    }
 
 }
