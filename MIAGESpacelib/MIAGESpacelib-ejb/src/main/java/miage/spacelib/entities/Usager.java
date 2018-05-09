@@ -43,7 +43,6 @@ public class Usager implements Serializable {
     /* Libre, Occupe */
     private String statutMeca;
     
-    @JoinColumn
     private List<Voyage> resa;
     
     protected Usager() {       

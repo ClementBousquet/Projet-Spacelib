@@ -36,7 +36,6 @@ public class Station implements Serializable {
     private String nom;
     
     @OneToMany
-    @JoinColumn
     private List<Quai> quais;
     
     protected Station() {

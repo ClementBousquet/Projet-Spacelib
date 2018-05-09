@@ -25,10 +25,8 @@ public class Trajet implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn
     private Station stationDep;
     
-    @JoinColumn
     private Station stationArr;
     
     //En nombres de jours

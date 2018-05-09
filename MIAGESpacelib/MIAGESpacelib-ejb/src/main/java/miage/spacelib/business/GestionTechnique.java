@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationRevisionNavette;
 import miage.spacelib.entities.Quai;
@@ -56,9 +57,11 @@ public class GestionTechnique implements GestionTechniqueLocal {
             List<Navette> navettes = new ArrayList();
             
             for (int i = 0; i < quais.size(); i++) {
-                if (quais.get(i).getIdNavette() != null) {
-                    if (navetteFacade.findByQuaiAndStatut(quais.get(i), "BesoinRevision") != null)
-                        navettes.add(navetteFacade.findByQuai(quais.get(i)));
+               try {
+                    Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "BesoinRevision");
+                    navettes.add(navetteFacade.findByQuai(quais.get(i)));
+                } catch (NoResultException e) {
+                    //e.printStackTrace();
                 }
             }
             

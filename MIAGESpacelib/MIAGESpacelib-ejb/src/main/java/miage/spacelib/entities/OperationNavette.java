@@ -27,15 +27,13 @@ public class OperationNavette implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JoinColumn
     private Navette idNavette;
-    
-    @JoinColumn
+
     private Usager idUsager;
-    
-    @JoinColumn
+
     private Quai quaiDep;
     
-    @JoinColumn
     private Quai quaiArr;
     
     private Date dateDep;

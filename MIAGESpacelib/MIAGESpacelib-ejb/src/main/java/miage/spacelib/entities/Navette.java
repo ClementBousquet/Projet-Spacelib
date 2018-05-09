@@ -33,7 +33,6 @@ public class Navette implements Serializable {
     private Long id;
 
     @OneToOne
-    @JoinColumn
     private Quai quai;
     
     /* Disponible, Voyage, BesoinRevision, EnRevision */

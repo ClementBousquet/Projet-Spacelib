@@ -18,6 +18,7 @@ import miage.spacelib.repositories.QuaiFacadeLocal;
 import miage.spacelib.repositories.StationFacadeLocal;
 import miage.spacelib.repositories.TrajetFacadeLocal;
 import miage.spacelib.repositories.UsagerFacadeLocal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,6 +27,8 @@ import miage.spacelib.repositories.UsagerFacadeLocal;
 @Stateless
 public class GestionSpacelib implements GestionSpacelibLocal {
 
+    final static Logger logger = Logger.getLogger(GestionSpacelib.class);
+    
     @EJB
     private StationFacadeLocal stationFacade;
 

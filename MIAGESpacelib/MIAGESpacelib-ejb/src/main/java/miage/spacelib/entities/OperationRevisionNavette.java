@@ -31,10 +31,8 @@ public class OperationRevisionNavette implements Serializable {
     @JoinColumn
     private Navette idNavette;
     
-    @JoinColumn
     private Station idStation;
     
-    @JoinColumn
     private Quai idQuai;
     
     @JoinColumn
