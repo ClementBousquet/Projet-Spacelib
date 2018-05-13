@@ -11,6 +11,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.business.GestionSpacelibLocal;
 import miage.spacelib.entities.Station;
+import miage.spacelib.entities.Trajet;
+import miage.spacelib.entities.Usager;
 import org.apache.log4j.Logger;
 
 /**
@@ -43,18 +45,40 @@ public class ServiceAdmin implements ServiceAdminRemote {
         gestionSpacelib.creerTrajet(st1, st2, duree);
     }
     
-    
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
     @Override
-    public List<String> getStations() {
+    public List<String[]> getStations() {
         List<Station> ls = gestionSpacelib.getStations();
-        List<String> stations = new ArrayList<>();
+        List<String[]> stations = new ArrayList<>();
         for (Station st : ls ) {
-            stations.add(st.getNom());
+            String[] maStation = new String []{st.getNom()};
+            stations.add(maStation);
         }
         return stations;
     }
+    
+    @Override
+    public List<String[]> getMecas() {
+        List<Usager> lu = gestionSpacelib.getMecas();
+        List<String[]> mecas = new ArrayList<>();
+        for (Usager us : lu ) {
+            String[] monUsager = new String []{us.getNom(), us.getPrenom(), us.getMdp()};
+            mecas.add(monUsager);
+        }
+        return mecas;
+    }
+    
+    @Override
+    public List<String[]> getTrajets() {
+        List<Trajet> lt = gestionSpacelib.getTrajets();
+        List<String[]> trajets = new ArrayList<>();
+        for (Trajet tr : lt ) {
+            String[] monTrajet = new String []{tr.getStationArr().getNom(), tr.getStationDep().getNom(), Integer.toString(tr.getDureeVoyage())};
+            trajets.add(monTrajet);
+        }
+        return trajets;
+    }
+    
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 
 }

@@ -32,4 +32,6 @@ public interface UsagerFacadeLocal {
 
     int count();
     
+    List<Usager> findMecas();
+    
 }

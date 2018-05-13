@@ -93,4 +93,14 @@ public class GestionSpacelib implements GestionSpacelibLocal {
     public List<Station> getStations() {
         return stationFacade.findAll();
     }
+
+    @Override
+    public List<Usager> getMecas() {
+        return usagerFacade.findMecas();
+    }
+
+    @Override
+    public List<Trajet> getTrajets() {
+        return trajetFacade.findAll();
+    }
 }

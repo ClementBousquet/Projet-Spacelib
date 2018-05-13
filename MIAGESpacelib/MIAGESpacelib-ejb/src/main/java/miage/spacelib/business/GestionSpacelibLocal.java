@@ -8,6 +8,8 @@ package miage.spacelib.business;
 import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Station;
+import miage.spacelib.entities.Trajet;
+import miage.spacelib.entities.Usager;
 
 /**
  *
@@ -20,4 +22,6 @@ public interface GestionSpacelibLocal {
     void ajouterMeca(String nom, String prenom, String pass);
     void creerTrajet(String nomSt1, String nomSt2, int duree);
     List<Station> getStations();
+    List<Usager> getMecas();
+    List<Trajet> getTrajets();
 }

@@ -5,7 +5,6 @@
  */
 package miage.spacelib.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,9 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import miage.spacelib.entities.Navette;
-import miage.spacelib.entities.Quai;
 import miage.spacelib.entities.Station;
-import miage.spacelib.entities.Usager;
 
 /**
  *
@@ -53,7 +50,7 @@ public class StationFacade extends AbstractFacade<Station> implements StationFac
 
     @Override
     public List<Navette> findNavetteRevision(Object id) {
-        Query qu = em.createQuery("SELECT n FROM QUAI, NAVETTE, STATION WHERE NAVETTE.id = QUAI.idNavette AND STATION.id = QUAI.idStation AND NAVETTE.Statut = 'BesoinRevision' AND STATION.id =:id");
+       Query qu = em.createQuery("SELECT n FROM QUAI, NAVETTE, STATION WHERE NAVETTE.id = QUAI.idNavette AND STATION.id = QUAI.idStation AND NAVETTE.Statut = 'BesoinRevision' AND STATION.id =:id");
        List<Navette> n = qu.getResultList();
        return n;
     }
