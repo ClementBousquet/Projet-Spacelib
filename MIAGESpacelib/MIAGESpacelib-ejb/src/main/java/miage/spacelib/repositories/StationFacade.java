@@ -49,12 +49,5 @@ public class StationFacade extends AbstractFacade<Station> implements StationFac
         );
         return getEntityManager().createQuery(cq).getSingleResult();
     }
-
-    @Override
-    public List<Navette> findNavetteRevision(Object id) {
-        Query qu = em.createQuery("SELECT n FROM QUAI, NAVETTE, STATION WHERE NAVETTE.id = QUAI.idNavette AND STATION.id = QUAI.idStation AND NAVETTE.Statut = 'BesoinRevision' AND STATION.id =:id");
-       List<Navette> n = qu.getResultList();
-       return n;
-    }
     
 }
