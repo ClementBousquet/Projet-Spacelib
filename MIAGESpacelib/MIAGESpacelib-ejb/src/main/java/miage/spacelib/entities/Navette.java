@@ -39,6 +39,9 @@ public class Navette implements Serializable {
     @Column(nullable = false)
     private String statut;
     
+    /* Reserve, Libre */
+    private String statutResa;
+    
     @Column(nullable = false)
     private int nbPlaces;
     
@@ -54,6 +57,7 @@ public class Navette implements Serializable {
     public Navette(int nbPlaces) {
         this.nbPlaces = nbPlaces;
         this.statut = "Disponible";
+        this.statutResa = "Libre";
         this.historique = new HashMap();
         this.historiqueRev = new ArrayList();
     }
@@ -66,6 +70,14 @@ public class Navette implements Serializable {
         this.id = id;
     }
 
+    public String getStatutResa() {
+        return statutResa;
+    }
+
+    public void setStatutResa(String statutResa) {
+        this.statutResa = statutResa;
+    }
+    
     public Quai getQuai() {
         return quai;
     }

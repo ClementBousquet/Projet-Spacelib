@@ -9,19 +9,20 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import miage.spacelib.entities.Navette;
+import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Reservation;
 import miage.spacelib.entities.Station;
+import miage.spacelib.entities.Usager;
 
 /**
  *
  * @author Quentin
  */
 @Stateless
-public class StationFacade extends AbstractFacade<Station> implements StationFacadeLocal {
+public class ReservationFacade extends AbstractFacade<Reservation> implements ReservationFacadeLocal {
 
     @PersistenceContext(unitName = "miage.spacelib_MIAGESpacelib-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -31,21 +32,21 @@ public class StationFacade extends AbstractFacade<Station> implements StationFac
         return em;
     }
 
-    public StationFacade() {
-        super(Station.class);
+    public ReservationFacade() {
+        super(Reservation.class);
     }
 
     @Override
-    public Station findByName(String name) {
+    public List<Reservation> findByUsager(Usager us) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Station> cq = cb.createQuery(Station.class);
-        Root<Station> root = cq.from(Station.class);
+        CriteriaQuery<Reservation> cq = cb.createQuery(Reservation.class);
+        Root<Reservation> root = cq.from(Reservation.class);
         cq.where(
                 cb.and(
-                        cb.equal(cb.upper(root.get("nom").as(String.class)), name.toUpperCase())
+                        cb.equal(root.get("usager").as(Usager.class), us)
                 )
         );
-        return getEntityManager().createQuery(cq).getSingleResult();
+        return getEntityManager().createQuery(cq).getResultList();
     }
     
 }

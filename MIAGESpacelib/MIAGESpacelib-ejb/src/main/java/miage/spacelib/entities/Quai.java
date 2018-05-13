@@ -34,7 +34,8 @@ public class Quai implements Serializable {
     @OneToOne
     private Navette idNavette;
     
-    /* Dispo, NonDispo */
+    
+    /* Dispo, NonDispo, Reserve */
     @Column(nullable = false)
     private String statut;
     

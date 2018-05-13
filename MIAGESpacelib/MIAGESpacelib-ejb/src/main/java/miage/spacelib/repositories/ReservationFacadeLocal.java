@@ -7,6 +7,7 @@ package miage.spacelib.repositories;
 
 import java.util.List;
 import javax.ejb.Local;
+import miage.spacelib.entities.Reservation;
 import miage.spacelib.entities.Usager;
 
 /**
@@ -14,24 +15,22 @@ import miage.spacelib.entities.Usager;
  * @author Quentin
  */
 @Local
-public interface UsagerFacadeLocal {
+public interface ReservationFacadeLocal {
 
-    void create(Usager usager);
+    void create(Reservation reservation);
 
-    void edit(Usager usager);
+    void edit(Reservation reservation);
 
-    void remove(Usager usager);
+    void remove(Reservation reservation);
 
-    Usager find(Object id);
-
-    Usager findByNameAndFirstname(String name, String firstName);
+    Reservation find(Object id);
     
-    List<Usager> findAll();
+    List<Reservation> findByUsager(Usager us);
 
-    List<Usager> findRange(int[] range);
+    List<Reservation> findAll();
+
+    List<Reservation> findRange(int[] range);
 
     int count();
-    
-    List<Usager> findMecas();
     
 }

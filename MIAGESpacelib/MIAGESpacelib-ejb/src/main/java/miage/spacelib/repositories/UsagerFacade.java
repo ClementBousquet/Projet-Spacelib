@@ -5,6 +5,7 @@
  */
 package miage.spacelib.repositories;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,6 +45,20 @@ public class UsagerFacade extends AbstractFacade<Usager> implements UsagerFacade
                 )
         );
         return getEntityManager().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public List<Usager> findMecas() {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Usager> cq = cb.createQuery(Usager.class);
+        Root<Usager> root = cq.from(Usager.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("statutUsager").as(Usager.class), "Mecanicien")
+                )
+        );
+        
+        return getEntityManager().createQuery(cq).getResultList();
     }
     
 }

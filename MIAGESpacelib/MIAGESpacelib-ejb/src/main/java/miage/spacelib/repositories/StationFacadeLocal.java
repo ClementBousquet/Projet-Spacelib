@@ -27,8 +27,6 @@ public interface StationFacadeLocal {
     
     Station findByName(String nom);
     
-    List<Navette> findNavetteRevision(Object id);
-    
     List<Station> findAll();
 
     List<Station> findRange(int[] range);

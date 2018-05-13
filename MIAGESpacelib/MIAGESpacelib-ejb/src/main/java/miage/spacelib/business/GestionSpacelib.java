@@ -88,4 +88,19 @@ public class GestionSpacelib implements GestionSpacelibLocal {
         log4j.info("Créer Trajet");
         trajetFacade.create(new Trajet(stationFacade.findByName(nomSt1),stationFacade.findByName(nomSt2), duree));
     }
+
+    @Override
+    public List<Station> getStations() {
+        return stationFacade.findAll();
+    }
+
+    @Override
+    public List<Usager> getMecas() {
+        return usagerFacade.findMecas();
+    }
+
+    @Override
+    public List<Trajet> getTrajets() {
+        return trajetFacade.findAll();
+    }
 }

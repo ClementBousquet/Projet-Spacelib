@@ -5,11 +5,14 @@
  */
 package miage.spacelib.services;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.business.GestionVoyageLocal;
+import miage.spacelib.entities.Reservation;
 import miage.spacelib.entities.Voyage;
+import miage.spacelib.miagespacelibshared.ReservationUs;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 import org.apache.log4j.Logger;
 
@@ -69,5 +72,32 @@ public class ServiceUsager implements ServiceUsagerRemote {
     public List<String> recupStations() {
         log4j.debug("ServiceUsager - recupStations");
         return gestionVoyage.recupStations();
+    }
+
+    @Override
+    public ReservationUs afficherResa(Long idUsager, String st) {
+        log4j.debug("ServiceUsager - afficherResa");
+        Reservation v = gestionVoyage.afficherReservation(idUsager, st);
+        if (v != null) {
+            return new ReservationUs(v.getId(), 
+                v.getQuaiDep().getId().toString(), 
+                v.getQuaiArr().getId().toString(),
+                v.getDateDep()
+            );
+        } else {
+            return new ReservationUs(0L, null, null, new Date());
+        }
+    }
+
+    @Override
+    public String cloturerReservation(Long idUsager, Long idResa) {
+        log4j.debug("ServiceUsager - cloturerReservation");
+        return gestionVoyage.cloturerReservation(idUsager, idResa);
+    }
+
+    @Override
+    public void annulerReservation(Long idUsager, Long idResa) {
+        log4j.debug("ServiceUsager - annulerReservation");
+        gestionVoyage.annulerReservation(idUsager, idResa);
     }
 }

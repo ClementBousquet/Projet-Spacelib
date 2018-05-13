@@ -2,6 +2,7 @@ package miage.spacelib.miagespacelibusager;
 
 import java.util.List;
 import java.util.Scanner;
+import miage.spacelib.miagespacelibshared.ReservationUs;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 import miage.spacelib.services.ServiceUsagerRemote;
 
@@ -19,6 +20,8 @@ public class DABStation {
     private Boolean isVoyage = false;
     private VoyageVoyage v = new VoyageVoyage(0L, null, null, 0);
     private VoyageVoyage vComp = new VoyageVoyage(0L, null, null, 0);
+    private ReservationUs r = new ReservationUs(0L, null, null, null);
+    private ReservationUs rComp = new ReservationUs(0L, null, null, null);
     
     public DABStation(ServiceUsagerRemote services) {
         this.services = services;
@@ -69,6 +72,8 @@ public class DABStation {
         int choix2 = -1;
         do {
             v = services.afficherVoyage(idUs);
+            r = services.afficherResa(idUs, stationActuelle);
+            System.out.println(r.getIdReservation());
             this.showMenuAuthent();
             choix2 = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
             switch (choix2) {
@@ -76,7 +81,10 @@ public class DABStation {
                     deconnexion();
                     break;
                 case 1 :
-                    if(v.getIdVoyage().equals(vComp.getIdVoyage())) {
+                    if (!r.getIdReservation().equals(rComp.getIdReservation())) {
+                        cloturerReservation();
+                    }
+                    else if (v.getIdVoyage().equals(vComp.getIdVoyage())) {
                         initierVoyage();
                     } else {
                         finaliserVoyage();
@@ -131,7 +139,11 @@ public class DABStation {
         if (v.getIdVoyage().equals(vComp.getIdVoyage())) {
             CLIUtils.afficherTitreSection("Menu de sélection");
             System.out.println("\t0. Déconnexion");
-            System.out.println("\t1. InitierVoyage");
+            if (r.getIdReservation().equals(rComp.getIdReservation())) {
+                System.out.println("\t1. InitierVoyage");
+            } else {
+                System.out.println("\t1. CloturerReservation");
+            }          
         } else {
             CLIUtils.afficherTitreSection("Menu de sélection");
             System.out.println("\t0. Déconnexion");
@@ -186,6 +198,16 @@ public class DABStation {
         int nbStations  = showMenuStation(stations);
         int station = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, nbStations-1);
         this.stationActuelle = stations.get(station);
+    }
+    
+    private void cloturerReservation() {
+        System.out.println("Vous avez une réservation le "+r.getDate()+ "partant du quai "+r.getQuaidep()+".");
+        int choix = CLIUtils.yesNoQuestion(scanner, "Souhaitez-vous confirmer cette réservation (y|n) ?") ? 1 : 0;
+        if (choix == 1) {
+            services.cloturerReservation(idUs, r.getIdReservation());
+        } else {
+            services.annulerReservation(idUs, r.getIdReservation());
+        }
     }
     
 }

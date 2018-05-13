@@ -17,6 +17,7 @@ import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.OperationNavette;
 import miage.spacelib.entities.OperationRevisionNavette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Reservation;
 import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 import miage.spacelib.entities.Usager;
@@ -25,6 +26,7 @@ import miage.spacelib.repositories.NavetteFacadeLocal;
 import miage.spacelib.repositories.OperationNavetteFacadeLocal;
 import miage.spacelib.repositories.OperationRevisionNavetteFacadeLocal;
 import miage.spacelib.repositories.QuaiFacadeLocal;
+import miage.spacelib.repositories.ReservationFacadeLocal;
 import miage.spacelib.repositories.StationFacadeLocal;
 import miage.spacelib.repositories.TrajetFacadeLocal;
 import miage.spacelib.repositories.UsagerFacadeLocal;
@@ -39,6 +41,9 @@ import org.apache.log4j.Logger;
 public class GestionVoyage implements GestionVoyageLocal {
 
     final static Logger log4j = Logger.getLogger(GestionVoyage.class);
+    
+    @EJB
+    ReservationFacadeLocal reservationFacade;
     
     @EJB
     UsagerFacadeLocal usagerFacade;
@@ -250,7 +255,6 @@ public class GestionVoyage implements GestionVoyageLocal {
         try {
             
             List<Voyage> lv = voyageFacade.findByUsager(usagerFacade.find(idUsager));
-            
             for (int i = 0; i < lv.size(); i++) {
                 
                 if (v == null) {
@@ -285,6 +289,178 @@ public class GestionVoyage implements GestionVoyageLocal {
         }
         
         return lst;
+        
+    }
+
+    @Override
+    public String creerReservation(Long idUsager, Date datedep, int nbpass, String st1, String st2) {
+        log4j.debug("Creer Reservation");
+        
+        Station st = stationFacade.findByName(st1);
+        List<Quai> quais = quaiFacade.findByStation(st);
+        
+        Quai qa = quaiFacade.findDispoByStation(stationFacade.findByName(st2));
+        
+        if (quais.size() > 0) {
+            
+            List<Navette> navettes = new ArrayList();
+
+            for (int i = 0; i < quais.size(); i++) {
+                if (quais.get(i).getIdNavette() != null) {
+                    try {
+                        Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "Disponible");
+                        if (n.getNbPlaces() >= nbpass && n.getStatutResa().equals("Libre"))
+                            navettes.add(navetteFacade.findByQuai(quais.get(i)));
+                    } catch (NoResultException e) {
+                        log4j.error(" Navette " + navetteFacade.findByQuai(quais.get(i)).getId() +" Non disponible " + e.getMessage());
+                    }
+                }
+            }
+            
+            if (navettes.size() > 0){
+                Navette n = navettes.get(0);
+                Quai qd = n.getQuai();
+                
+                reservationFacade.create(new Reservation(
+                    usagerFacade.find(idUsager),
+                    datedep,
+                    nbpass,
+                    qd,
+                    qa,
+                    n,
+                    trajetFacade.findByStations(stationFacade.findByName(st1), stationFacade.findByName(st2))
+                ));
+                
+                qa.setStatut("Reserve");
+                n.setStatutResa("Reserve");
+                
+                quaiFacade.edit(qa);
+                navetteFacade.edit(n);
+                
+                return "Veuillez vous rendre le "+datedep+" au quai numéro "+qd.getId()+", vous arriverez au quai "+qa.getId();
+                
+            } else {
+                return "pas de navettes disponible en départ de la station "+st1;
+            }
+            
+        } else {
+            return " pas de quais disponible en arrivée à la station "+st2;
+        }
+        
+ 
+    }
+
+    @Override
+    public Reservation afficherReservation(Long idUsager, String station) {
+        log4j.debug("afficher Reservation");
+        
+        List<Reservation> lr = reservationFacade.findByUsager(usagerFacade.find(idUsager));
+        
+        List<Quai> quais = quaiFacade.findByStation(stationFacade.findByName(station));
+        
+        Reservation r = null;
+        
+        for (int i = 0; i < lr.size(); i++) {
+            if ("Cloturer".equals(lr.get(i).getStatut()) || lr.get(i).getDateDep().compareTo(new Date()) < 0 || !quais.contains(lr.get(i).getQuaiDep())  ) {
+                lr.remove(i);
+            }
+        }
+        
+        for (int i = 0; i < lr.size(); i++) {
+            if (r == null) 
+                r = lr.get(i);
+            else
+                if (lr.get(i).getDateDep().compareTo(r.getDateDep()) < 0)
+                    r = lr.get(i);
+        }
+        
+        if (r != null) 
+            return r;
+        else
+            return null;
+    }
+
+    @Override
+    public String cloturerReservation(Long idUsager, Long idResa) {
+        log4j.debug("Cloturer Reservation");
+        
+        Reservation r = reservationFacade.find(idResa);
+        r.setStatut("Cloturer");
+        reservationFacade.edit(r);
+        
+        Navette n = r.getNavette();
+        n.setStatutResa("Libre");
+        
+        Calendar c = Calendar.getInstance();
+        
+        Voyage v = new Voyage(
+                r.getTrajet(),
+                n,
+                usagerFacade.find(idUsager), 
+                new Date(), 
+                r.getNbPassager(), 
+                new Date(), 
+                "Voyage Initie");
+        c.setTime(v.getDateDepart());
+        c.add(Calendar.DATE, r.getTrajet().getDureeVoyage());
+
+        v.setDateArrive(c.getTime());
+
+        voyageFacade.create(v);
+        
+        OperationNavette on = new OperationNavette(
+                v.getIdNavette(), 
+                usagerFacade.find(idUsager), 
+                r.getQuaiDep(), 
+                r.getQuaiArr(), 
+                "Voyage Initie", 
+                new Date(), 
+                c.getTime(), 
+                r.getNbPassager(), 
+                new Date());
+
+        operationNavetteFacade.create(on);
+        
+        Quai q = quaiFacade.find(r.getQuaiDep().getId());
+        Quai q2 = quaiFacade.find(r.getQuaiArr().getId());
+        q.setStatut("Dispo");
+        q.setIdNavette(null);
+
+        n.setQuai(q2);
+        q2.setIdNavette(n);
+
+        q.setStatut("NonDispo");
+        n.setStatut("Voyage");
+        
+        Map<Voyage, OperationNavette> lon = n.getHistorique();
+        lon.put(v, on);
+
+        quaiFacade.edit(q);
+        quaiFacade.edit(q2);
+        navetteFacade.edit(n);
+
+        Usager u = usagerFacade.find(idUsager);
+        List<Voyage> lv = u.getResa();
+        lv.add(v);
+        u.setResa(lv);
+
+        usagerFacade.edit(u);
+        
+        return "Rendez-vous au quai "+r.getId()+", votre navette va partir";
+    }
+
+    @Override
+    public void annulerReservation(Long idUs, Long idResa) {
+        
+        Reservation r = reservationFacade.find(idResa);
+        Navette n = r.getNavette();
+        n.setStatutResa("Libre");
+        navetteFacade.edit(n);
+        Quai qA = r.getQuaiArr();
+        qA.setStatut("Dispo");
+        quaiFacade.edit(qA);
+        
+        reservationFacade.remove(r);
         
     }
 }
