@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Reservation;
+import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Voyage;
 
 /**
@@ -28,4 +29,8 @@ public interface GestionVoyageLocal {
     String cloturerReservation(Long idUsager, Long idResa);
     void annulerReservation(Long idUs, Long idResa);
     List<String> recupStations();
+
+    public List<Station> genererCarteSpacelib();
+
+    public List<Reservation> afficherReservations(Long idUsager);
 }

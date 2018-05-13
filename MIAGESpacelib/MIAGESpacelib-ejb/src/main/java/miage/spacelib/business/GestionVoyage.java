@@ -463,4 +463,23 @@ public class GestionVoyage implements GestionVoyageLocal {
         reservationFacade.remove(r);
         
     }
+
+    @Override
+    public List<Station> genererCarteSpacelib() {
+        return stationFacade.findAll();
+    }
+
+    @Override
+    public List<Reservation> afficherReservations(Long idUsager) {
+        List<Reservation> lr = reservationFacade.findAll();
+        
+        for (int i = 0; i < lr.size(); i++) {
+            if ("Cloturer".equals(lr.get(i).getStatut()) || lr.get(i).getDateDep().compareTo(new Date()) < 0 ) {
+                lr.remove(i);
+            }
+        }
+        
+        return lr;
+        
+    }
 }
