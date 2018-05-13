@@ -12,9 +12,7 @@ import javax.ejb.Stateless;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import miage.spacelib.business.GestionTechniqueLocal;
-import miage.spacelib.entities.Navette;
-import miage.spacelib.entities.Quai;
+import miage.spacelib.services.ServiceMecaLocal;
 
 /**
  *
@@ -25,16 +23,16 @@ import miage.spacelib.entities.Quai;
 public class WSMeca {
 
     @EJB
-    private GestionTechniqueLocal ejbRef;// Add business logic below. (Right-click in editor and choose
+    private ServiceMecaLocal ejbRef;// Add business logic below. (Right-click in editor and choose
     // "Web Service > Add Operation"
 
-    @WebMethod(operationName = "afficherRevision")
-    public List<Navette> afficherRevision(@WebParam(name = "station") String station, @WebParam(name = "idUsager") Long idUsager) {
-        return ejbRef.afficherRevision(station, idUsager);
+    @WebMethod(operationName = "authentifier")
+    public Long authentifier(@WebParam(name = "login") String login, @WebParam(name = "pass") String pass) {
+        return ejbRef.authentifier(login, pass);
     }
 
     @WebMethod(operationName = "initierRevision")
-    public Quai initierRevision(@WebParam(name = "idUsager") Long idUsager, @WebParam(name = "idNavette") Long idNavette, @WebParam(name = "station") String station) {
+    public String initierRevision(@WebParam(name = "idUsager") Long idUsager, @WebParam(name = "idNavette") Long idNavette, @WebParam(name = "station") String station) {
         return ejbRef.initierRevision(idUsager, idNavette, station);
     }
 
@@ -44,9 +42,9 @@ public class WSMeca {
         ejbRef.finaliserRevision(idUsager, idNavette, station);
     }
 
-    @WebMethod(operationName = "authentifier")
-    public Long authentifier(@WebParam(name = "login") String login, @WebParam(name = "pass") String pass) {
-        return ejbRef.authentifier(login, pass);
+    @WebMethod(operationName = "afficherRevision")
+    public List<String> afficherRevision(@WebParam(name = "station") String station, @WebParam(name = "idUsager") Long idUsager) {
+        return ejbRef.afficherRevision(station, idUsager);
     }
     
 }
