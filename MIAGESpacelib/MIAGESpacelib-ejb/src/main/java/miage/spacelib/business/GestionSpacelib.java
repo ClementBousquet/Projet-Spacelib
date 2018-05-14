@@ -106,4 +106,10 @@ public class GestionSpacelib implements GestionSpacelibLocal {
         log4j.debug("getTrajets");
         return trajetFacade.findAll();
     }
+
+    @Override
+    public void ajouterConducteur(String nom, String prenom, String pass) {
+        log4j.debug("ajouterConducteur");
+        usagerFacade.create(new Usager(nom, prenom, pass, "Conducteur"));
+    }
 }

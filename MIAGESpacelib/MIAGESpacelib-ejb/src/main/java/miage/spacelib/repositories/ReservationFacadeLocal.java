@@ -7,6 +7,7 @@ package miage.spacelib.repositories;
 
 import java.util.List;
 import javax.ejb.Local;
+import miage.spacelib.entities.Quai;
 import miage.spacelib.entities.Reservation;
 import miage.spacelib.entities.Usager;
 
@@ -27,6 +28,10 @@ public interface ReservationFacadeLocal {
     
     List<Reservation> findByUsager(Usager us);
 
+    Reservation findByQuaiArrAndLabel(Quai q);
+    
+    Reservation findByQuaiDepAndLabel(Quai q);
+    
     List<Reservation> findAll();
 
     List<Reservation> findRange(int[] range);

@@ -18,19 +18,19 @@ import miage.spacelib.entities.Voyage;
  */
 @Local
 public interface GestionVoyageLocal {
-    
+    /* V1 */
     Long authentifier(String login, String pass);
     void inscrire(String nom, String prenom, String pass);
     String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep);
     void finaliserVoyage(Long idUsager, Long idVoyage);
     Voyage afficherVoyage(Long idUsager);
+    /* V2 */
     String creerReservation(Long idUsager, Date datedep, int nbpass, String st1, String st2);
     Reservation afficherReservation(Long idUsager, String station);
     String cloturerReservation(Long idUsager, Long idResa);
     void annulerReservation(Long idUs, Long idResa);
     List<String> recupStations();
-
     public List<Station> genererCarteSpacelib();
-
     public List<Reservation> afficherReservations(Long idUsager);
+    
 }

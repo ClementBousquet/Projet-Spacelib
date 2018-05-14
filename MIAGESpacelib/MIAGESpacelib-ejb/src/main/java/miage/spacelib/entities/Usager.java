@@ -37,7 +37,7 @@ public class Usager implements Serializable {
     @Column(nullable = false)
     private String mdp;
     
-    /* Mecanicien, Admin, Usager */
+    /* Mecanicien, Admin, Usager, Conducteur */
     private String statutUsager;
     
     /* Libre, Occupe */
