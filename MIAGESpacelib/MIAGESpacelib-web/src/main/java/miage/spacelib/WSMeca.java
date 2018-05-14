@@ -7,17 +7,20 @@ package miage.spacelib;
 
 import java.util.List;
 import javax.ejb.EJB;
+import javax.jws.WebService;
+import javax.ejb.Stateless;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.jws.WebService;
+import miage.spacelib.miagespacelibshared.TrajetAEffectuer;
 import miage.spacelib.services.ServiceMecaLocal;
 
 /**
  *
- * @author clem
+ * @author Quentin
  */
 @WebService(serviceName = "WSMeca")
+@Stateless()
 public class WSMeca {
 
     @EJB
@@ -48,6 +51,11 @@ public class WSMeca {
     @WebMethod(operationName = "authentifierConduc")
     public Long authentifierConduc(@WebParam(name = "login") String login, @WebParam(name = "pass") String pass) {
         return ejbRef.authentifierConduc(login, pass);
+    }
+
+    @WebMethod(operationName = "transfertNecessaire")
+    public List<TrajetAEffectuer> transfertNecessaire() {
+        return ejbRef.transfertNecessaire();
     }
     
 }

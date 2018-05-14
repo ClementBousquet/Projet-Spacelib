@@ -10,6 +10,7 @@ import javax.ejb.Local;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
 import miage.spacelib.entities.Trajet;
+import miage.spacelib.miagespacelibshared.TrajetAEffectuer;
 
 /**
  *
@@ -24,5 +25,5 @@ public interface GestionTechniqueLocal {
     Long authentifierMeca(String login, String pass);
     /* V3 */
     Long authentifierConduc(String login, String pass);
-    void transfertNecessaire();
+    List<TrajetAEffectuer> transfertNecessaire();
 }

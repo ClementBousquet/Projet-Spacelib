@@ -13,35 +13,29 @@ import java.io.Serializable;
  */
 public class TrajetAEffectuer implements Serializable {
     
-    int nbTrajet;
-    int stationDep;
-    int stationArr;
+    private static final long serialVersionUID = 1L;
+    
+    String stationDep;
+    String stationArr;
     
     public TrajetAEffectuer() {
-        
+        stationDep = "";
+        stationArr = "";
     }
 
-    public int getNbTrajet() {
-        return nbTrajet;
-    }
-
-    public void setNbTrajet(int nbTrajet) {
-        this.nbTrajet = nbTrajet;
-    }
-
-    public int getStationDep() {
+    public String getStationDep() {
         return stationDep;
     }
 
-    public void setStationDep(int stationDep) {
+    public void setStationDep(String stationDep) {
         this.stationDep = stationDep;
     }
 
-    public int getStationArr() {
+    public String getStationArr() {
         return stationArr;
     }
 
-    public void setStationArr(int stationArr) {
+    public void setStationArr(String stationArr) {
         this.stationArr = stationArr;
     }
     

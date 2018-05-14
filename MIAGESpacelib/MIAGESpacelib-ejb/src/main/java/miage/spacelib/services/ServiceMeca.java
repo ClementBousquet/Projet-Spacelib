@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import miage.spacelib.business.GestionTechniqueLocal;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.miagespacelibshared.TrajetAEffectuer;
 import org.apache.log4j.Logger;
 
 /**
@@ -74,4 +75,10 @@ public class ServiceMeca implements ServiceMecaLocal {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public List<TrajetAEffectuer> transfertNecessaire() {
+        log4j.debug("transfertNecessaire");
+        return gestionTech.transfertNecessaire();
+    }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.miagespacelibshared.TrajetAEffectuer;
 
 /**
  *
@@ -23,5 +24,6 @@ public interface ServiceMecaLocal {
     List<String> afficherRevision(String station, Long idUsager);
     
     Long authentifierConduc(String login, String pass);
+    List<TrajetAEffectuer> transfertNecessaire();
     
 }
