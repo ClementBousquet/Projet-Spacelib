@@ -48,7 +48,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public List<Navette> afficherRevision(String station, Long idUsager) {
-        log4j.debug("afficher Revision");
+        log4j.debug("afficherRevision");
         
         OperationRevisionNavette orn = null;
         List<Navette> ln = new ArrayList();
@@ -93,7 +93,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Quai initierRevision(Long idUsager, Long idNavette, String station) {
-        log4j.debug("Initier Revision");
+        log4j.debug("initierRevision");
         
         if(usagerFacade.find(idUsager).getStatutMeca().equals("Occupe")) {
             return null;
@@ -120,7 +120,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public void finaliserRevision(Long idUsager, Long idNavette, String station) {
-        log4j.debug("finaliser Révision");
+        log4j.debug("finaliserRévision");
         this.ornFacade.create(new OperationRevisionNavette(
                 navetteFacade.find(idNavette),
                 stationFacade.findByName(station),
@@ -144,7 +144,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
 
     @Override
     public Long authentifier(String login, String pass) {
-        log4j.debug("Authentifier Mécanicien");
+        log4j.debug("authentifier");
         String[] tab = login.split("\\.");
         try {
             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);

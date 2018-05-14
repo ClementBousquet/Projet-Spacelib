@@ -29,24 +29,25 @@ public class ServiceAdmin implements ServiceAdminRemote {
     
     @Override
     public void creerStation(String nom, float coordX, float coordY, List<Integer> nbPass) {
-        log4j.debug("ServiceAdmin - creerStation " + nom );
+        log4j.debug("creerStation");
         gestionSpacelib.creerStation(nom, coordX, coordY, nbPass);
     }
 
     @Override
     public void ajouterMeca(String nom, String prenom, String pass) {
-        log4j.debug("ServiceAdmin - ajouterMeca " + nom +" "+prenom+" "+pass);
+        log4j.debug("ajouterMeca");
         gestionSpacelib.ajouterMeca(nom, prenom, pass);
     }
 
     @Override
     public void creerTrajet(String st1, String st2, int duree) {
-        log4j.debug("ServiceAdmin - creerTrajet " + st1 +" "+st2+" "+duree );
+        log4j.debug("creerTrajet");
         gestionSpacelib.creerTrajet(st1, st2, duree);
     }
     
     @Override
     public List<String[]> getStations() {
+        log4j.debug("getStations");
         List<Station> ls = gestionSpacelib.getStations();
         List<String[]> stations = new ArrayList<>();
         for (Station st : ls ) {
@@ -58,6 +59,7 @@ public class ServiceAdmin implements ServiceAdminRemote {
     
     @Override
     public List<String[]> getMecas() {
+        log4j.debug("getMecas");
         List<Usager> lu = gestionSpacelib.getMecas();
         List<String[]> mecas = new ArrayList<>();
         for (Usager us : lu ) {
@@ -69,6 +71,7 @@ public class ServiceAdmin implements ServiceAdminRemote {
     
     @Override
     public List<String[]> getTrajets() {
+        log4j.debug("getTrajets");
         List<Trajet> lt = gestionSpacelib.getTrajets();
         List<String[]> trajets = new ArrayList<>();
         for (Trajet tr : lt ) {

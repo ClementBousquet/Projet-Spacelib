@@ -15,6 +15,7 @@ import miage.spacelib.business.GestionVoyageLocal;
 import miage.spacelib.entities.Station;
 import miage.spacelib.miagespacelibshared.Coordonnee;
 import miage.spacelib.miagespacelibshared.StationUs;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,11 +24,15 @@ import miage.spacelib.miagespacelibshared.StationUs;
 @Stateless
 public class ServiceCarteSpacelib implements ServiceCarteSpacelibLocal {
 
+        final static Logger log4j = Logger.getLogger(ServiceCarteSpacelib.class);
+
+    
     @EJB
     GestionVoyageLocal gestionVoyage;
     
     @Override
     public List<StationUs> genCarteSpacelib() {
+        log4j.debug("genCarteSpacelib");
         List<Station> ls = gestionVoyage.genererCarteSpacelib();  
         List<StationUs> lus = new ArrayList();
         

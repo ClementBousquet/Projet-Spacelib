@@ -28,13 +28,13 @@ public class ServiceMeca implements ServiceMecaLocal {
     
     @Override
     public Long authentifier(String login, String pass) {
-        log4j.debug("ServiceMeca - authentifier " + login + " " + pass);
+        log4j.debug("authentifier ");
         return gestionTech.authentifier(login, pass);
     }
 
     @Override
     public String initierRevision(Long idUsager, Long idNavette, String station) {
-        log4j.debug("ServiceMeca - initierRevision " + idUsager + " " + idNavette + " " + station);
+        log4j.debug("initierRevision ");
         try {
             Quai q = gestionTech.initierRevision(idUsager, idNavette, station);
             System.out.println("initierRevision4");
@@ -47,13 +47,13 @@ public class ServiceMeca implements ServiceMecaLocal {
 
     @Override
     public void finaliserRevision(Long idUsager, Long idNavette, String station) {
-        log4j.debug("ServiceMeca - finaliserRevision " + idUsager + " " + idNavette + " " + station);
+        log4j.debug("finaliserRevision ");
         gestionTech.finaliserRevision(idUsager, idNavette, station);
     }
 
     @Override
     public List<String> afficherRevision(String station, Long idUsager) {
-        log4j.debug("ServiceMeca - afficherRevision " + idUsager + " " + station);
+        log4j.debug("afficherRevision ");
         List<String> ls = new ArrayList();
         List<Navette> ln = gestionTech.afficherRevision(station, idUsager);
 

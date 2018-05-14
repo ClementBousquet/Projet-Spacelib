@@ -72,7 +72,7 @@ public class GestionVoyage implements GestionVoyageLocal {
     // LOGIN : NOM.PRENOM
     @Override
     public Long authentifier(String login, String pass) {
-        log4j.debug("authentification de l'usager" + login + " " + pass);
+        log4j.debug("authentifier");
         String[] tab = login.split("\\.");
         try {
             Usager us = usagerFacade.findByNameAndFirstname(tab[0], tab[1]);
@@ -89,13 +89,13 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public void inscrire(String nom, String prenom, String pass) {
-        log4j.debug("Inscription");
+        log4j.debug("inscrire");
         usagerFacade.create(new Usager(nom, prenom, pass));
     }
 
     @Override
     public String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep) {
-        log4j.debug("Initialisation du voyage");
+        log4j.debug("initierVoyage");
         
         Station st = stationFacade.findByName(stationDep);
         List<Quai> quais = quaiFacade.findByStation(st);
@@ -191,7 +191,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public void finaliserVoyage(Long idUsager, Long idVoyage) {
-        log4j.debug("Finaliser Voyage");
+        log4j.debug("finaliserVoyage");
         
         Voyage v = voyageFacade.find(idVoyage);
         
@@ -248,7 +248,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public Voyage afficherVoyage(Long idUsager) {
-        log4j.debug("afficher Voyage");
+        log4j.debug("afficherVoyage");
         
         Voyage v = null;
         
@@ -281,7 +281,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public List<String> recupStations() {
-        log4j.debug("recuperation des stations");
+        log4j.debug("recupStations");
         List<String> lst = new ArrayList();
         List<Station> ls = stationFacade.findAll();
         for (int i = 0; i < ls.size(); i++) {
@@ -294,7 +294,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public String creerReservation(Long idUsager, Date datedep, int nbpass, String st1, String st2) {
-        log4j.debug("Creer Reservation");
+        log4j.debug("creerReservation");
         
         Station st = stationFacade.findByName(st1);
         List<Quai> quais = quaiFacade.findByStation(st);
@@ -352,7 +352,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public Reservation afficherReservation(Long idUsager, String station) {
-        log4j.debug("afficher Reservation");
+        log4j.debug("afficherReservation");
         
         List<Reservation> lr = reservationFacade.findByUsager(usagerFacade.find(idUsager));
         
@@ -382,7 +382,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public String cloturerReservation(Long idUsager, Long idResa) {
-        log4j.debug("Cloturer Reservation");
+        log4j.debug("cloturerReservation");
         
         Reservation r = reservationFacade.find(idResa);
         r.setStatut("Cloturer");
@@ -451,7 +451,7 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public void annulerReservation(Long idUs, Long idResa) {
-        
+        log4j.debug("annlerReservation");
         Reservation r = reservationFacade.find(idResa);
         Navette n = r.getNavette();
         n.setStatutResa("Libre");
@@ -466,11 +466,13 @@ public class GestionVoyage implements GestionVoyageLocal {
 
     @Override
     public List<Station> genererCarteSpacelib() {
+        log4j.debug("genererCarteSpacelib");
         return stationFacade.findAll();
     }
 
     @Override
     public List<Reservation> afficherReservations(Long idUsager) {
+        log4j.debug("afficherReservations");
         List<Reservation> lr = reservationFacade.findAll();
         
         for (int i = 0; i < lr.size(); i++) {

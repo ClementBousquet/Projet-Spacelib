@@ -16,6 +16,8 @@ public class DABStation {
     private final Scanner scanner = new Scanner(System.in);
     private String stationActuelle;
     
+    private int run = 0;
+    
     private Long idUs = null;
     private Boolean isVoyage = false;
     private VoyageVoyage v = new VoyageVoyage(0L, null, null, 0);
@@ -64,8 +66,9 @@ public class DABStation {
                         System.out.println("Erreur de choix");
                 }
             } while (choix != 0);
+            run = CLIUtils.yesNoQuestion(scanner, "Voulez vous quitter l'application (y|n) ?") ? 1 : 0;
             this.quitter();
-        } while (true);
+        } while (run != 1);
     }
     
      private void launchServCli() {
@@ -73,7 +76,6 @@ public class DABStation {
         do {
             v = services.afficherVoyage(idUs);
             r = services.afficherResa(idUs, stationActuelle);
-            System.out.println(r.getIdReservation());
             this.showMenuAuthent();
             choix2 = (int) CLIUtils.saisirEntier(scanner, "Que voulez vous faire : ", 0, 1);
             switch (choix2) {

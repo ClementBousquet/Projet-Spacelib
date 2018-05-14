@@ -31,31 +31,31 @@ public class ServiceUsager implements ServiceUsagerRemote {
     
     @Override
     public Long authentifier(String login, String pass) {
-        log4j.debug("ServiceUsager - Authentifier " + login + " " + pass);
+        log4j.debug("authentifier");
         return gestionVoyage.authentifier(login, pass);
     }
 
     @Override
     public void inscrire(String nom, String prenom, String pass) {
-        log4j.debug("ServiceUsager - Inscrire " + nom + " " + prenom + " " + pass);
+        log4j.debug("inscrire ");
         gestionVoyage.inscrire(nom, prenom, pass);
     }
 
     @Override
     public String initierVoyage(Long idUsager, int nbPass, String stationArr, String stationDep) {
-        log4j.debug("ServiceUsager - initierVoyage " + idUsager + " " + nbPass + " " + stationArr + " " + stationDep);
+        log4j.debug("initierVoyage");
         return gestionVoyage.initierVoyage(idUsager, nbPass, stationArr, stationDep);
     }
 
     @Override
     public void finaliserVoyage(Long idUsager, VoyageVoyage v) {
-        log4j.debug("ServiceUsager - finaliserVoyage " + idUsager + " " + v.toString());
+        log4j.debug("finaliserVoyage");
         gestionVoyage.finaliserVoyage(idUsager, v.getIdVoyage());
     }
 
     @Override
     public VoyageVoyage afficherVoyage(Long idUsager) {
-        log4j.debug("ServiceUsager - afficherVoyage "+ idUsager);
+        log4j.debug("afficherVoyage");
         Voyage v = gestionVoyage.afficherVoyage(idUsager);
         if (v != null) {
             return new VoyageVoyage(v.getId(), v.getDateDepart(), v.getDateArrive(), v.getNbPassager());
@@ -70,13 +70,13 @@ public class ServiceUsager implements ServiceUsagerRemote {
 
     @Override
     public List<String> recupStations() {
-        log4j.debug("ServiceUsager - recupStations");
+        log4j.debug("recupStations");
         return gestionVoyage.recupStations();
     }
 
     @Override
     public ReservationUs afficherResa(Long idUsager, String st) {
-        log4j.debug("ServiceUsager - afficherResa");
+        log4j.debug("afficherResa");
         Reservation v = gestionVoyage.afficherReservation(idUsager, st);
         if (v != null) {
             return new ReservationUs(v.getId(), 
@@ -91,13 +91,13 @@ public class ServiceUsager implements ServiceUsagerRemote {
 
     @Override
     public String cloturerReservation(Long idUsager, Long idResa) {
-        log4j.debug("ServiceUsager - cloturerReservation");
+        log4j.debug("cloturerReservation");
         return gestionVoyage.cloturerReservation(idUsager, idResa);
     }
 
     @Override
     public void annulerReservation(Long idUsager, Long idResa) {
-        log4j.debug("ServiceUsager - annulerReservation");
+        log4j.debug("annulerReservation");
         gestionVoyage.annulerReservation(idUsager, idResa);
     }
 }

@@ -47,7 +47,7 @@ public class GestionSpacelib implements GestionSpacelibLocal {
     
     @Override
     public void creerStation(String nom, float coordX, float coordY, List<Integer> nbPassagers) {
-        log4j.info("Créer Station");
+        log4j.debug("créerStation");
         Navette nav;
         Quai q1, q2;
         
@@ -79,28 +79,31 @@ public class GestionSpacelib implements GestionSpacelibLocal {
 
     @Override
     public void ajouterMeca(String nom, String prenom, String pass) {
-        log4j.info("Creer Mécanicien");
+        log4j.debug("ajouterMeca");
         usagerFacade.create(new Usager(nom, prenom, pass, "Mecanicien"));
     }
 
     @Override
     public void creerTrajet(String nomSt1, String nomSt2, int duree) {
-        log4j.info("Créer Trajet");
+        log4j.debug("créerTrajet");
         trajetFacade.create(new Trajet(stationFacade.findByName(nomSt1),stationFacade.findByName(nomSt2), duree));
     }
 
     @Override
     public List<Station> getStations() {
+        log4j.debug("gesStations");
         return stationFacade.findAll();
     }
 
     @Override
     public List<Usager> getMecas() {
+        log4j.debug("getMecas");
         return usagerFacade.findMecas();
     }
 
     @Override
     public List<Trajet> getTrajets() {
+        log4j.debug("getTrajets");
         return trajetFacade.findAll();
     }
 }

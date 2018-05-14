@@ -111,18 +111,22 @@ public class ConsoleAdmin {
     private void genererJeuTest() {
         
         List<Integer> navettes = new ArrayList();
-        navettes.add(2);
         navettes.add(5);
         navettes.add(5);
+        navettes.add(5);
+        navettes.add(10);
+        navettes.add(10);
         this.services.creerStation("Terre", 1, 1, navettes);
+        this.services.creerStation("Amateru", 5, 5, navettes);
+        this.services.creerStation("Tadmor", 6, 6, navettes);
+        navettes.add(15);
+        navettes.add(15);
+        navettes.add(10);
+        navettes.add(15);
         navettes.add(15);
         this.services.creerStation("Dimidium", 2, 2, navettes);
         this.services.creerStation("Arion", 3, 3, navettes);
         this.services.creerStation("Brahe", 4, 4, navettes);
-        navettes.add(10);
-        navettes.add(10);
-        this.services.creerStation("Amateru", 5, 5, navettes);
-        this.services.creerStation("Tadmor", 6, 6, navettes);
         
         this.services.ajouterMeca("Guillet", "Quentin", "toulouse");
         this.services.ajouterMeca("Bousquet", "Clement", "canard");

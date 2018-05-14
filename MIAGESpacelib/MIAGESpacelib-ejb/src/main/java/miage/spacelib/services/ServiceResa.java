@@ -52,7 +52,7 @@ public class ServiceResa implements ServiceResaLocal {
 
     @Override
     public List<ReservationUs> afficherReservations(Long idUsager) {
-        log4j.debug("annulerReservation");
+        log4j.debug("afficherReservations");
         List<ReservationUs> list = new ArrayList();
         List<Reservation> ls = gestionVoyage.afficherReservations(idUsager);
         for (int i = 0; i < ls.size(); i++) {
