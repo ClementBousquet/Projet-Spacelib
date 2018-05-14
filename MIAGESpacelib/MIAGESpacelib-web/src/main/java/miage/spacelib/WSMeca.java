@@ -24,9 +24,9 @@ public class WSMeca {
     private ServiceMecaLocal ejbRef;// Add business logic below. (Right-click in editor and choose
     // "Web Service > Add Operation"
 
-    @WebMethod(operationName = "authentifier")
-    public Long authentifier(@WebParam(name = "login") String login, @WebParam(name = "pass") String pass) {
-        return ejbRef.authentifier(login, pass);
+    @WebMethod(operationName = "authentifierMeca")
+    public Long authentifierMeca(@WebParam(name = "login") String login, @WebParam(name = "pass") String pass) {
+        return ejbRef.authentifierMeca(login, pass);
     }
 
     @WebMethod(operationName = "initierRevision")
@@ -43,6 +43,11 @@ public class WSMeca {
     @WebMethod(operationName = "afficherRevision")
     public List<String> afficherRevision(@WebParam(name = "station") String station, @WebParam(name = "idUsager") Long idUsager) {
         return ejbRef.afficherRevision(station, idUsager);
+    }
+
+    @WebMethod(operationName = "authentifierConduc")
+    public Long authentifierConduc(@WebParam(name = "login") String login, @WebParam(name = "pass") String pass) {
+        return ejbRef.authentifierConduc(login, pass);
     }
     
 }

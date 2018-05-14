@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Trajet;
 
 /**
  *
@@ -16,10 +17,12 @@ import miage.spacelib.entities.Quai;
  */
 @Local
 public interface GestionTechniqueLocal {
-    
+    /* V1 */
     List<Navette> afficherRevision(String station, Long idUsager);
     Quai initierRevision(Long idUsager, Long idNavette, String station);
     void finaliserRevision(Long idUsager, Long idNavette, String station);
-    Long authentifier(String login, String pass);
-    
+    Long authentifierMeca(String login, String pass);
+    /* V3 */
+    Long authentifierConduc(String login, String pass);
+    void transfertNecessaire();
 }

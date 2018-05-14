@@ -97,7 +97,7 @@ public class Authentification extends HttpServlet {
         this.wsresa = new WSResa();
         String login = request.getParameter("login");
         String pass = request.getParameter("pass");
-        long nb = wsmeca.authentifier(login, pass);
+        long nb = wsmeca.authentifierMeca(login, pass);
         System.out.println(nb+"");
     }
 

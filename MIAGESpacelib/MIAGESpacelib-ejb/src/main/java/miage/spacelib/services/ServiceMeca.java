@@ -27,9 +27,9 @@ public class ServiceMeca implements ServiceMecaLocal {
     private GestionTechniqueLocal gestionTech;
     
     @Override
-    public Long authentifier(String login, String pass) {
-        log4j.debug("authentifier ");
-        return gestionTech.authentifier(login, pass);
+    public Long authentifierMeca(String login, String pass) {
+        log4j.debug("authentifierMeca");
+        return gestionTech.authentifierMeca(login, pass);
     }
 
     @Override
@@ -65,6 +65,11 @@ public class ServiceMeca implements ServiceMecaLocal {
         
     }
 
+    @Override
+    public Long authentifierConduc(String login, String pass) {
+        log4j.debug("authentifierConduc");
+        return gestionTech.authentifierConduc(login, pass);
+    }
     
     
     // Add business logic below. (Right-click in editor and choose

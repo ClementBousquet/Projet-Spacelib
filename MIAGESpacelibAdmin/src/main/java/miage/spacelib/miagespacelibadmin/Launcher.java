@@ -5,9 +5,6 @@
  */
 package miage.spacelib.miagespacelibadmin;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import javax.naming.NamingException;
 
 /**

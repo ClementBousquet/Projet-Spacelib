@@ -17,11 +17,13 @@ import miage.spacelib.entities.Usager;
  */
 @Local
 public interface GestionSpacelibLocal {
-    
+    /* V1 */
     void creerStation(String nom, float coordX, float coordY, List<Integer> nbPassagers);
     void ajouterMeca(String nom, String prenom, String pass);
     void creerTrajet(String nomSt1, String nomSt2, int duree);
     List<Station> getStations();
     List<Usager> getMecas();
     List<Trajet> getTrajets();
+    /* V3 */
+    void ajouterConducteur(String nom, String prenom, String pass);
 }
