@@ -15,11 +15,15 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ServiceAdminRemote {
-    
+    /* V1 */
     void creerStation(String nom, float coordX, float coordY, List<Integer> nbPass);
     void ajouterMeca(String nom, String prenom, String pass);
     void creerTrajet(String st1, String st2, int duree);
     List<String[]> getStations();
     List<String[]> getMecas();
     List<String[]> getTrajets();
+    /* V3 */
+    void ajouterConduc(String nom, String prenom, String pass);
+    /* V4 */
+    void nettoyerResa();
 }

@@ -84,4 +84,16 @@ public class ServiceAdmin implements ServiceAdminRemote {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
+    @Override
+    public void ajouterConduc(String nom, String prenom, String pass) {
+        log4j.debug("ajouterConduc");
+        gestionSpacelib.ajouterConducteur(nom, prenom, pass);
+    }
+
+    @Override
+    public void nettoyerResa() {
+        log4j.debug("nettoyerResa");
+        gestionSpacelib.nettoyerResa();
+    }
+
 }

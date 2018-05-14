@@ -36,7 +36,7 @@ public class ConsoleAdmin {
         do {
             do {
                 showMenu();
-                choix = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, 3);
+                choix = (int) CLIUtils.saisirEntier(scanner, "Votre choix : ", 0, 5);
                     switch (choix) {
                         case 0:
                             break;
@@ -50,6 +50,14 @@ public class ConsoleAdmin {
                             break;
                         case 3:
                             AjouterMeca();
+                            choix = this.askNext();
+                            break;
+                        case 4:
+                            AjouterConducteur();
+                            choix = this.askNext();
+                            break;
+                        case 5: 
+                            NettoyerReservations();
                             choix = this.askNext();
                             break;
                         default:
@@ -67,6 +75,8 @@ public class ConsoleAdmin {
         System.out.println("\t1. Ajouter une nouvelle Station");
         System.out.println("\t2. Ajouter un nouveau Trajet");
         System.out.println("\t3. Ajouter un nouveau Mécanicien");
+        System.out.println("\t4. Ajouter un nouveau Conducteur");
+        System.out.println("\t5. Nettoyer les réservations");
     }
     
     private void AjouterMeca() {
@@ -170,6 +180,17 @@ public class ConsoleAdmin {
         
         System.out.println("Jeu de Test initialisé");
         
+    }
+
+    private void AjouterConducteur() {
+        String nom = CLIUtils.saisirChaine(scanner, "Entrer le nom : ");
+        String prenom = CLIUtils.saisirChaine(scanner, "Entrer le prenom : ");
+        String pass = CLIUtils.saisirChaine(scanner, "Entrer le mot de passe : ");
+        this.services.ajouterConduc(nom, prenom, pass);
+    }
+
+    private void NettoyerReservations() {
+        this.services.nettoyerResa();
     }
     
 }

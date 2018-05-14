@@ -26,4 +26,6 @@ public interface GestionSpacelibLocal {
     List<Trajet> getTrajets();
     /* V3 */
     void ajouterConducteur(String nom, String prenom, String pass);
+
+    public void nettoyerResa();
 }

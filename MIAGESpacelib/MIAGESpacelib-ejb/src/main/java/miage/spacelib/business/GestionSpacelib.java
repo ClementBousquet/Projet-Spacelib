@@ -5,22 +5,23 @@
  */
 package miage.spacelib.business;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Reservation;
 import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Trajet;
 import miage.spacelib.entities.Usager;
 import miage.spacelib.repositories.NavetteFacadeLocal;
 import miage.spacelib.repositories.QuaiFacadeLocal;
+import miage.spacelib.repositories.ReservationFacadeLocal;
 import miage.spacelib.repositories.StationFacadeLocal;
 import miage.spacelib.repositories.TrajetFacadeLocal;
 import miage.spacelib.repositories.UsagerFacadeLocal;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
-
 /**
  *
  * @author Quentin
@@ -44,6 +45,9 @@ public class GestionSpacelib implements GestionSpacelibLocal {
     
     @EJB
     private TrajetFacadeLocal trajetFacade;
+    
+    @EJB
+    private ReservationFacadeLocal reservationFacade;
     
     @Override
     public void creerStation(String nom, float coordX, float coordY, List<Integer> nbPassagers) {
@@ -111,5 +115,16 @@ public class GestionSpacelib implements GestionSpacelibLocal {
     public void ajouterConducteur(String nom, String prenom, String pass) {
         log4j.debug("ajouterConducteur");
         usagerFacade.create(new Usager(nom, prenom, pass, "Conducteur"));
+    }
+
+    @Override
+    public void nettoyerResa() {
+        log4j.debug("nettoyerResa");
+        List<Reservation> lr = reservationFacade.findAll();
+        for (int i = 0; i < lr.size(); i++) {
+            if (lr.get(i).getDateDep().compareTo(new Date()) < 0 && lr.get(i).getStatut().equals("EnCours")) {
+                reservationFacade.remove(lr.get(i));
+            }
+        }
     }
 }
