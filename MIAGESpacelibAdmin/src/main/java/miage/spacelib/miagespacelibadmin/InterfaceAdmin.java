@@ -93,6 +93,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     public void resetOngletTrajet () {
         DefaultTableModel model = (DefaultTableModel) jTableTrajet.getModel();
         model.setRowCount(0);
+        this.stations = this.services.getStations();
         this.trajets = this.services.getTrajets();
         for(int i = 0; i < trajets.size(); i++) {
             String rowData[] = { "", "", "" };
@@ -177,6 +178,12 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jTextFieldMecaMdp = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPaneMouseClicked(evt);
+            }
+        });
 
         jTableStation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -355,19 +362,18 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                         .addComponent(jLabelStationDepart)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxStationDepart, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelAjoutTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
-                            .addComponent(jLabelStationArrivee)
-                            .addGap(12, 12, 12)
-                            .addComponent(jComboBoxStationArrivee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
-                            .addGroup(jPanelAjoutTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
-                                    .addComponent(jLabelDureeTrajet)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSpinnerDureeTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jButtonAjouterTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
+                        .addComponent(jLabelStationArrivee)
+                        .addGap(12, 12, 12)
+                        .addComponent(jComboBoxStationArrivee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
+                        .addGroup(jPanelAjoutTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
+                                .addComponent(jLabelDureeTrajet)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinnerDureeTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButtonAjouterTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelAjoutTrajetLayout.setVerticalGroup(
@@ -614,6 +620,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         this.Etat = Etat.Etat_initial;
         transitionEtat_initial();
     }//GEN-LAST:event_jButtonAjouterMecaActionPerformed
+
+    private void jTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPaneMouseClicked
+        resetOngletTrajet();
+    }//GEN-LAST:event_jTabbedPaneMouseClicked
 
     /**
      * @param args the command line arguments
