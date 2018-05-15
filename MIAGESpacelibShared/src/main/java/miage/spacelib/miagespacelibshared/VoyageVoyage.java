@@ -21,6 +21,10 @@ public class VoyageVoyage implements Serializable {
     private Date dateArrive;
     private int nbPassager;
     
+    public VoyageVoyage(){
+        
+    }
+    
     public VoyageVoyage(Long idVoyage, Date dateDepart, Date dateArrive, int nbPassager) {
         this.idVoyage = idVoyage;
         this.dateDepart = dateDepart;
