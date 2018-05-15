@@ -109,7 +109,7 @@ public class GestionVoyage implements GestionVoyageLocal {
                     if (n.getNbPlaces() >= nbPass)
                         navettes.add(navetteFacade.findByQuai(quais.get(i)));
                 } catch (NoResultException e) {
-                    log4j.error(" Navette " + navetteFacade.findByQuai(quais.get(i)).getId() +" Non disponible " + e.getMessage());
+                    log4j.debug(" Navette " + navetteFacade.findByQuai(quais.get(i)).getId() +" Non disponible " + e.getMessage());
                 }
             }
         }

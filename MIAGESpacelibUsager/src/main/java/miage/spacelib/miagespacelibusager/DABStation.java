@@ -165,8 +165,8 @@ public class DABStation {
     private void genererJeuTest() {
         
         this.services.inscrire("Ate", "Tom", "mdp");
-        this.services.inscrire("Alain", "Terieur", "mdp");
-        this.services.inscrire("Haile", "Leau", "mdp");
+        this.services.inscrire("Terieur", "Alain", "mdp");
+        this.services.inscrire("Leau", "Haile", "mdp");
         
         System.out.println("Jeu de Test initialisé");
         

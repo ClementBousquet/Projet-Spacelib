@@ -68,7 +68,7 @@ public class NavetteFacade extends AbstractFacade<Navette> implements NavetteFac
         try {
             return getEntityManager().createQuery(cq).getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            return new Navette(0);
         }
     }
     
