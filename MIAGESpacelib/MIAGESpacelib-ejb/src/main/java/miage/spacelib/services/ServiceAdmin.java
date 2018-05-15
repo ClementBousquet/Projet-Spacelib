@@ -96,4 +96,16 @@ public class ServiceAdmin implements ServiceAdminRemote {
         gestionSpacelib.nettoyerResa();
     }
 
+    @Override
+    public List<String[]> getConducts() {
+        log4j.debug("getMecas");
+        List<Usager> lu = gestionSpacelib.getConducts();
+        List<String[]> conducts = new ArrayList<>();
+        for (Usager us : lu ) {
+            String[] monUsager = new String []{us.getNom(), us.getPrenom(), us.getMdp()};
+            conducts.add(monUsager);
+        }
+        return conducts;
+    }
+
 }

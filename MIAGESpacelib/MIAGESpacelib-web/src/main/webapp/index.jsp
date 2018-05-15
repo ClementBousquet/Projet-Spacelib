@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : 14 mai 2018, 23:12:25
+    Author     : clem
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,15 +18,7 @@
     <body>
         <div class="jumbotron">
             <div class="container">
-              <h1 class="display-3">Spacelib</h1>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <p>Bienvenue chez Spacelib, le service public de transports spatiaux intergalactiques du XIIème siècle.</p>
-            </div>
-            <div class="row">
-                <p><a class="btn btn-primary btn-lg" href="authentification" role="button">Connexion &raquo;</a></p>
+              <h1 class="display-3">Spacelib server running</h1>
             </div>
         </div>
     </body>

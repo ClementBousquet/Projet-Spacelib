@@ -60,5 +60,19 @@ public class UsagerFacade extends AbstractFacade<Usager> implements UsagerFacade
         
         return getEntityManager().createQuery(cq).getResultList();
     }
+
+    @Override
+    public List<Usager> findConducts() {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Usager> cq = cb.createQuery(Usager.class);
+        Root<Usager> root = cq.from(Usager.class);
+        cq.where(
+                cb.and(
+                        cb.equal(root.get("statutUsager").as(Usager.class), "Conducteur")
+                )
+        );
+        
+        return getEntityManager().createQuery(cq).getResultList();
+    }
     
 }

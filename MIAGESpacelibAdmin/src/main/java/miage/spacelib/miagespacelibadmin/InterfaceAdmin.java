@@ -28,6 +28,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private List<String[]> stations = new ArrayList<>();
     private List<String[]> trajets = new ArrayList<>();
     private List<String[]> mecas = new ArrayList<>();
+    private List<String[]> conducts = new ArrayList<>();
     Etat Etat;
     
     protected enum Etat {
@@ -49,7 +50,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         resetOngletStation();
         resetOngletTrajet();
         resetOngletMeca();
-        this.pack();
+        resetOngletConducteur();
     }
     
     public void transitionEtat_SaisieNavette(){
@@ -76,6 +77,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         this.jTextFieldMecaNom.setText("");
         this.jTextFieldMecaPrenom.setText("");
         this.jTextFieldMecaMdp.setText("");
+        this.jTextFieldConducteurNom.setText("");
+        this.jTextFieldConducteurPrenom.setText("");
+        this.jTextFieldConducteurMdp.setText("");
     }
     
     public void resetOngletStation () {
@@ -117,7 +121,6 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableMeca.getModel();
         model.setRowCount(0);
         this.mecas = this.services.getMecas();
-        System.out.println(mecas.toString());
         for(int i = 0; i < mecas.size(); i++) {
             String rowData[] = { "", "", ""};
             rowData[0] = mecas.get(i)[0]; //Nom
@@ -125,7 +128,21 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             rowData[2] = mecas.get(i)[2]; //Mdp
             model.addRow(rowData);
         }
-        this.jTableStation.repaint();
+        this.jTableMeca.repaint();
+    }
+    
+    public void resetOngletConducteur () {
+        DefaultTableModel model = (DefaultTableModel) jTableConducteur.getModel();
+        model.setRowCount(0);
+        this.conducts = this.services.getConducts();
+        for(int i = 0; i < conducts.size(); i++) {
+            String rowData[] = { "", "", ""};
+            rowData[0] = conducts.get(i)[0]; //Nom
+            rowData[1] = conducts.get(i)[1]; //Prenom
+            rowData[2] = conducts.get(i)[2]; //Mdp
+            model.addRow(rowData);
+        }
+        this.jTableConducteur.repaint();
     }
 
     /**
@@ -176,6 +193,20 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jTextFieldMecaNom = new javax.swing.JTextField();
         jTextFieldMecaPrenom = new javax.swing.JTextField();
         jTextFieldMecaMdp = new javax.swing.JTextField();
+        jPanelConducteur = new javax.swing.JPanel();
+        jLabelTableConducteur = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableConducteur = new javax.swing.JTable();
+        jPanelAjoutConducteur = new javax.swing.JPanel();
+        jLabelConducteurNom = new javax.swing.JLabel();
+        jLabelConducteurPrenom = new javax.swing.JLabel();
+        jButtonAjouterConducteur = new javax.swing.JButton();
+        jLabelConducteurMdp = new javax.swing.JLabel();
+        jTextFieldConducteurNom = new javax.swing.JTextField();
+        jTextFieldConducteurPrenom = new javax.swing.JTextField();
+        jTextFieldConducteurMdp = new javax.swing.JTextField();
+        jPanelResa = new javax.swing.JPanel();
+        jButtonNettoyerReservations = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -259,7 +290,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSpinnerNbNavette, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButtonAjouterStation, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanelAjoutStationLayout.setVerticalGroup(
             jPanelAjoutStationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,19 +392,16 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
                         .addComponent(jLabelStationDepart)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxStationDepart, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jComboBoxStationDepart, 0, 132, Short.MAX_VALUE))
                     .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
                         .addComponent(jLabelStationArrivee)
                         .addGap(12, 12, 12)
                         .addComponent(jComboBoxStationArrivee, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
-                        .addGroup(jPanelAjoutTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelAjoutTrajetLayout.createSequentialGroup()
-                                .addComponent(jLabelDureeTrajet)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinnerDureeTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButtonAjouterTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabelDureeTrajet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerDureeTrajet))
+                    .addComponent(jButtonAjouterTrajet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelAjoutTrajetLayout.setVerticalGroup(
@@ -401,14 +429,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jPanelTrajetLayout.setHorizontalGroup(
             jPanelTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTrajetLayout.createSequentialGroup()
-                .addGroup(jPanelTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabelTableTrajet, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addGroup(jPanelTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelTableTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(284, Short.MAX_VALUE))
             .addGroup(jPanelTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelTrajetLayout.createSequentialGroup()
-                    .addGap(321, 321, 321)
-                    .addComponent(jPanelAjoutTrajet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTrajetLayout.createSequentialGroup()
+                    .addContainerGap(341, Short.MAX_VALUE)
+                    .addComponent(jPanelAjoutTrajet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
         jPanelTrajetLayout.setVerticalGroup(
@@ -416,7 +444,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanelTrajetLayout.createSequentialGroup()
                 .addComponent(jLabelTableTrajet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanelTrajetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelTrajetLayout.createSequentialGroup()
@@ -512,7 +540,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     .addComponent(jTextFieldMecaMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonAjouterMeca)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelMecaLayout = new javax.swing.GroupLayout(jPanelMeca);
@@ -533,27 +561,169 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMecaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMecaLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanelAjoutMeca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanelAjoutMeca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jTabbedPane.addTab("Gestion Mecanicien", jPanelMeca);
+
+        jLabelTableConducteur.setText("Liste des Conducteurs :");
+
+        jTableConducteur.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nom", "Prénom", "Mot de passe"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableConducteur.setToolTipText("");
+        jScrollPane3.setViewportView(jTableConducteur);
+
+        jPanelAjoutConducteur.setBorder(javax.swing.BorderFactory.createTitledBorder("Ajout de Conducteur"));
+
+        jLabelConducteurNom.setText("Nom :");
+
+        jLabelConducteurPrenom.setText("Prénom :");
+
+        jButtonAjouterConducteur.setText("Ajouter Conducteur");
+        jButtonAjouterConducteur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjouterConducteurActionPerformed(evt);
+            }
+        });
+
+        jLabelConducteurMdp.setText("Mot de passe :");
+
+        jTextFieldConducteurPrenom.setToolTipText("");
+
+        javax.swing.GroupLayout jPanelAjoutConducteurLayout = new javax.swing.GroupLayout(jPanelAjoutConducteur);
+        jPanelAjoutConducteur.setLayout(jPanelAjoutConducteurLayout);
+        jPanelAjoutConducteurLayout.setHorizontalGroup(
+            jPanelAjoutConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelAjoutConducteurLayout.createSequentialGroup()
+                .addGroup(jPanelAjoutConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelAjoutConducteurLayout.createSequentialGroup()
+                        .addComponent(jLabelConducteurNom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldConducteurNom))
+                    .addGroup(jPanelAjoutConducteurLayout.createSequentialGroup()
+                        .addComponent(jLabelConducteurPrenom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldConducteurPrenom))
+                    .addGroup(jPanelAjoutConducteurLayout.createSequentialGroup()
+                        .addComponent(jLabelConducteurMdp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldConducteurMdp))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAjoutConducteurLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonAjouterConducteur, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanelAjoutConducteurLayout.setVerticalGroup(
+            jPanelAjoutConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelAjoutConducteurLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanelAjoutConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelConducteurNom)
+                    .addComponent(jTextFieldConducteurNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelAjoutConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelConducteurPrenom)
+                    .addComponent(jTextFieldConducteurPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelAjoutConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelConducteurMdp, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldConducteurMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonAjouterConducteur)
+                .addContainerGap(105, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelConducteurLayout = new javax.swing.GroupLayout(jPanelConducteur);
+        jPanelConducteur.setLayout(jPanelConducteurLayout);
+        jPanelConducteurLayout.setHorizontalGroup(
+            jPanelConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConducteurLayout.createSequentialGroup()
+                .addGroup(jPanelConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConducteurLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelTableConducteur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelConducteurLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelAjoutConducteur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanelConducteurLayout.setVerticalGroup(
+            jPanelConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConducteurLayout.createSequentialGroup()
+                .addComponent(jLabelTableConducteur)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelConducteurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelAjoutConducteur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jTabbedPane.addTab("Gestion conducteur", jPanelConducteur);
+
+        jButtonNettoyerReservations.setText("Nettoyer Reservations");
+        jButtonNettoyerReservations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNettoyerReservationsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelResaLayout = new javax.swing.GroupLayout(jPanelResa);
+        jPanelResa.setLayout(jPanelResaLayout);
+        jPanelResaLayout.setHorizontalGroup(
+            jPanelResaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelResaLayout.createSequentialGroup()
+                .addContainerGap(241, Short.MAX_VALUE)
+                .addComponent(jButtonNettoyerReservations)
+                .addGap(209, 209, 209))
+        );
+        jPanelResaLayout.setVerticalGroup(
+            jPanelResaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelResaLayout.createSequentialGroup()
+                .addGap(125, 125, 125)
+                .addComponent(jButtonNettoyerReservations)
+                .addContainerGap(171, Short.MAX_VALUE))
+        );
+
+        jTabbedPane.addTab("Gestion Reservation", jPanelResa);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 48, Short.MAX_VALUE))
+                .addComponent(jTabbedPane)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+            .addComponent(jTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
+
+        jTabbedPane.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -625,6 +795,21 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         resetOngletTrajet();
     }//GEN-LAST:event_jTabbedPaneMouseClicked
 
+    private void jButtonAjouterConducteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterConducteurActionPerformed
+        String nom = jTextFieldConducteurNom.getText();
+        String prenom = jTextFieldConducteurPrenom.getText();
+        String mdp = jTextFieldConducteurMdp.getText();
+        services.ajouterConduc(nom, prenom, mdp);
+        resetOngletConducteur();
+        this.Etat = Etat.Etat_initial;
+        transitionEtat_initial();
+    }//GEN-LAST:event_jButtonAjouterConducteurActionPerformed
+
+    private void jButtonNettoyerReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNettoyerReservationsActionPerformed
+        services.nettoyerResa();
+        JOptionPane.showMessageDialog(this, "Réservations nettoyées avec succès.");
+    }//GEN-LAST:event_jButtonNettoyerReservationsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -667,11 +852,16 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAjouterConducteur;
     private javax.swing.JButton jButtonAjouterMeca;
     private javax.swing.JButton jButtonAjouterStation;
     private javax.swing.JButton jButtonAjouterTrajet;
+    private javax.swing.JButton jButtonNettoyerReservations;
     private javax.swing.JComboBox<String> jComboBoxStationArrivee;
     private javax.swing.JComboBox<String> jComboBoxStationDepart;
+    private javax.swing.JLabel jLabelConducteurMdp;
+    private javax.swing.JLabel jLabelConducteurNom;
+    private javax.swing.JLabel jLabelConducteurPrenom;
     private javax.swing.JLabel jLabelCoordonneesStation;
     private javax.swing.JLabel jLabelCoordonneesStation2;
     private javax.swing.JLabel jLabelDureeTrajet;
@@ -682,24 +872,33 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNomStation;
     private javax.swing.JLabel jLabelStationArrivee;
     private javax.swing.JLabel jLabelStationDepart;
+    private javax.swing.JLabel jLabelTableConducteur;
     private javax.swing.JLabel jLabelTableMeca;
     private javax.swing.JLabel jLabelTableStation;
     private javax.swing.JLabel jLabelTableTrajet;
+    private javax.swing.JPanel jPanelAjoutConducteur;
     private javax.swing.JPanel jPanelAjoutMeca;
     private javax.swing.JPanel jPanelAjoutStation;
     private javax.swing.JPanel jPanelAjoutTrajet;
+    private javax.swing.JPanel jPanelConducteur;
     private javax.swing.JPanel jPanelMeca;
+    private javax.swing.JPanel jPanelResa;
     private javax.swing.JPanel jPanelStation;
     private javax.swing.JPanel jPanelTrajet;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinnerDureeTrajet;
     private javax.swing.JSpinner jSpinnerNbNavette;
     private javax.swing.JTabbedPane jTabbedPane;
+    private javax.swing.JTable jTableConducteur;
     private javax.swing.JTable jTableMeca;
     private javax.swing.JTable jTableStation;
     private javax.swing.JTable jTableTrajet;
+    private javax.swing.JTextField jTextFieldConducteurMdp;
+    private javax.swing.JTextField jTextFieldConducteurNom;
+    private javax.swing.JTextField jTextFieldConducteurPrenom;
     private javax.swing.JTextField jTextFieldCoordonneesX;
     private javax.swing.JTextField jTextFieldCoordonneesY;
     private javax.swing.JTextField jTextFieldMecaMdp;

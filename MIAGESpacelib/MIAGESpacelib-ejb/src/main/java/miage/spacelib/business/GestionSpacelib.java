@@ -110,6 +110,12 @@ public class GestionSpacelib implements GestionSpacelibLocal {
         log4j.debug("getTrajets");
         return trajetFacade.findAll();
     }
+    
+    @Override
+    public List<Usager> getConducts() {
+        log4j.debug("getMecas");
+        return usagerFacade.findConducts();
+    }
 
     @Override
     public void ajouterConducteur(String nom, String prenom, String pass) {
@@ -127,4 +133,5 @@ public class GestionSpacelib implements GestionSpacelibLocal {
             }
         }
     }
+
 }

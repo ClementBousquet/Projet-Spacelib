@@ -22,8 +22,11 @@ public interface ServiceAdminRemote {
     List<String[]> getStations();
     List<String[]> getMecas();
     List<String[]> getTrajets();
+    List<String[]> getConducts();
     /* V3 */
     void ajouterConduc(String nom, String prenom, String pass);
     /* V4 */
     void nettoyerResa();
+
+    
 }

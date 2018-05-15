@@ -24,6 +24,7 @@ public interface GestionSpacelibLocal {
     List<Station> getStations();
     List<Usager> getMecas();
     List<Trajet> getTrajets();
+    List<Usager> getConducts();
     /* V3 */
     void ajouterConducteur(String nom, String prenom, String pass);
 
