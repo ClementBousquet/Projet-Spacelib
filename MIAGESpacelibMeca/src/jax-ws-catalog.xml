@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/WSMeca/WSMeca?wsdl" uri="wsdl/localhost_8080/WSMeca/WSMeca.wsdl"/>
     <system systemId="http://localhost:8080/WSMeca/WSMeca?xsd=1" uri="wsdl/localhost_8080/WSMeca/WSMeca.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WSMeca/WSMeca?xsd=2" uri="wsdl/localhost_8080/WSMeca/WSMeca.xsd_2.xsd"/>
 </catalog>
