@@ -5,6 +5,7 @@
  */
 package miage.spacelib;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -13,6 +14,7 @@ import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import miage.spacelib.miagespacelibshared.ReservationUs;
+import miage.spacelib.miagespacelibshared.StationUs;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 import miage.spacelib.services.ServiceUsagerV4Local;
 
@@ -20,9 +22,9 @@ import miage.spacelib.services.ServiceUsagerV4Local;
  *
  * @author Quentin
  */
-@WebService(serviceName = "WSUsagerV4")
+@WebService(serviceName = "WSUsager")
 @Stateless()
-public class WSUsagerV4 {
+public class WSUsager {
 
     @EJB
     private ServiceUsagerV4Local ejbRef;// Add business logic below. (Right-click in editor and choose
@@ -54,12 +56,6 @@ public class WSUsagerV4 {
         return ejbRef.cloturerReservation(idUsager, idResa);
     }
 
-    @WebMethod(operationName = "annulerReservation")
-    @Oneway
-    public void annulerReservation(@WebParam(name = "idUsager") Long idUsager, @WebParam(name = "idResa") Long idResa) {
-        ejbRef.annulerReservation(idUsager, idResa);
-    }
-
     @WebMethod(operationName = "finaliserVoyage")
     @Oneway
     public void finaliserVoyage(@WebParam(name = "idUsager") Long idUsager, @WebParam(name = "v") VoyageVoyage v) {
@@ -74,6 +70,27 @@ public class WSUsagerV4 {
     @WebMethod(operationName = "recupStations")
     public List<String> recupStations() {
         return ejbRef.recupStations();
+    }
+
+    @WebMethod(operationName = "creerReservation")
+    public String creerReservation(@WebParam(name = "idUsager") Long idUsager, @WebParam(name = "station1") String station1, @WebParam(name = "station2") String station2, @WebParam(name = "nbPass") int nbPass, @WebParam(name = "date") Date date) {
+        return ejbRef.creerReservation(idUsager, station1, station2, nbPass, date);
+    }
+
+    @WebMethod(operationName = "annulerReservation")
+    @Oneway
+    public void annulerReservation(@WebParam(name = "idUsager") Long idUsager, @WebParam(name = "idResa") Long idResa) {
+        ejbRef.annulerReservation(idUsager, idResa);
+    }
+
+    @WebMethod(operationName = "afficherReservations")
+    public List<ReservationUs> afficherReservations(@WebParam(name = "idUsager") Long idUsager) {
+        return ejbRef.afficherReservations(idUsager);
+    }
+
+    @WebMethod(operationName = "genCarteSpacelib")
+    public List<StationUs> genCarteSpacelib() {
+        return ejbRef.genCarteSpacelib();
     }
     
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import miage.spacelib.miagespacelibshared.ReservationUs;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
-import miage.spacelib.services.ServiceUsagerRemote;
+import miage.spacelib.services.ServiceUsagerV4Remote;
 
 /**
  *
@@ -12,7 +12,7 @@ import miage.spacelib.services.ServiceUsagerRemote;
  */
 public class DABStation {
     
-    private final ServiceUsagerRemote services;
+    private final ServiceUsagerV4Remote services;
     private final Scanner scanner = new Scanner(System.in);
     private String stationActuelle;
     
@@ -25,7 +25,7 @@ public class DABStation {
     private ReservationUs r = new ReservationUs(0L, null, null, null);
     private ReservationUs rComp = new ReservationUs(0L, null, null, null);
     
-    public DABStation(ServiceUsagerRemote services) {
+    public DABStation(ServiceUsagerV4Remote services) {
         this.services = services;
         this.stationActuelle = "Terre";
     }

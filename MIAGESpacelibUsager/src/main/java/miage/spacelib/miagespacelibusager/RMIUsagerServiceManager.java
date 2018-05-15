@@ -8,7 +8,7 @@ package miage.spacelib.miagespacelibusager;
 import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import miage.spacelib.services.ServiceUsagerRemote;
+import miage.spacelib.services.ServiceUsagerV4Remote;
 
 /**
  *
@@ -18,10 +18,10 @@ public class RMIUsagerServiceManager {
     
     private final static String GLASSFISH_ORB_HOST = "localhost";
     private final static String GLASSFISH_ORB_PORT = "3700";
-    private final static String SERVICES_DAB_EJB_URI = "java:global/MIAGESpacelib-ear/MIAGESpacelib-ejb-1.0-SNAPSHOT/ServiceUsager!miage.spacelib.services.ServiceUsagerRemote";
+    private final static String SERVICES_DAB_EJB_URI = "java:global/MIAGESpacelib-ear/MIAGESpacelib-ejb-1.0-SNAPSHOT/ServiceUsagerV4!miage.spacelib.services.ServiceUsagerV4Remote";
 
     private InitialContext namingContext;
-    private ServiceUsagerRemote remoteSvc;
+    private ServiceUsagerV4Remote remoteSvc;
 
     public RMIUsagerServiceManager() throws NamingException {
         this.initJndi();
@@ -37,10 +37,10 @@ public class RMIUsagerServiceManager {
     }
 
     private void retrieveRemoteServicesUsager() throws NamingException {
-        this.remoteSvc = (ServiceUsagerRemote) this.namingContext.lookup(SERVICES_DAB_EJB_URI);
+        this.remoteSvc = (ServiceUsagerV4Remote) this.namingContext.lookup(SERVICES_DAB_EJB_URI);
     }
 
-    public ServiceUsagerRemote getUsagerRemoteSvc() {
+    public ServiceUsagerV4Remote getUsagerRemoteSvc() {
         return remoteSvc;
     }
     
