@@ -123,7 +123,7 @@ public class GestionVoyage implements GestionVoyageLocal {
             List<Quai> lq = quaiFacade.findDispoByStation(stationFacade.findByName(stationArr));
             
             if (lq.size() > 0) {
-                Quai q = quais.get(0);
+                Quai q = lq.get(0);
                 
                 if (q != null) {
 
