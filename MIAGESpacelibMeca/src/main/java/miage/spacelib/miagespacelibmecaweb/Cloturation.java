@@ -6,8 +6,7 @@
 package miage.spacelib.miagespacelibmecaweb;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author clem
  */
-@WebServlet(name = "Authentification", urlPatterns = {"/authentification"})
-public class Authentification extends HttpServlet {
+@WebServlet(name = "Cloturation", urlPatterns = {"/cloturation"})
+public class Cloturation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,41 +33,15 @@ public class Authentification extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String login = request.getParameter("login");
-        String pass = request.getParameter("pass");
+        String id = request.getParameter("id");
+        String nav = request.getParameter("nav");
         String station = request.getParameter("station");
+        System.out.println(id+station+nav);
         miage.spacelib.miagespacelibmeca.WSMeca_Service service = new miage.spacelib.miagespacelibmeca.WSMeca_Service();
         miage.spacelib.miagespacelibmeca.WSMeca port = service.getWSMecaPort();
-        
-        long nb = port.authentifierMeca(login, pass);
-        
-        if (nb == 0) {
-            request.setAttribute("error_login", "Informations invalides, veuillez réessayer.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("authentification.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            String statut = port.getStatutMeca(nb);
-            if (statut.equals("Libre")) {
-                List<String> revisions = new ArrayList<>();
-                revisions = port.afficherRevision(station, nb);
-                String [] rev = new String [revisions.size()];
-                for (int i=0;i<revisions.size();i++) {
-                    rev[i] = revisions.get(i);
-                }
-                request.setAttribute("id",nb);
-                request.setAttribute("station", station);
-                request.setAttribute("stations_revision", rev);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("revisions.jsp");
-                dispatcher.forward(request, response);
-            }
-            else {
-                request.setAttribute("id",nb);
-                request.setAttribute("station", station);
-                //ici
-                RequestDispatcher dispatcher = request.getRequestDispatcher("cloturations.jsp");
-                dispatcher.forward(request, response);
-            }
-        }
+        port.finaliserRevision(Long.parseLong(id), Long.parseLong(nav), station);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

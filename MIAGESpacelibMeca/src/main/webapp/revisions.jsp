@@ -25,14 +25,31 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-lg-3 offset-md-3 offset-sm-6 offset-xs-6">
                     <div class="text-center mb-4" style="margin-bottom: 1rem;">
-                        <h1 class="h3 mb-3 font-weight-normal">Navettes en révision :</h1>
+                        <h1 class="h3 mb-3 font-weight-normal">Navettes nécéssitant une révision :</h1>
                     </div>
                     <%
                     String [] stations = (String [])request.getAttribute("stations_revision");
-                    for (int i=0; i<stations.length; i++) {
-                        out.println(stations[i]);
+                    if (stations.length == 0) {
+                        out.println("<div class=\"text-center mb-4\" style=\"margin-bottom: 1rem;\">");
+                        out.println("<p>Aucune navette ne nécéssite une révision.");
+                        out.println("</div>");
+                        
                     }
-                    //out.println(stations.toString());
+                    else {
+                        out.println("<form  method=\"POST\" action=\"initierRevision\">");
+                        out.println("<div class=\"form-label-group\" style=\"margin-bottom: 1rem;\">");
+                        out.println("<p>Quelle navette souhaitez vous mettre en révision ?</p>");
+                        out.println("<select class=\"form-control\" name=\"navette\">");
+                        for (int i=0; i<stations.length; i++) {
+                            out.println("<option value="+stations[i]+"> Navette n°"+stations[i]+"</option>");
+                            out.println(stations[i]);
+                        }
+                        out.println("</select>");
+                        out.println("<input type=\"hidden\" name=\"id\" value="+request.getAttribute("id")+">");
+                        out.println("<input type=\"hidden\" name=\"station\" value="+request.getAttribute("station")+">");
+                        out.println("</div>");
+                        out.println("<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Valider</button>");
+                    }
                     %>
                 </div>
             </div>

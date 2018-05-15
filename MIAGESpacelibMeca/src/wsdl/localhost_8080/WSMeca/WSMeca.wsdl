@@ -7,6 +7,24 @@
 <xsd:import namespace="http://jaxb.dev.java.net/array" schemaLocation="http://localhost:8080/WSMeca/WSMeca?xsd=2"/>
 </xsd:schema>
 </types>
+<message name="authentifierMeca">
+<part name="parameters" element="tns:authentifierMeca"/>
+</message>
+<message name="authentifierMecaResponse">
+<part name="parameters" element="tns:authentifierMecaResponse"/>
+</message>
+<message name="getStatutMeca">
+<part name="parameters" element="tns:getStatutMeca"/>
+</message>
+<message name="getStatutMecaResponse">
+<part name="parameters" element="tns:getStatutMecaResponse"/>
+</message>
+<message name="afficherRevision">
+<part name="parameters" element="tns:afficherRevision"/>
+</message>
+<message name="afficherRevisionResponse">
+<part name="parameters" element="tns:afficherRevisionResponse"/>
+</message>
 <message name="finaliserRevision">
 <part name="parameters" element="tns:finaliserRevision"/>
 </message>
@@ -15,18 +33,6 @@
 </message>
 <message name="transfertNecessaireResponse">
 <part name="parameters" element="tns:transfertNecessaireResponse"/>
-</message>
-<message name="afficherRevision">
-<part name="parameters" element="tns:afficherRevision"/>
-</message>
-<message name="afficherRevisionResponse">
-<part name="parameters" element="tns:afficherRevisionResponse"/>
-</message>
-<message name="authentifierMeca">
-<part name="parameters" element="tns:authentifierMeca"/>
-</message>
-<message name="authentifierMecaResponse">
-<part name="parameters" element="tns:authentifierMecaResponse"/>
 </message>
 <message name="authentifierConduc">
 <part name="parameters" element="tns:authentifierConduc"/>
@@ -46,27 +52,25 @@
 <message name="getStationsResponse">
 <part name="parameters" element="tns:getStationsResponse"/>
 </message>
-<message name="getStatutMeca">
-<part name="parameters" element="tns:getStatutMeca"/>
-</message>
-<message name="getStatutMecaResponse">
-<part name="parameters" element="tns:getStatutMecaResponse"/>
-</message>
 <portType name="WSMeca">
+<operation name="authentifierMeca">
+<input wsam:Action="http://spacelib.miage/WSMeca/authentifierMecaRequest" message="tns:authentifierMeca"/>
+<output wsam:Action="http://spacelib.miage/WSMeca/authentifierMecaResponse" message="tns:authentifierMecaResponse"/>
+</operation>
+<operation name="getStatutMeca">
+<input wsam:Action="http://spacelib.miage/WSMeca/getStatutMecaRequest" message="tns:getStatutMeca"/>
+<output wsam:Action="http://spacelib.miage/WSMeca/getStatutMecaResponse" message="tns:getStatutMecaResponse"/>
+</operation>
+<operation name="afficherRevision">
+<input wsam:Action="http://spacelib.miage/WSMeca/afficherRevisionRequest" message="tns:afficherRevision"/>
+<output wsam:Action="http://spacelib.miage/WSMeca/afficherRevisionResponse" message="tns:afficherRevisionResponse"/>
+</operation>
 <operation name="finaliserRevision">
 <input wsam:Action="http://spacelib.miage/WSMeca/finaliserRevision" message="tns:finaliserRevision"/>
 </operation>
 <operation name="transfertNecessaire">
 <input wsam:Action="http://spacelib.miage/WSMeca/transfertNecessaireRequest" message="tns:transfertNecessaire"/>
 <output wsam:Action="http://spacelib.miage/WSMeca/transfertNecessaireResponse" message="tns:transfertNecessaireResponse"/>
-</operation>
-<operation name="afficherRevision">
-<input wsam:Action="http://spacelib.miage/WSMeca/afficherRevisionRequest" message="tns:afficherRevision"/>
-<output wsam:Action="http://spacelib.miage/WSMeca/afficherRevisionResponse" message="tns:afficherRevisionResponse"/>
-</operation>
-<operation name="authentifierMeca">
-<input wsam:Action="http://spacelib.miage/WSMeca/authentifierMecaRequest" message="tns:authentifierMeca"/>
-<output wsam:Action="http://spacelib.miage/WSMeca/authentifierMecaResponse" message="tns:authentifierMecaResponse"/>
 </operation>
 <operation name="authentifierConduc">
 <input wsam:Action="http://spacelib.miage/WSMeca/authentifierConducRequest" message="tns:authentifierConduc"/>
@@ -80,20 +84,19 @@
 <input wsam:Action="http://spacelib.miage/WSMeca/getStationsRequest" message="tns:getStations"/>
 <output wsam:Action="http://spacelib.miage/WSMeca/getStationsResponse" message="tns:getStationsResponse"/>
 </operation>
-<operation name="getStatutMeca">
-<input wsam:Action="http://spacelib.miage/WSMeca/getStatutMecaRequest" message="tns:getStatutMeca"/>
-<output wsam:Action="http://spacelib.miage/WSMeca/getStatutMecaResponse" message="tns:getStatutMecaResponse"/>
-</operation>
 </portType>
 <binding name="WSMecaPortBinding" type="tns:WSMeca">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="finaliserRevision">
+<operation name="authentifierMeca">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
 </input>
+<output>
+<soap:body use="literal"/>
+</output>
 </operation>
-<operation name="transfertNecessaire">
+<operation name="getStatutMeca">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -111,7 +114,13 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="authentifierMeca">
+<operation name="finaliserRevision">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="transfertNecessaire">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -139,15 +148,6 @@
 </output>
 </operation>
 <operation name="getStations">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getStatutMeca">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
