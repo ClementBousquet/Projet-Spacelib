@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://spacelib.miage/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://spacelib.miage/">
+
+<xs:element name="afficherRevision" type="tns:afficherRevision"/>
+
+<xs:element name="afficherRevisionResponse" type="tns:afficherRevisionResponse"/>
+
+<xs:element name="authentifierConduc" type="tns:authentifierConduc"/>
+
+<xs:element name="authentifierConducResponse" type="tns:authentifierConducResponse"/>
+
+<xs:element name="authentifierMeca" type="tns:authentifierMeca"/>
+
+<xs:element name="authentifierMecaResponse" type="tns:authentifierMecaResponse"/>
+
+<xs:element name="finaliserRevision" type="tns:finaliserRevision"/>
+
+<xs:element name="initierRevision" type="tns:initierRevision"/>
+
+<xs:element name="initierRevisionResponse" type="tns:initierRevisionResponse"/>
+
+<xs:element name="transfertNecessaire" type="tns:transfertNecessaire"/>
+
+<xs:element name="transfertNecessaireResponse" type="tns:transfertNecessaireResponse"/>
+
+<xs:complexType name="initierRevision">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="idNavette" type="xs:long" minOccurs="0"/>
+<xs:element name="station" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="initierRevisionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transfertNecessaire">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="transfertNecessaireResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:trajetAEffectuer" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="trajetAEffectuer">
+<xs:sequence>
+<xs:element name="stationArr" type="xs:string" minOccurs="0"/>
+<xs:element name="stationDep" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authentifierConduc">
+<xs:sequence>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authentifierConducResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="finaliserRevision">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="idNavette" type="xs:long" minOccurs="0"/>
+<xs:element name="station" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherRevision">
+<xs:sequence>
+<xs:element name="station" type="xs:string" minOccurs="0"/>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherRevisionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authentifierMeca">
+<xs:sequence>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authentifierMecaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
