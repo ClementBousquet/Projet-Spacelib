@@ -22,6 +22,10 @@ public class StationUs implements Serializable {
             this.coord = c;
             this.station = st;
         }
+        
+        public StationUs(){
+            
+        }
 
     public Coordonnee getCoord() {
         return coord;

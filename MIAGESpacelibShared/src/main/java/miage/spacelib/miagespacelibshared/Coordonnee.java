@@ -24,6 +24,10 @@ public class Coordonnee implements Serializable {
             this.coordY = Y;
             
         }
+        
+        public Coordonnee(){
+            
+        }
 
     public float getCoordX() {
         return coordX;
