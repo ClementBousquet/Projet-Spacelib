@@ -18,7 +18,7 @@
     <body>
         <div class="jumbotron">
             <div class="container">
-              <h1 class="display-3">Spacelib Meca</h1>
+              <h1 class="display-3">Spacelib Usager</h1>
             </div>
         </div>
         <div class="container">
@@ -26,7 +26,8 @@
                 <p>Bienvenue chez Spacelib, le service public de transports spatiaux intergalactiques du XIIème siècle.</p>
             </div>
             <div class="row">
-                <p><a class="btn btn-primary btn-lg" href="authentification.jsp" role="button">Connexion &raquo;</a></p>
+                <p><a class="btn btn-primary btn-lg" href="authentification.jsp" role="button" style="margin-right:15px;">Connexion &raquo;</a></p>
+                <p><a class="btn btn-primary btn-lg" href="inscription.jsp" role="button">Inscription &raquo;</a></p>
             </div>
         </div>
     </body>

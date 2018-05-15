@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miage.spacelib.miagespacelibmeca;
+package miage.spacelib.miagespacelibmecaweb;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class Authentification extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String login = request.getParameter("login");
         String pass = request.getParameter("pass");
+        String station = request.getParameter("station");
         miage.spacelib.miagespacelibmeca.WSMeca_Service service = new miage.spacelib.miagespacelibmeca.WSMeca_Service();
         miage.spacelib.miagespacelibmeca.WSMeca port = service.getWSMecaPort();
         
@@ -47,14 +48,14 @@ public class Authentification extends HttpServlet {
             dispatcher.forward(request, response);
         } else {
             List<String> revisions = new ArrayList<>();
-            revisions = port.afficherRevision("Terre", nb);
+            System.out.println(station);
+            revisions = port.afficherRevision(station, nb);
             for (int i=0;i<revisions.size();i++) {
                 System.out.println(revisions.get(i).toString());
             }
-            response.sendRedirect("menu.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("authentification.jsp");
+            dispatcher.forward(request, response);
         }
-        
-        System.out.println(nb + "");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

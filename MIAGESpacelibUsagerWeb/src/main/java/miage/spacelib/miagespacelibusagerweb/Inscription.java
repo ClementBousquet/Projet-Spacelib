@@ -7,7 +7,6 @@ package miage.spacelib.miagespacelibusagerweb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author clem
  */
-@WebServlet(name = "Authentification", urlPatterns = {"/authentification"})
-public class Authentification extends HttpServlet {
+@WebServlet(name = "Inscription", urlPatterns = {"/inscription"})
+public class Inscription extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,23 +32,14 @@ public class Authentification extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String login = request.getParameter("login");
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
         String pass = request.getParameter("pass");
         miage.spacelib.WSUsager_Service service = new miage.spacelib.WSUsager_Service();
         miage.spacelib.WSUsager port = service.getWSUsagerPort();
         
-        
-        long nb = port.authentifier(login, pass);
-        
-        if (nb == 0) {
-            request.setAttribute("error_login", "Informations invalides, veuillez réessayer.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("authentification.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("id_usager", nb);
-            response.sendRedirect("menu.jsp");
-        }
-        System.out.println(nb + "");
+        port.inscrire(nom, prenom, pass);
+        response.sendRedirect("authentification.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
