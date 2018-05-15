@@ -142,6 +142,10 @@ public class ConsoleAdmin {
         this.services.ajouterMeca("Bousquet", "Clement", "canard");
         this.services.ajouterMeca("Pasero", "Hugo", "toulouse");
         
+        this.services.ajouterConduc("DiSalvo", "Quentin", "canard");
+        this.services.ajouterConduc("Togni", "Lucas", "canard");
+        this.services.ajouterConduc("Lehoux", "Nolain", "canard");
+        
         this.services.creerTrajet("Terre", "Dimidium", 2);
         this.services.creerTrajet("Terre", "Arion", 6);
         this.services.creerTrajet("Terre", "Brahe", 2);

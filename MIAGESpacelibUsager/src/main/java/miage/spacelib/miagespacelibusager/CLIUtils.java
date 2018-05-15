@@ -18,7 +18,7 @@ public class CLIUtils {
     
     public static void afficherTitreSection(String titre){
         System.out.println();
-        System.out.println("***** " + titre.toUpperCase() + "*****");
+        System.out.println("***** " + titre.toUpperCase() + " *****");
         System.out.println();
     }
     

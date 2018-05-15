@@ -5,14 +5,17 @@
  */
 package miage.spacelib.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import miage.spacelib.business.GestionVoyageLocal;
 import miage.spacelib.entities.Reservation;
+import miage.spacelib.entities.Station;
 import miage.spacelib.entities.Voyage;
 import miage.spacelib.miagespacelibshared.ReservationUs;
+import miage.spacelib.miagespacelibshared.StationUs;
 import miage.spacelib.miagespacelibshared.VoyageVoyage;
 import org.apache.log4j.Logger;
 
@@ -103,4 +106,35 @@ public class ServiceUsagerV4 implements ServiceUsagerV4Remote, ServiceUsagerV4Lo
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public String creerReservation(Long idUsager, String station1, String station2, int nbPass, Date date) {
+        log4j.debug("creerReservation");
+        return gestionVoyage.creerReservation(idUsager, date, nbPass, station1, station2);
+    }
+
+    @Override
+    public List<ReservationUs> afficherReservations(Long idUsager) {
+        log4j.debug("afficherReservations");
+        List<ReservationUs> list = new ArrayList();
+        List<Reservation> ls = gestionVoyage.afficherReservations(idUsager);
+        for (int i = 0; i < ls.size(); i++) {
+            list.add(new ReservationUs(ls.get(i).getId(), ls.get(i).getTrajet().getStationDep().getNom(), ls.get(i).getTrajet().getStationArr().getNom(), null));
+        }
+        
+        return list;
+    }
+
+    @Override
+    public List<StationUs> genCarteSpacelib() {
+        log4j.debug("genCarteSpacelib");
+        List<Station> ls = gestionVoyage.genererCarteSpacelib();  
+        List<StationUs> lus = new ArrayList();
+        
+        for (int i = 0; i < ls.size(); i++) 
+            lus.add(new StationUs(ls.get(i).getCoordStation(), ls.get(i).getNom()));
+        
+        
+        return lus;
+    }
 }

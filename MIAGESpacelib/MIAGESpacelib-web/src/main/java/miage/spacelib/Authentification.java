@@ -21,8 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Authentification extends HttpServlet {
     
     private WSMeca wsmeca;
-    private WSCarte wscarte;
-    private WSResa wsresa;
+    private WSUsager wsusager;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -94,7 +93,7 @@ public class Authentification extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         this.wsmeca = new WSMeca();
-        this.wsresa = new WSResa();
+        this.wsusager = new WSUsager();
         String login = request.getParameter("login");
         String pass = request.getParameter("pass");
         long nb = wsmeca.authentifierMeca(login, pass);
