@@ -48,12 +48,14 @@ public class Authentification extends HttpServlet {
             dispatcher.forward(request, response);
         } else {
             List<String> revisions = new ArrayList<>();
-            System.out.println(station);
             revisions = port.afficherRevision(station, nb);
+            String [] rev = new String [revisions.size()];
             for (int i=0;i<revisions.size();i++) {
-                System.out.println(revisions.get(i).toString());
+                rev[i] = revisions.get(i);
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("authentification.jsp");
+            
+            request.setAttribute("stations_revision", rev);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("revisions.jsp");
             dispatcher.forward(request, response);
         }
     }

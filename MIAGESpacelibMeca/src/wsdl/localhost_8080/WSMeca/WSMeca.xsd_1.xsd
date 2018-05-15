@@ -20,6 +20,10 @@
 
 <xs:element name="getStationsResponse" type="tns:getStationsResponse"/>
 
+<xs:element name="getStatutMeca" type="tns:getStatutMeca"/>
+
+<xs:element name="getStatutMecaResponse" type="tns:getStatutMecaResponse"/>
+
 <xs:element name="initierRevision" type="tns:initierRevision"/>
 
 <xs:element name="initierRevisionResponse" type="tns:initierRevisionResponse"/>
@@ -77,6 +81,18 @@
 <xs:element name="idUsager" type="xs:long" minOccurs="0"/>
 <xs:element name="idNavette" type="xs:long" minOccurs="0"/>
 <xs:element name="station" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getStatutMeca">
+<xs:sequence>
+<xs:element name="idUs" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getStatutMecaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

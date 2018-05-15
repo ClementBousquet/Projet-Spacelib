@@ -1,6 +1,6 @@
 <%-- 
-    Document   : afficher
-    Created on : 15 mai 2018, 00:58:27
+    Document   : revisions
+    Created on : 15 mai 2018, 17:18:17
     Author     : clem
 --%>
 
@@ -23,12 +23,19 @@
         </div>
         <div class="container">
             <div class="row">
-                <p>Bienvenue chez Spacelib, le service public de transports spatiaux intergalactiques du XIIème siècle.</p>
-            </div>
-            <div class="row">
-                <p><a class="btn btn-primary btn-lg" href="authentification.jsp" role="button">Connexion &raquo;</a></p>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-lg-3 offset-md-3 offset-sm-6 offset-xs-6">
+                    <div class="text-center mb-4" style="margin-bottom: 1rem;">
+                        <h1 class="h3 mb-3 font-weight-normal">Navettes en révision :</h1>
+                    </div>
+                    <%
+                    String [] stations = (String [])request.getAttribute("stations_revision");
+                    for (int i=0; i<stations.length; i++) {
+                        out.println(stations[i]);
+                    }
+                    //out.println(stations.toString());
+                    %>
+                </div>
             </div>
         </div>
     </body>
 </html>
-
