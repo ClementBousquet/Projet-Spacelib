@@ -71,7 +71,7 @@ public class GestionTechnique implements GestionTechniqueLocal {
             for (int i = 0; i < quais.size(); i++) {
                 try {
                     Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "BesoinRevision");
-                    if (n != null) {
+                    if (n.getNbPlaces() != 0) {
                         navettes.add(n);
                     }
                 } catch (javax.persistence.NoResultException e) {
