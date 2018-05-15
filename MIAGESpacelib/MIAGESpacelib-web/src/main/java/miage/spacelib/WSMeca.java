@@ -62,5 +62,10 @@ public class WSMeca {
     public List<String[]> getStations() {
         return ejbRef.getStations();
     }
+
+    @WebMethod(operationName = "getStatutMeca")
+    public String getStatutMeca(@WebParam(name = "idUs") Long idUs) {
+        return ejbRef.getStatutMeca(idUs);
+    }
     
 }

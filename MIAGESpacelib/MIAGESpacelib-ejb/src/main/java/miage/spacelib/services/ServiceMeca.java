@@ -98,4 +98,10 @@ public class ServiceMeca implements ServiceMecaLocal {
         }
         return stations;
     }
+
+    @Override
+    public String getStatutMeca(Long idUs) {
+        log4j.debug("getStatutMeca");
+        return gestionTech.getStatutMeca(idUs);
+    }
 }

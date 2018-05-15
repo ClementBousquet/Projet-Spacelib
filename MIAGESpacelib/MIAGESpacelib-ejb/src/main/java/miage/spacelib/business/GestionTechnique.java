@@ -366,4 +366,9 @@ public class GestionTechnique implements GestionTechniqueLocal {
         return listeB;
 
     }
+
+    @Override
+    public String getStatutMeca(Long idUs) {
+        return usagerFacade.find(idUs).getStatutMeca();
+    }
 }

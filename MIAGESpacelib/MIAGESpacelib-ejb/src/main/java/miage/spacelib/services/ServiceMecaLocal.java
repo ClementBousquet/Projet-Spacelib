@@ -25,5 +25,6 @@ public interface ServiceMecaLocal {
     List<TrajetAEffectuer> transfertNecessaire();
     
     List<String[]> getStations();
+    String getStatutMeca(Long idUs);
     
 }
