@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://spacelib.miage/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://spacelib.miage/">
+
+<xs:element name="afficherResa" type="tns:afficherResa"/>
+
+<xs:element name="afficherResaResponse" type="tns:afficherResaResponse"/>
+
+<xs:element name="afficherReservations" type="tns:afficherReservations"/>
+
+<xs:element name="afficherReservationsResponse" type="tns:afficherReservationsResponse"/>
+
+<xs:element name="afficherVoyage" type="tns:afficherVoyage"/>
+
+<xs:element name="afficherVoyageResponse" type="tns:afficherVoyageResponse"/>
+
+<xs:element name="annulerReservation" type="tns:annulerReservation"/>
+
+<xs:element name="authentifier" type="tns:authentifier"/>
+
+<xs:element name="authentifierResponse" type="tns:authentifierResponse"/>
+
+<xs:element name="cloturerReservation" type="tns:cloturerReservation"/>
+
+<xs:element name="cloturerReservationResponse" type="tns:cloturerReservationResponse"/>
+
+<xs:element name="creerReservation" type="tns:creerReservation"/>
+
+<xs:element name="creerReservationResponse" type="tns:creerReservationResponse"/>
+
+<xs:element name="finaliserVoyage" type="tns:finaliserVoyage"/>
+
+<xs:element name="genCarteSpacelib" type="tns:genCarteSpacelib"/>
+
+<xs:element name="genCarteSpacelibResponse" type="tns:genCarteSpacelibResponse"/>
+
+<xs:element name="initierVoyage" type="tns:initierVoyage"/>
+
+<xs:element name="initierVoyageResponse" type="tns:initierVoyageResponse"/>
+
+<xs:element name="inscrire" type="tns:inscrire"/>
+
+<xs:element name="recupStations" type="tns:recupStations"/>
+
+<xs:element name="recupStationsResponse" type="tns:recupStationsResponse"/>
+
+<xs:complexType name="afficherReservations">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherReservationsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:reservationUs" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="reservationUs">
+<xs:sequence>
+<xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="idReservation" type="xs:long" minOccurs="0"/>
+<xs:element name="quaiarr" type="xs:string" minOccurs="0"/>
+<xs:element name="quaidep" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="finaliserVoyage">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="v" type="tns:voyageVoyage" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="voyageVoyage">
+<xs:sequence>
+<xs:element name="dateArrive" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="dateDepart" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="idVoyage" type="xs:long" minOccurs="0"/>
+<xs:element name="nbPassager" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="inscrire">
+<xs:sequence>
+<xs:element name="nom" type="xs:string" minOccurs="0"/>
+<xs:element name="prenom" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authentifier">
+<xs:sequence>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="authentifierResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="annulerReservation">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="idResa" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherVoyage">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherVoyageResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:voyageVoyage" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="creerReservation">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="station1" type="xs:string" minOccurs="0"/>
+<xs:element name="station2" type="xs:string" minOccurs="0"/>
+<xs:element name="nbPass" type="xs:int"/>
+<xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="creerReservationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cloturerReservation">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="idResa" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cloturerReservationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherResa">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="st" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherResaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:reservationUs" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="genCarteSpacelib">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="genCarteSpacelibResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:stationUs" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="stationUs">
+<xs:sequence>
+<xs:element name="coord" type="tns:coordonnee" minOccurs="0"/>
+<xs:element name="station" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="coordonnee">
+<xs:sequence>
+<xs:element name="coordX" type="xs:float"/>
+<xs:element name="coordY" type="xs:float"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="initierVoyage">
+<xs:sequence>
+<xs:element name="idUsager" type="xs:long" minOccurs="0"/>
+<xs:element name="nbPass" type="xs:int"/>
+<xs:element name="stationArr" type="xs:string" minOccurs="0"/>
+<xs:element name="stationDep" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="initierVoyageResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="recupStations">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="recupStationsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>miage.spacelib</groupId>
-    <artifactId>MIAGESpacelibMeca</artifactId>
+    <artifactId>MIAGESpacelibUsagerWeb</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>MIAGESpacelibMecaWeb</name>
+    <name>MIAGESpacelibUsagerWeb</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -99,16 +99,16 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/WSMeca/WSMeca.wsdl</wsdlFile>
+                                <wsdlFile>localhost_8080/WSUsager/WSUsager.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <packageName>miage.spacelib.miagespacelibmeca</packageName>
+                            <packageName></packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:8080/WSMeca/WSMeca?wsdl</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/WSMeca.stale</staleFile>
+                            <wsdlLocation>http://localhost:8080/WSUsager/WSUsager?wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/WSUsager.stale</staleFile>
                         </configuration>
-                        <id>wsimport-generate-WSMeca</id>
+                        <id>wsimport-generate-WSUsager</id>
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>
