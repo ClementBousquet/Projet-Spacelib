@@ -120,69 +120,76 @@ public class GestionVoyage implements GestionVoyageLocal {
         if(navettes.size() > 0) {
             
             Navette ln = navettes.get(0);
+            List<Quai> lq = quaiFacade.findDispoByStation(stationFacade.findByName(stationArr));
             
-            Quai q = quaiFacade.findDispoByStation(stationFacade.findByName(stationArr));
-            if (q != null) {
+            if (lq.size() > 0) {
+                Quai q = quais.get(0);
                 
-                q.setStatut("NonDispo");
-                ln.setStatut("Voyage");
-                Voyage v = new Voyage(
-                        t,
-                        ln,
-                        usagerFacade.find(idUsager), 
-                        new Date(), 
-                        nbPass, 
-                        new Date(), 
-                        "Voyage Initie");
-                c.setTime(v.getDateDepart());
-                c.add(Calendar.DATE, t.getDureeVoyage());
-                
-                v.setDateArrive(c.getTime());
-                
-                voyageFacade.create(v);
-                OperationNavette on = new OperationNavette(
-                        v.getIdNavette(), 
-                        usagerFacade.find(idUsager), 
-                        quaiFacade.find(ln.getQuai().getId()), 
-                        q, 
-                        "Voyage Initie", 
-                        new Date(), 
-                        c.getTime(), 
-                        nbPass, 
-                        new Date());
-                
-                operationNavetteFacade.create(on);
-                
-                Quai q2 = quaiFacade.find(ln.getQuai().getId());
-                q2.setStatut("Dispo");
-                q2.setIdNavette(null);
-                
-                
-                
-                Navette n = navetteFacade.find(ln.getId());
-                n.setQuai(q);
-                q.setIdNavette(n);
-                
-                Map<Voyage, OperationNavette> lon = n.getHistorique();
-                lon.put(v, on);
-                
-                quaiFacade.edit(q);
-                quaiFacade.edit(q2);
-                navetteFacade.edit(n);
-                
-                Usager u = usagerFacade.find(idUsager);
-                List<Voyage> lv = u.getResa();
-                lv.add(v);
-                u.setResa(lv);
-                
-                usagerFacade.edit(u);
-                
-                return "Rendez vous au quai "+q2.getId()+", vous arriverez au quai "+q.getId();
+                if (q != null) {
+
+                    q.setStatut("NonDispo");
+                    ln.setStatut("Voyage");
+                    Voyage v = new Voyage(
+                            t,
+                            ln,
+                            usagerFacade.find(idUsager), 
+                            new Date(), 
+                            nbPass, 
+                            new Date(), 
+                            "Voyage Initie");
+                    c.setTime(v.getDateDepart());
+                    c.add(Calendar.DATE, t.getDureeVoyage());
+
+                    v.setDateArrive(c.getTime());
+
+                    voyageFacade.create(v);
+                    OperationNavette on = new OperationNavette(
+                            v.getIdNavette(), 
+                            usagerFacade.find(idUsager), 
+                            quaiFacade.find(ln.getQuai().getId()), 
+                            q, 
+                            "Voyage Initie", 
+                            new Date(), 
+                            c.getTime(), 
+                            nbPass, 
+                            new Date());
+
+                    operationNavetteFacade.create(on);
+
+                    Quai q2 = quaiFacade.find(ln.getQuai().getId());
+                    q2.setStatut("Dispo");
+                    q2.setIdNavette(null);
+
+
+
+                    Navette n = navetteFacade.find(ln.getId());
+                    n.setQuai(q);
+                    q.setIdNavette(n);
+
+                    Map<Voyage, OperationNavette> lon = n.getHistorique();
+                    lon.put(v, on);
+
+                    quaiFacade.edit(q);
+                    quaiFacade.edit(q2);
+                    navetteFacade.edit(n);
+
+                    Usager u = usagerFacade.find(idUsager);
+                    List<Voyage> lv = u.getResa();
+                    lv.add(v);
+                    u.setResa(lv);
+
+                    usagerFacade.edit(u);
+
+                    return "Rendez vous au quai "+q2.getId()+", vous arriverez au quai "+q.getId();
+
+                } else {
+                    return "Aucun Quais dans la station d'arrivee disponibles";
+                }
                 
             } else {
-                return "Aucun Quais dans la station d'arrivee disponibles";
+                return "Aucun Quai disponible";
             }
-            
+
         } else {
             return "Aucune Navettes disponibles";
         }
@@ -299,52 +306,59 @@ public class GestionVoyage implements GestionVoyageLocal {
         Station st = stationFacade.findByName(st1);
         List<Quai> quais = quaiFacade.findByStation(st);
         
-        Quai qa = quaiFacade.findDispoByStation(stationFacade.findByName(st2));
+        List<Quai> qsa = quaiFacade.findDispoByStation(stationFacade.findByName(st2));
         
-        if (quais.size() > 0) {
+        if (qsa.size() > 0) {
             
-            List<Navette> navettes = new ArrayList();
+            Quai qa = qsa.get(0);
+            
+            if (quais.size() > 0) {
+            
+                List<Navette> navettes = new ArrayList();
 
-            for (int i = 0; i < quais.size(); i++) {
-                if (quais.get(i).getIdNavette() != null) {
-                    try {
-                        Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "Disponible");
-                        if (n.getNbPlaces() >= nbpass && n.getStatutResa().equals("Libre"))
-                            navettes.add(navetteFacade.findByQuai(quais.get(i)));
-                    } catch (NoResultException e) {
-                        log4j.error(" Navette " + navetteFacade.findByQuai(quais.get(i)).getId() +" Non disponible " + e.getMessage());
+                for (int i = 0; i < quais.size(); i++) {
+                    if (quais.get(i).getIdNavette() != null) {
+                        try {
+                            Navette n = navetteFacade.findByQuaiAndStatut(quais.get(i), "Disponible");
+                            if (n.getNbPlaces() >= nbpass && n.getStatutResa().equals("Libre"))
+                                navettes.add(navetteFacade.findByQuai(quais.get(i)));
+                        } catch (NoResultException e) {
+                            log4j.error(" Navette " + navetteFacade.findByQuai(quais.get(i)).getId() +" Non disponible " + e.getMessage());
+                        }
                     }
                 }
-            }
-            
-            if (navettes.size() > 0){
-                Navette n = navettes.get(0);
-                Quai qd = n.getQuai();
-                
-                reservationFacade.create(new Reservation(
-                    usagerFacade.find(idUsager),
-                    datedep,
-                    nbpass,
-                    qd,
-                    qa,
-                    n,
-                    trajetFacade.findByStations(stationFacade.findByName(st1), stationFacade.findByName(st2))
-                ));
-                
-                qa.setStatut("Reserve");
-                n.setStatutResa("Reserve");
-                
-                quaiFacade.edit(qa);
-                navetteFacade.edit(n);
-                
-                return "Veuillez vous rendre le "+datedep+" au quai numéro "+qd.getId()+", vous arriverez au quai "+qa.getId();
-                
+
+                if (navettes.size() > 0){
+                    Navette n = navettes.get(0);
+                    Quai qd = n.getQuai();
+
+                    reservationFacade.create(new Reservation(
+                        usagerFacade.find(idUsager),
+                        datedep,
+                        nbpass,
+                        qd,
+                        qa,
+                        n,
+                        trajetFacade.findByStations(stationFacade.findByName(st1), stationFacade.findByName(st2))
+                    ));
+
+                    qa.setStatut("Reserve");
+                    n.setStatutResa("Reserve");
+
+                    quaiFacade.edit(qa);
+                    navetteFacade.edit(n);
+
+                    return "Veuillez vous rendre le "+datedep+" au quai numéro "+qd.getId()+", vous arriverez au quai "+qa.getId();
+
+                } else {
+                    return "pas de navettes disponible en départ de la station "+st1;
+                }
+
             } else {
-                return "pas de navettes disponible en départ de la station "+st1;
+                return " pas de quais disponible en arrivée à la station "+st2;
             }
-            
         } else {
-            return " pas de quais disponible en arrivée à la station "+st2;
+            return " Pas de quais disponible dans la station d'arrivée "+st2;
         }
         
  

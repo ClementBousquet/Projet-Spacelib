@@ -8,6 +8,7 @@ package miage.spacelib.repositories;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,7 +36,7 @@ public class QuaiFacade extends AbstractFacade<Quai> implements QuaiFacadeLocal 
     }
 
     @Override
-    public Quai findDispoByStation(Station st) {
+    public List<Quai> findDispoByStation(Station st) {
        
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Quai> cq = cb.createQuery(Quai.class);
@@ -46,7 +47,7 @@ public class QuaiFacade extends AbstractFacade<Quai> implements QuaiFacadeLocal 
                         cb.equal(root.get("statut").as(String.class), "Dispo")
                 )
         );
-        return getEntityManager().createQuery(cq).getResultList().get(0);
+        return getEntityManager().createQuery(cq).getResultList();
         
     }
 

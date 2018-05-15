@@ -98,7 +98,7 @@ public class ServiceAdmin implements ServiceAdminRemote {
 
     @Override
     public List<String[]> getConducts() {
-        log4j.debug("getMecas");
+        log4j.debug("getConducts");
         List<Usager> lu = gestionSpacelib.getConducts();
         List<String[]> conducts = new ArrayList<>();
         for (Usager us : lu ) {

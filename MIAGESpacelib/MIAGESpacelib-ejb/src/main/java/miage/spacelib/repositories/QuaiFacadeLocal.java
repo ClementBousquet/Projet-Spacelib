@@ -27,7 +27,7 @@ public interface QuaiFacadeLocal {
     
     List<Quai> findByStation(Station st);
 
-    Quai findDispoByStation(Station st);
+    List<Quai> findDispoByStation(Station st);
     
     List<Quai> findAll();
 

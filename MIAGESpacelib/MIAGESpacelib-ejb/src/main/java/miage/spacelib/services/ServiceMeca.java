@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import miage.spacelib.business.GestionSpacelibLocal;
 import miage.spacelib.business.GestionTechniqueLocal;
 import miage.spacelib.entities.Navette;
 import miage.spacelib.entities.Quai;
+import miage.spacelib.entities.Station;
 import miage.spacelib.miagespacelibshared.TrajetAEffectuer;
 import org.apache.log4j.Logger;
 
@@ -26,6 +28,9 @@ public class ServiceMeca implements ServiceMecaLocal {
     
     @EJB
     private GestionTechniqueLocal gestionTech;
+    
+    @EJB
+    private GestionSpacelibLocal gestionSpacelib;
     
     @Override
     public Long authentifierMeca(String login, String pass) {
@@ -80,5 +85,17 @@ public class ServiceMeca implements ServiceMecaLocal {
     public List<TrajetAEffectuer> transfertNecessaire() {
         log4j.debug("transfertNecessaire");
         return gestionTech.transfertNecessaire();
+    }
+
+    @Override
+    public List<String[]> getStations() {
+        log4j.debug("getStations");
+        List<Station> ls = gestionSpacelib.getStations();
+        List<String[]> stations = new ArrayList<>();
+        for (Station st : ls ) {
+            String[] maStation = new String []{st.getNom()};
+            stations.add(maStation);
+        }
+        return stations;
     }
 }

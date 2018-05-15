@@ -57,5 +57,10 @@ public class WSMeca {
     public List<TrajetAEffectuer> transfertNecessaire() {
         return ejbRef.transfertNecessaire();
     }
+
+    @WebMethod(operationName = "getStations")
+    public List<String[]> getStations() {
+        return ejbRef.getStations();
+    }
     
 }
