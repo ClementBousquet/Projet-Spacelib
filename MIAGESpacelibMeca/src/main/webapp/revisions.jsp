@@ -51,6 +51,7 @@
                         out.println("<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Valider</button>");
                     }
                     %>
+                    <a href="/MIAGESpacelibMeca">Déconnexion</a>
                 </div>
             </div>
         </div>

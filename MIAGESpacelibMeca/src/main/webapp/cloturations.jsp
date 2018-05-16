@@ -24,11 +24,12 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-lg-3 offset-md-3 offset-sm-6 offset-xs-6">
                     <form method="POST" action="cloturation">
-                        <input type="hidden" name="id" value="<%request.getAttribute("id");%>">
-                        <input type="hidden" name="station" value="<%request.getAttribute("station");%>">
-                        <input type="hidden" name="nav" value="<%request.getAttribute("nav");%>">
+                        <input type="hidden" name="id" value="<%out.print(request.getAttribute("id"));%>">
+                        <input type="hidden" name="station" value="<%out.print(request.getAttribute("station"));%>">
+                        <input type="hidden" name="nav" value="<%out.print(request.getAttribute("nav"));%>">
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Cloturer</button>
                     </form>
+                    <a href="/MIAGESpacelibMeca">Déconnexion</a>
                 </div>
             </div>
         </div>

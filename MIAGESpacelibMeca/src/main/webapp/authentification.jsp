@@ -46,6 +46,7 @@
                out.println("<p style=\"color: red\">"+request.getAttribute("error_login")+"</p>");
             }
             %>
+            <a href="/MIAGESpacelibMeca">Retour</a>
         </form>
     </body>
 </html>

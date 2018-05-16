@@ -64,7 +64,10 @@ public class Authentification extends HttpServlet {
             else {
                 request.setAttribute("id",nb);
                 request.setAttribute("station", station);
-                //ici
+                List<String> nav = new ArrayList<>();
+                nav = port.afficherRevision(station, nb);
+                request.setAttribute("nav", nav.get(0));
+                System.out.println(nav.get(0));
                 RequestDispatcher dispatcher = request.getRequestDispatcher("cloturations.jsp");
                 dispatcher.forward(request, response);
             }
